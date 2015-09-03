@@ -10,19 +10,27 @@ import UIKit
 
 class EventCell: UICollectionViewCell {
     
-    var eventBackgroundImage : UIImageView!
-    var eventTitleLabel : UILabel!
-    var isFlipped : Bool?
+    @IBOutlet weak var eventTitleLabel: UILabel!
+    @IBOutlet weak var eventBackgroundImage: UIImageView!
+    
+//    var isFlipped : Bool?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         
+//        eventBackgroundImage = UIImageView(frame: self.bounds)
+//        self.addSubview(eventBackgroundImage)
+//        
+//        eventTitleLabel = UILabel(frame: CGRectMake(0, self.frame.size.height / 3, self.frame.size.width, self.frame.size.height / 4))
+//        eventTitleLabel.textColor = UIColor.blackColor()
+//        eventTitleLabel.backgroundColor = UIColor.whiteColor()
+//        self.addSubview(eventTitleLabel)
         
     }
 
     required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
 }

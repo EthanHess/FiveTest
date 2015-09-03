@@ -1,3 +1,4 @@
+
 //
 //  EventCollectionViewController.swift
 //  FiveTest
@@ -8,7 +9,7 @@
 
 import UIKit
 
-class EventCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class EventCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var events : [String]? = []
     var testImages : [String]? = []
@@ -16,9 +17,15 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
+        layout.itemSize = CGSize(width: self.view.frame.size.width / 2.5, height: 120)
 
-        events = ["Homer","Marge","Bart","Lisa","Maggie"]
-        testImages = ["", "", "", "", ""]
+        events = ["homer","marge","bart","lisa","maggie"]
+        testImages = ["homer", "marge", "bart", "lisa", "maggie"]
+        
+        collectionView.reloadData()
         
     }
     
@@ -32,7 +39,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         var cell : EventCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! EventCell
         
-        cell.eventTitleLabel.text = self.events![indexPath.row]
+        cell.eventTitleLabel.text = events?[indexPath.row]
         cell.eventBackgroundImage.image = UIImage(named: testImages![indexPath.row])
         
         return cell

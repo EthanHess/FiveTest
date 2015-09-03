@@ -23,7 +23,10 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
         
         displayName.delegate = self
 
+        imagePicker = UIImagePickerController.new()
         imagePicker?.delegate = self
+        imagePicker?.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        imagePicker?.allowsEditing = false
         
         profileImageView.image = UIImage(named: "imagePickerBackground")
         
@@ -41,6 +44,18 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
     @IBAction func saveProfile(sender: AnyObject) {
         
         
+    }
+    
+    func presentImagePicker() {
+        
+        presentViewController(imagePicker!, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        
+        chosenImage = image
+        profileImageView.image = chosenImage
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

@@ -11,6 +11,7 @@ import UIKit
 class CreateEventViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     var event : Event?
+    var chosenImage : UIImage?
     var imagePicker : UIImagePickerController?
     @IBOutlet weak var eventImage: UIImageView!
     @IBOutlet weak var eventTitleField: UITextField!
@@ -22,7 +23,10 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         
         eventTitleField.delegate = self
 
+        imagePicker = UIImagePickerController.new()
         imagePicker?.delegate = self
+        imagePicker?.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        imagePicker?.allowsEditing = false
         
         eventImage.layer.cornerRadius = 50
         eventImage.layer.borderColor = UIColor.blackColor().CGColor
@@ -40,6 +44,20 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func saveEvent(sender: AnyObject) {
         
+        
+    }
+    
+    func presentImagePicker() {
+        
+         presentViewController(imagePicker!, animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        
+        chosenImage = image
+        eventImage.image = chosenImage
+        self.dismissViewControllerAnimated(true, completion: nil)
         
     }
     
