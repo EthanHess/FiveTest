@@ -42,6 +42,10 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         cell.eventTitleLabel.text = events?[indexPath.row]
         cell.eventBackgroundImage.image = UIImage(named: testImages![indexPath.row])
         
+        cell.layer.cornerRadius = 20
+        cell.layer.borderColor = UIColor.blackColor().CGColor
+        cell.layer.borderWidth = 2
+        
         return cell
         
     }

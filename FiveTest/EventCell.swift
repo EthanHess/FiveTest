@@ -33,4 +33,12 @@ class EventCell: UICollectionViewCell {
         super.init(coder: aDecoder)
     }
     
+    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes!) {
+        super.applyLayoutAttributes(layoutAttributes)
+        let circularlayoutAttributes = layoutAttributes as! CollectionViewLayoutAttributes
+        self.layer.anchorPoint = circularlayoutAttributes.anchorPoint
+        self.center.y += (circularlayoutAttributes.anchorPoint.y - 0.5) * CGRectGetHeight(self.bounds)
+    }
+
+    
 }

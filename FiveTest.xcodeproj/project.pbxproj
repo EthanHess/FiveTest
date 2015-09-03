@@ -36,6 +36,7 @@
 		27C093B31B98C80E006C9FD4 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093B21B98C80E006C9FD4 /* EventCell.swift */; };
 		27C093B51B98C8C1006C9FD4 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093B41B98C8C1006C9FD4 /* Event.swift */; };
 		27C093B71B98C926006C9FD4 /* EventCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093B61B98C926006C9FD4 /* EventCollectionViewController.swift */; };
+		27C093BB1B9910DE006C9FD4 /* CircularCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093BA1B9910DE006C9FD4 /* CircularCollectionViewLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		27C093B21B98C80E006C9FD4 /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		27C093B41B98C8C1006C9FD4 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		27C093B61B98C926006C9FD4 /* EventCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCollectionViewController.swift; sourceTree = "<group>"; };
+		27C093BA1B9910DE006C9FD4 /* CircularCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularCollectionViewLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				27C093AC1B98C5DC006C9FD4 /* CreateProfileViewController.swift */,
 				27C093AE1B98C5F0006C9FD4 /* CreateEventViewController.swift */,
 				27C093B01B98C604006C9FD4 /* CalenderViewController.swift */,
+				27C093BA1B9910DE006C9FD4 /* CircularCollectionViewLayout.swift */,
 				27C093B21B98C80E006C9FD4 /* EventCell.swift */,
 				27C093B41B98C8C1006C9FD4 /* Event.swift */,
 				271335951B97C35200D70EA3 /* Main.storyboard */,
@@ -301,6 +304,7 @@
 				27C093B51B98C8C1006C9FD4 /* Event.swift in Sources */,
 				27C093B11B98C604006C9FD4 /* CalenderViewController.swift in Sources */,
 				27C093AD1B98C5DC006C9FD4 /* CreateProfileViewController.swift in Sources */,
+				27C093BB1B9910DE006C9FD4 /* CircularCollectionViewLayout.swift in Sources */,
 				27C093B71B98C926006C9FD4 /* EventCollectionViewController.swift in Sources */,
 				271335941B97C35200D70EA3 /* ViewController.swift in Sources */,
 				27C093AF1B98C5F0006C9FD4 /* CreateEventViewController.swift in Sources */,
