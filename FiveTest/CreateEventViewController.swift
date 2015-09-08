@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class CreateEventViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
@@ -17,6 +18,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var eventTitleField: UITextField!
     @IBOutlet weak var eventDescriptionField: UITextView!
     @IBOutlet weak var eventSaveButton: UIButton!
+    @IBOutlet weak var popImagePickerButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,13 +30,18 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         imagePicker?.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         imagePicker?.allowsEditing = false
         
-        eventImage.layer.cornerRadius = 50
+        eventImage.layer.cornerRadius = 10
         eventImage.layer.borderColor = UIColor.blackColor().CGColor
+        eventImage.layer.masksToBounds = true
         eventImage.layer.borderWidth = 2
         
         eventSaveButton.layer.cornerRadius = 10
         eventSaveButton.layer.borderColor = UIColor.blackColor().CGColor
         eventSaveButton.layer.borderWidth = 2
+        
+        popImagePickerButton.layer.cornerRadius = 10
+        popImagePickerButton.layer.borderColor = UIColor.blackColor().CGColor
+        popImagePickerButton.layer.borderWidth = 2
         
         eventDescriptionField.layer.cornerRadius = 10
         eventDescriptionField.layer.borderColor = UIColor.blackColor().CGColor
@@ -44,7 +51,44 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func saveEvent(sender: AnyObject) {
         
+        let pictureData = UIImagePNGRepresentation(eventImage.image)
         
+        let file = PFFile(name: "eventImage", data: pictureData)
+        
+        file.saveInBackgroundWithBlock { (succeeded, error) -> Void in
+            
+            if !(error != nil) {
+                self.saveEventToParse(file)
+            }
+            
+            else if let error = error {
+                println("error: \(error.localizedDescription)")
+            }
+            
+        }
+        
+        
+    }
+    
+    func saveEventToParse(file: PFFile) {
+        
+        let event = Event(image: file, user: PFUser.currentUser()!, comment: eventDescriptionField.text, title: eventTitleField.text)
+        
+        event.saveInBackgroundWithBlock { (success, error) -> Void in
+            if success {
+                var alertView = UIAlertView(title: "Saved!", message: "Success", delegate: nil, cancelButtonTitle: "Okay!")
+                alertView.show()
+            }
+            else {
+                println("error: \(error?.localizedDescription)")
+            }
+            
+        }
+    }
+    
+    @IBAction func popImagePicker(sender: AnyObject) {
+        
+        self.presentImagePicker()
     }
     
     func presentImagePicker() {

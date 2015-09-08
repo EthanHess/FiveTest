@@ -17,6 +17,7 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var displayName: UITextField!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var imageButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,11 +40,21 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
         saveButton.layer.borderColor = UIColor.blackColor().CGColor
         saveButton.layer.borderWidth = 2
         
+        imageButton.layer.cornerRadius = 10
+        imageButton.layer.borderColor = UIColor.blackColor().CGColor
+        imageButton.layer.borderWidth = 2
+        
     }
     
     @IBAction func saveProfile(sender: AnyObject) {
         
         
+        
+    }
+    
+    @IBAction func presentImagePicker(sender: AnyObject) {
+        
+        self.presentImagePicker()
     }
     
     func presentImagePicker() {

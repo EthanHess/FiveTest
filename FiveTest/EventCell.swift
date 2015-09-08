@@ -12,11 +12,16 @@ class EventCell: UICollectionViewCell {
     
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventBackgroundImage: UIImageView!
+    @IBOutlet weak var userImageView: UIImageView!
     
-//    var isFlipped : Bool?
+    var isFlipped : Bool?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        userImageView.layer.cornerRadius = userImageView.frame.size.height / 2
+        userImageView.layer.borderColor = UIColor.blackColor().CGColor
+        userImageView.layer.borderWidth = 2
         
         
 //        eventBackgroundImage = UIImageView(frame: self.bounds)
