@@ -76,7 +76,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         
         event.saveInBackgroundWithBlock { (success, error) -> Void in
             if success {
-                var alertView = UIAlertView(title: "Saved!", message: "Success", delegate: nil, cancelButtonTitle: "Okay!")
+                var alertView = UIAlertView(title: "Event saved!", message: "Success", delegate: nil, cancelButtonTitle: "Okay!")
                 alertView.show()
             }
             else {

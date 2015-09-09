@@ -49,10 +49,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 alertView.show()
                 
             }
-            
         }
-        
-        
     }
     
 
@@ -90,8 +87,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-   
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

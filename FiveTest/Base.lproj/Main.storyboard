@@ -254,34 +254,22 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oTx-LK-r08">
-                                                    <rect key="frame" x="52" y="8" width="75" height="75"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="75" id="HrZ-dP-tAI"/>
-                                                        <constraint firstAttribute="width" constant="75" id="ova-v6-TzE"/>
-                                                    </constraints>
-                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="oTx-LK-r08" firstAttribute="top" secondItem="vy0-HC-wLr" secondAttribute="topMargin" id="2Uh-RW-zQ5"/>
                                             <constraint firstItem="xzV-Hs-Oml" firstAttribute="trailing" secondItem="BnO-V3-3qo" secondAttribute="trailing" id="3kL-aY-2tc"/>
                                             <constraint firstItem="xzV-Hs-Oml" firstAttribute="leading" secondItem="BnO-V3-3qo" secondAttribute="leading" id="84T-nk-DoL"/>
-                                            <constraint firstItem="xzV-Hs-Oml" firstAttribute="top" secondItem="oTx-LK-r08" secondAttribute="bottom" constant="50" id="QLw-J7-iad"/>
-                                            <constraint firstItem="oTx-LK-r08" firstAttribute="centerX" secondItem="xzV-Hs-Oml" secondAttribute="centerX" id="Xmc-Ly-YKy"/>
                                             <constraint firstAttribute="bottom" secondItem="xzV-Hs-Oml" secondAttribute="bottom" id="YSF-yD-U7a"/>
                                             <constraint firstItem="BnO-V3-3qo" firstAttribute="top" secondItem="vy0-HC-wLr" secondAttribute="top" id="miP-of-57r"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="BnO-V3-3qo" secondAttribute="bottom" constant="-16" id="qGR-fh-TIb"/>
                                             <constraint firstItem="xzV-Hs-Oml" firstAttribute="leading" secondItem="vy0-HC-wLr" secondAttribute="leading" id="u3J-1b-AQl"/>
-                                            <constraint firstItem="oTx-LK-r08" firstAttribute="leading" secondItem="vy0-HC-wLr" secondAttribute="leadingMargin" constant="44" id="vvI-kh-bhv"/>
                                             <constraint firstAttribute="trailing" secondItem="xzV-Hs-Oml" secondAttribute="trailing" id="zGg-mN-R1h"/>
                                         </constraints>
                                         <size key="customSize" width="178" height="178"/>
                                         <connections>
                                             <outlet property="eventBackgroundImage" destination="BnO-V3-3qo" id="3ZQ-mm-GPa"/>
                                             <outlet property="eventTitleLabel" destination="xzV-Hs-Oml" id="TUr-kg-Neo"/>
-                                            <outlet property="userImageView" destination="oTx-LK-r08" id="ZS2-xm-PcM"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

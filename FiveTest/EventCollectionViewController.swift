@@ -8,35 +8,31 @@
 //
 
 import UIKit
+import Parse
 
 class EventCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var events : [Event]? = []
     var testEvents : [String]? = []
     var testImages : [String]? = []
+    var user = PFUser.currentUser()
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    override func viewWillAppear(animated: Bool) {
-        
-        //queries parse as view appears
-        
-        let query = Event.query()
-        
-        query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
-            
-            if let objects = objects as? [Event] {
-                self.events = objects
-            }
-            
-            else if let error = error {
-                println("error: \(error.localizedDescription)")
-            }
-            
-        })
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let query = Event.query()
+//        
+//        query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+//            
+//            if let objects = objects as? [Event] {
+//                self.events = objects
+//                self.collectionView.reloadData()
+//            }
+//            else if let error = error {
+//                println("error: \(error.localizedDescription)")
+//            }
+//        })
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
@@ -44,6 +40,8 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
 
         testEvents = ["homer","marge","bart","lisa","maggie"]
         testImages = ["homer", "marge", "bart", "lisa", "maggie"]
+
+
         
 //        collectionView.collectionViewLayout.invalidateLayout()
         
@@ -55,9 +53,10 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
 //        collectionView.collectionViewLayout.invalidateLayout()
         
-        return events!.count
-//
-//        return 5
+        return testEvents!.count
+        
+//        return self.events!.count
+    
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -68,46 +67,46 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         //queries parse for events
         
-        var event = events?[indexPath.row]
-        
-        event?.eventImage?.getDataInBackgroundWithBlock({ (data, error) -> Void in
-            
-            if let data = data, image = UIImage(data: data) {
-                
-                cell.eventBackgroundImage.image = image
-                cell.eventTitleLabel.text = event?.eventTitle
-                
-            }
-        })
-        
-//        cell.eventTitleLabel.text = events?[indexPath.row]
-//        cell.eventBackgroundImage.image = UIImage(named: testImages![indexPath.row])
-        
-        //SWITCH TESTING
-        
-//        switch indexPath.row {
-//            
-//        case 0:
-//            cell.backgroundColor = UIColor.redColor()
-//            
-//        case 1:
-//            cell.backgroundColor = UIColor.yellowColor()
-//            
-//        case 2:
-//            cell.backgroundColor = UIColor.greenColor()
-//            
-//        case 3:
-//            cell.backgroundColor = UIColor.blackColor()
-//            
-//        case 4:
-//            cell.backgroundColor = UIColor.orangeColor()
-//            
-//        default:
-//            
-//            break
-//            
-//        }
+//        var event = events?[indexPath.row]
 //        
+//        event?.eventImage.getDataInBackgroundWithBlock({ (data, error) -> Void in
+//            
+//            if let data = data, image = UIImage(data: data) {
+//                
+//                cell.eventBackgroundImage.image = image
+//                cell.eventTitleLabel.text = event?.eventTitle
+//                
+//            }
+//        })
+        
+        cell.eventTitleLabel.text = testEvents?[indexPath.row]
+        cell.eventBackgroundImage.image = UIImage(named: testImages![indexPath.row])
+        
+//        SWITCH TESTING
+        
+        switch indexPath.row {
+            
+        case 0:
+            cell.backgroundColor = UIColor.redColor()
+            
+        case 1:
+            cell.backgroundColor = UIColor.yellowColor()
+            
+        case 2:
+            cell.backgroundColor = UIColor.greenColor()
+            
+        case 3:
+            cell.backgroundColor = UIColor.blackColor()
+            
+        case 4:
+            cell.backgroundColor = UIColor.orangeColor()
+            
+        default:
+            
+            break
+            
+        }
+        
 //        cell.userImageView.image = UIImage(named: self.testImages![indexPath.row])
         
         cell.layer.cornerRadius = 20
@@ -120,6 +119,19 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
+        //flip cell when selected
+        
+        var cell : EventCell = collectionView.cellForItemAtIndexPath(indexPath) as! EventCell
+        
+        UIView.transitionWithView(cell, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromLeft, animations: { () -> Void in
+            
+        }) { (success) -> Void in
+            
+            cell.eventBackgroundImage.hidden = true
+            cell.eventTitleLabel.hidden = true
+            cell.backgroundColor = UIColor.whiteColor()
+            
+        }
         
     }
 
