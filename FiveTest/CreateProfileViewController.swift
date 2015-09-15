@@ -19,6 +19,7 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
     var locationManager = CLLocationManager()
     var longString : String?
     var latString : String?
+    var scrollView : UIScrollView!
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var displayName: UITextField!
@@ -73,6 +74,8 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
         
         longString = String(format: "@%", long)
         latString = String(format: "@%", lat)
+        
+        println("\(long, lat)")
         
     }
     

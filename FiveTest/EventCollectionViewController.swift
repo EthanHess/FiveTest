@@ -21,31 +21,33 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let query = Event.query()
-//        
-//        query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
-//            
-//            if let objects = objects as? [Event] {
-//                self.events = objects
-//                self.collectionView.reloadData()
-//            }
-//            else if let error = error {
-//                println("error: \(error.localizedDescription)")
-//            }
-//        })
+        let query = Event.query()
+        
+        query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+            
+            if let objects = objects as? [Event] {
+                self.events = objects
+                self.collectionView.reloadData()
+            }
+            else if let error = error {
+                println("error: \(error.localizedDescription)")
+            }
+        })
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
         layout.itemSize = CGSize(width: self.view.frame.size.width / 2.5, height: 120)
 
-        testEvents = ["homer","marge","bart","lisa","maggie"]
-        testImages = ["homer", "marge", "bart", "lisa", "maggie"]
+//        testEvents = ["homer","marge","bart","lisa","maggie"]
+//        testImages = ["homer", "marge", "bart", "lisa", "maggie"]
+//        testEvents = []
+//        testImages = []
 
 
         
 //        collectionView.collectionViewLayout.invalidateLayout()
         
-        collectionView.reloadData()
+//        collectionView.reloadData()
         
     }
     
@@ -53,9 +55,13 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
 //        collectionView.collectionViewLayout.invalidateLayout()
         
-        return testEvents!.count
+//        return testEvents!.count
         
-//        return self.events!.count
+        if let events = self.events {
+            return events.count
+        }
+        
+        return 0
     
     }
     
@@ -67,45 +73,45 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         //queries parse for events
         
-//        var event = events?[indexPath.row]
-//        
-//        event?.eventImage.getDataInBackgroundWithBlock({ (data, error) -> Void in
-//            
-//            if let data = data, image = UIImage(data: data) {
-//                
-//                cell.eventBackgroundImage.image = image
-//                cell.eventTitleLabel.text = event?.eventTitle
-//                
-//            }
-//        })
+        var event = events?[indexPath.row]
         
-        cell.eventTitleLabel.text = testEvents?[indexPath.row]
-        cell.eventBackgroundImage.image = UIImage(named: testImages![indexPath.row])
+        event?.eventImage.getDataInBackgroundWithBlock({ (data, error) -> Void in
+            
+            if let data = data, image = UIImage(data: data) {
+                
+                cell.eventBackgroundImage.image = image
+                cell.eventTitleLabel.text = event?.eventTitle
+                
+            }
+        })
+        
+//        cell.eventTitleLabel.text = testEvents?[indexPath.row]
+//        cell.eventBackgroundImage.image = UIImage(named: testImages![indexPath.row])
         
 //        SWITCH TESTING
         
-        switch indexPath.row {
-            
-        case 0:
-            cell.backgroundColor = UIColor.redColor()
-            
-        case 1:
-            cell.backgroundColor = UIColor.yellowColor()
-            
-        case 2:
-            cell.backgroundColor = UIColor.greenColor()
-            
-        case 3:
-            cell.backgroundColor = UIColor.blackColor()
-            
-        case 4:
-            cell.backgroundColor = UIColor.orangeColor()
-            
-        default:
-            
-            break
-            
-        }
+//        switch indexPath.row {
+//            
+//        case 0:
+//            cell.backgroundColor = UIColor.redColor()
+//            
+//        case 1:
+//            cell.backgroundColor = UIColor.yellowColor()
+//            
+//        case 2:
+//            cell.backgroundColor = UIColor.greenColor()
+//            
+//        case 3:
+//            cell.backgroundColor = UIColor.blackColor()
+//            
+//        case 4:
+//            cell.backgroundColor = UIColor.orangeColor()
+//            
+//        default:
+//            
+//            break
+//            
+//        }
         
 //        cell.userImageView.image = UIImage(named: self.testImages![indexPath.row])
         

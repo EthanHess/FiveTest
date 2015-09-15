@@ -76,6 +76,13 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
     override func prepareLayout() {
         super.prepareLayout()
         
+        let itemCount = self.collectionView?.numberOfItemsInSection(0)
+        if itemCount == 0 {
+            return
+        }
+        
+        
+        
         let centerX = collectionView!.contentOffset.x + (CGRectGetWidth(collectionView!.bounds) / 2.0)
         
         //sets anchor point
@@ -112,6 +119,8 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
             // 3
             attributes.angle = self.angle + (self.anglePerItem * CGFloat(i))
             attributes.anchorPoint = CGPoint(x: 0.5, y: anchorPointY)
+            
+            
             
             return attributes
         }

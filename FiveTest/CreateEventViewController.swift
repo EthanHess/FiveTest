@@ -19,7 +19,8 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var eventDescriptionField: UITextView!
     @IBOutlet weak var eventSaveButton: UIButton!
     @IBOutlet weak var popImagePickerButton: UIButton!
-    
+    @IBOutlet weak var scrollView: UIScrollView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,6 +47,11 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         eventDescriptionField.layer.cornerRadius = 10
         eventDescriptionField.layer.borderColor = UIColor.blackColor().CGColor
         eventDescriptionField.layer.borderWidth = 2
+        
+        scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: 1000)
+//        scrollView.contentSize.width = self.view.frame.size.width
+//        scrollView.contentSize.height = 1000
+        
     }
     
     
