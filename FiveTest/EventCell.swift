@@ -12,33 +12,46 @@ class EventCell: UICollectionViewCell {
     
     @IBOutlet weak var eventTitleLabel: UILabel!
     @IBOutlet weak var eventBackgroundImage: UIImageView!
-//    @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var eventDescriptionLabel: UILabel!
+    @IBOutlet weak var eventDateLabel: UILabel!
     
     var isFlipped = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-//        userImageView.layer.cornerRadius = userImageView.frame.size.height / 2
-//        userImageView.layer.borderColor = UIColor.blackColor().CGColor
-//        userImageView.layer.borderWidth = 2
-//        userImageView.backgroundColor = UIColor.whiteColor()
-        
-        
-//        eventBackgroundImage = UIImageView(frame: self.bounds)
-//        self.addSubview(eventBackgroundImage)
-//        
-//        eventTitleLabel = UILabel(frame: CGRectMake(0, self.frame.size.height / 3, self.frame.size.width, self.frame.size.height / 4))
-//        eventTitleLabel.textColor = UIColor.blackColor()
-//        eventTitleLabel.backgroundColor = UIColor.whiteColor()
-//        self.addSubview(eventTitleLabel)
-        
-        
         
     }
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func flipCell() {
+        
+        if isFlipped == false {
+        
+        eventTitleLabel.hidden = true
+        eventBackgroundImage.hidden = true
+        
+        eventDateLabel.hidden = false
+        eventDescriptionLabel.hidden = false
+        
+        self.isFlipped = true
+            
+        }
+        
+        else {
+            
+            eventTitleLabel.hidden = false
+            eventBackgroundImage.hidden = false
+            
+            eventDateLabel.hidden = true
+            eventDescriptionLabel.hidden = true
+            
+            self.isFlipped = false
+            
+        }
     }
     
     override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes!) {

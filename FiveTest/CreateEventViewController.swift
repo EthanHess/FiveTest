@@ -14,12 +14,15 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     var event : Event?
     var chosenImage : UIImage?
     var imagePicker : UIImagePickerController?
+    var eventDate : NSDate?
+    
     @IBOutlet weak var eventImage: UIImageView!
     @IBOutlet weak var eventTitleField: UITextField!
     @IBOutlet weak var eventDescriptionField: UITextView!
     @IBOutlet weak var eventSaveButton: UIButton!
     @IBOutlet weak var popImagePickerButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var datePicker: UIDatePicker!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +81,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     
     func saveEventToParse(file: PFFile) {
         
-        let event = Event(image: file, user: PFUser.currentUser()!, comment: eventDescriptionField.text, title: eventTitleField.text)
+        let event = Event(image: file, user: PFUser.currentUser()!, comment: eventDescriptionField.text, title: eventTitleField.text, date: datePicker.date)
         
         event.saveInBackgroundWithBlock { (success, error) -> Void in
             if success {

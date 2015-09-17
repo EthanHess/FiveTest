@@ -40,21 +40,13 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
 
 //        testEvents = ["homer","marge","bart","lisa","maggie"]
 //        testImages = ["homer", "marge", "bart", "lisa", "maggie"]
-//        testEvents = []
-//        testImages = []
 
-
-        
-//        collectionView.collectionViewLayout.invalidateLayout()
-        
-//        collectionView.reloadData()
+        collectionView.reloadData()
         
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-//        collectionView.collectionViewLayout.invalidateLayout()
-        
+
 //        return testEvents!.count
         
         if let events = self.events {
@@ -79,8 +71,23 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
             
             if let data = data, image = UIImage(data: data) {
                 
+                if cell.isFlipped == false {
+                
                 cell.eventBackgroundImage.image = image
                 cell.eventTitleLabel.text = event?.eventTitle
+                    
+                }
+                
+                else {
+                    
+                    let date = event?.eventDate
+                    var dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "hh:mm"
+                    var dateString = dateFormatter.stringFromDate(date!)
+                    
+                    cell.eventDescriptionLabel.text = event?.eventDescription
+                    cell.eventDateLabel.text = dateString
+                }
                 
             }
         })
@@ -133,9 +140,10 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
             
         }) { (success) -> Void in
             
-            cell.eventBackgroundImage.hidden = true
-            cell.eventTitleLabel.hidden = true
+            cell.flipCell()
+            
             cell.backgroundColor = UIColor.whiteColor()
+            
             
         }
         

@@ -16,10 +16,9 @@ class Event: PFObject {
     @NSManaged var atendeeArray : [PFUser]
     @NSManaged var eventDescription : String?
     @NSManaged var eventTitle : String?
-    
+    @NSManaged var eventDate: NSDate?
     
     var location : CLLocationCoordinate2D?
-    var eventDate : NSDate?
     var eventIsFull : Bool!
    
     override class func query() -> PFQuery? {
@@ -31,7 +30,7 @@ class Event: PFObject {
         return query
     }
     
-    init(image: PFFile, user: PFUser, comment: String?, title: String?) {
+    init(image: PFFile, user: PFUser, comment: String?, title: String?, date: NSDate?) {
         super.init()
         
         //eventually init with location, atendee array, date and full boolean
@@ -39,7 +38,8 @@ class Event: PFObject {
         self.eventImage = image
         self.user = user
         self.eventDescription = comment;
-        self.eventTitle = title; 
+        self.eventTitle = title;
+        self.eventDate = date;
         
     }
     
