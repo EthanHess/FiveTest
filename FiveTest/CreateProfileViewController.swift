@@ -11,14 +11,15 @@ import Parse
 import CoreLocation
 
 class CreateProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, CLLocationManagerDelegate {
-    
+
     var imagePicker : UIImagePickerController?
     var chosenImage : UIImage?
     var user : PFUser!
-    var location = CLLocation()
-    var locationManager = CLLocationManager()
-    var longString : String?
-    var latString : String?
+//    var location = CLLocation()
+//    var locationManager = CLLocationManager()
+//    var longString : String?
+//    var latString : String?
+    var userGeoPoint : PFGeoPoint!
     var scrollView : UIScrollView!
     
     @IBOutlet weak var profileImageView: UIImageView!
@@ -53,31 +54,60 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
         imageButton.layer.borderColor = UIColor.blackColor().CGColor
         imageButton.layer.borderWidth = 2
         
-        self.determineCurrentUserLocation()
+//        self.determineCurrentUserLocation()
+        
+        self.getParseGeoPoint()
         
     }
     
-    func determineCurrentUserLocation() {
+//    func determineCurrentUserLocation() {
+//        
+////        locationManager = CLLocationManager()
+////        locationManager.delegate = self
+////        locationManager.requestAlwaysAuthorization()
+////        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+////        locationManager.startUpdatingLocation()
+//        
+//
+//    }
+    
+//    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+//        
+//        location = (locations[0] as? CLLocation)!
+//        let long = location.coordinate.longitude
+//        let lat = location.coordinate.latitude
+//        
+//        //converts points into strings if needed
+//        
+//        longString = String(format: "@%", long)
+//        latString = String(format: "@%", lat)
+//        
+//        //grabs value of longitute and latitude
+//        
+//        let point = PFGeoPoint(latitude: lat, longitude:long)
+//        
+//        println("\(long, lat)")
+//        
+//    }
+    
+    func getParseGeoPoint() {
         
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
+        PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint: PFGeoPoint?, error: NSError?) -> Void in
+            
+            if (error == nil) {
+                
+            self.userGeoPoint = geoPoint
+            }
+            
+            else if let error = error {
+                
+                println("error: \(error.localizedDescription)")
+            }
+            
+        }
         
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        
-        location = (locations[0] as? CLLocation)!
-        let long = location.coordinate.longitude
-        let lat = location.coordinate.latitude
-        
-        longString = String(format: "@%", long)
-        latString = String(format: "@%", lat)
-        
-        println("\(long, lat)")
-        
-    }
     
     @IBAction func saveProfile(sender: AnyObject) {
         
@@ -102,7 +132,9 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
         
         //TODO: Fix error with location
         
-        let profile = Profile(image: file, latitude: latString!, longitude: longString!, user: PFUser.currentUser()!, displayName: displayName.text)
+//        let profile = Profile(image: file, latitude: latString!, longitude: longString!, user: PFUser.currentUser()!, displayName: displayName.text)
+        
+        let profile = Profile(image: file, user: PFUser.currentUser()!, displayName: displayName.text, location: userGeoPoint)
         
         profile.saveInBackgroundWithBlock { (success, error) -> Void in
             

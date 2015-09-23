@@ -13,8 +13,9 @@ class Profile: PFObject {
     
     @NSManaged var image : PFFile
     @NSManaged var user : PFUser
-    @NSManaged var latitude : String?
-    @NSManaged var longitude : String?
+    @NSManaged var location : PFGeoPoint
+//    @NSManaged var latitude : String?
+//    @NSManaged var longitude : String?
     @NSManaged var displayName : String?
    
     override class func query() -> PFQuery? {
@@ -25,14 +26,17 @@ class Profile: PFObject {
         return query
     }
     
-    init(image: PFFile, latitude: String, longitude: String, user: PFUser, displayName: String?) {
+    init(image: PFFile, user: PFUser, displayName: String?, location: PFGeoPoint) {
         super.init()
         
+        //add latitude: String, longitude: String, when location manager works
+        
         self.image = image
-        self.latitude = latitude
-        self.longitude = longitude
+//        self.latitude = latitude
+//        self.longitude = longitude
         self.displayName = displayName
         self.user = user
+        self.location = location
     }
     
     override init() {

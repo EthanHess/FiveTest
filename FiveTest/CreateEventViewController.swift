@@ -16,6 +16,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     var imagePicker : UIImagePickerController?
     var eventDate : NSDate?
     
+    @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var eventImage: UIImageView!
     @IBOutlet weak var eventTitleField: UITextField!
     @IBOutlet weak var eventDescriptionField: UITextView!
@@ -23,11 +24,14 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var popImagePickerButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var datePicker: UIDatePicker!
+    
+    func updateWithLocation(location: String) {
+        
+        locationTextField.text = location
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        eventTitleField.delegate = self
 
         imagePicker = UIImagePickerController.new()
         imagePicker?.delegate = self
@@ -119,6 +123,13 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         textField.resignFirstResponder()
         return true
     }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        self.performSegueWithIdentifier("locationSegue", sender: locationTextField)
+        
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

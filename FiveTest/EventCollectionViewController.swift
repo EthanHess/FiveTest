@@ -13,6 +13,7 @@ import Parse
 class EventCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var events : [Event]? = []
+    var profiles : [Profile]? = []
     var testEvents : [String]? = []
     var testImages : [String]? = []
     var user = PFUser.currentUser()
@@ -76,6 +77,8 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                 cell.eventBackgroundImage.image = image
                 cell.eventTitleLabel.text = event?.eventTitle
                     
+                cell.imageView.image = UIImage(named: "homer")
+                    
                 }
                 
                 else {
@@ -92,39 +95,25 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
             }
         })
         
-//        cell.eventTitleLabel.text = testEvents?[indexPath.row]
-//        cell.eventBackgroundImage.image = UIImage(named: testImages![indexPath.row])
         
-//        SWITCH TESTING
+        //query parse for profiles 
         
-//        switch indexPath.row {
+//        var profile = profiles?[indexPath.row]
+//        
+//        profile?.image.getDataInBackgroundWithBlock({ (data, error) -> Void in
 //            
-//        case 0:
-//            cell.backgroundColor = UIColor.redColor()
+//            if let data = data, image = UIImage(data: data) {
+//                
+//                cell.imageView.image = image
+//                
+//            }
 //            
-//        case 1:
-//            cell.backgroundColor = UIColor.yellowColor()
-//            
-//        case 2:
-//            cell.backgroundColor = UIColor.greenColor()
-//            
-//        case 3:
-//            cell.backgroundColor = UIColor.blackColor()
-//            
-//        case 4:
-//            cell.backgroundColor = UIColor.orangeColor()
-//            
-//        default:
-//            
-//            break
-//            
-//        }
-        
-//        cell.userImageView.image = UIImage(named: self.testImages![indexPath.row])
+//            else {
+//                cell.imageView.image = nil
+//            }
+//        })
         
         cell.layer.cornerRadius = 20
-        cell.layer.borderColor = UIColor.blackColor().CGColor
-        cell.layer.borderWidth = 2
         
         return cell
         
@@ -148,6 +137,29 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         }
         
     }
+    
+    @IBAction func popAlertView(sender: AnyObject) {
+        
+        var alertViewController = UIAlertController(title: "Attend event?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alertViewController.addAction(UIAlertAction(title: "Yes!", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            
+            
+            
+            // save event to array of events of user
+        }))
+        
+        alertViewController.addAction(UIAlertAction(title: "No thanks", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+            
+            
+        }))
+        
+        self.presentViewController(alertViewController, animated: true) { () -> Void in
+            
+            // finish up here
+        }
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -166,3 +178,35 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     */
 
 }
+
+// test images
+
+//        cell.eventTitleLabel.text = testEvents?[indexPath.row]
+//        cell.eventBackgroundImage.image = UIImage(named: testImages![indexPath.row])
+
+//        SWITCH TESTING
+
+//        switch indexPath.row {
+//
+//        case 0:
+//            cell.backgroundColor = UIColor.redColor()
+//
+//        case 1:
+//            cell.backgroundColor = UIColor.yellowColor()
+//
+//        case 2:
+//            cell.backgroundColor = UIColor.greenColor()
+//
+//        case 3:
+//            cell.backgroundColor = UIColor.blackColor()
+//
+//        case 4:
+//            cell.backgroundColor = UIColor.orangeColor()
+//
+//        default:
+//
+//            break
+//
+//        }
+
+//        cell.userImageView.image = UIImage(named: self.testImages![indexPath.row])

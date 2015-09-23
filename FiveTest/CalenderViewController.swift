@@ -8,12 +8,37 @@
 
 import UIKit
 
-class CalenderViewController: UIViewController {
-
+class CalenderViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var eventsToAttend : [Event]? = []
+    @IBOutlet weak var eventsTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        
+        return cell
+        
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if let eventsToAttend = self.eventsToAttend {
+            return eventsToAttend.count
+        }
+        
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
