@@ -17,6 +17,13 @@ class EventCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var attendButton: UIButton!
     
+    @IBOutlet weak var categoryImageView: UIImageView!
+    @IBOutlet weak var imageViewOne: UIImageView!
+    @IBOutlet weak var imageViewTwo: UIImageView!
+    @IBOutlet weak var imageViewThree: UIImageView!
+    @IBOutlet weak var imageViewFour: UIImageView!
+    @IBOutlet weak var imageViewFive: UIImageView!
+    
     var isFlipped = false
     
     override init(frame: CGRect) {
@@ -37,8 +44,13 @@ class EventCell: UICollectionViewCell {
         eventTitleLabel.hidden = true
         eventBackgroundImage.hidden = true
         imageView.hidden = true
-       
-//        imageView.layer.cornerRadius = imageView.frame.size.height / 2
+        categoryImageView.hidden = true
+            
+        imageViewOne.hidden = false
+        imageViewTwo.hidden = false
+        imageViewThree.hidden = false
+        imageViewFour.hidden = false
+        imageViewFive.hidden = false
             
         eventDateLabel.hidden = false
         eventDescriptionLabel.hidden = false
@@ -53,7 +65,13 @@ class EventCell: UICollectionViewCell {
             eventTitleLabel.hidden = false
             eventBackgroundImage.hidden = false
             imageView.hidden = false
-//            imageView.layer.cornerRadius = imageView.frame.size.height / 2
+            categoryImageView.hidden = false
+            
+            imageViewOne.hidden = true
+            imageViewTwo.hidden = true
+            imageViewThree.hidden = true
+            imageViewFour.hidden = true
+            imageViewFive.hidden = true
             
             eventDateLabel.hidden = true
             eventDescriptionLabel.hidden = true
@@ -74,9 +92,55 @@ class EventCell: UICollectionViewCell {
         
         attendButton.layer.cornerRadius = attendButton.frame.size.height / 2
         
+        eventTitleLabel.layer.cornerRadius = 15
+        eventTitleLabel.layer.masksToBounds = true
+        eventTitleLabel.layer.borderColor = UIColor.blackColor().CGColor
+        eventTitleLabel.layer.borderWidth = 1
+        
+        eventDescriptionLabel.layer.cornerRadius = 15
+        eventDescriptionLabel.layer.masksToBounds = true
+        eventDescriptionLabel.layer.borderColor = UIColor.blackColor().CGColor
+        eventDescriptionLabel.layer.borderWidth = 1
+        
+        eventDateLabel.layer.cornerRadius = 15
+        eventDateLabel.layer.masksToBounds = true
+        eventDateLabel.layer.borderColor = UIColor.blackColor().CGColor
+        eventDateLabel.layer.borderWidth = 1
+        
         eventBackgroundImage.layer.cornerRadius = 20
         eventBackgroundImage.layer.masksToBounds = true
         
+        imageViewOne.layer.cornerRadius = 15
+        imageViewOne.layer.borderColor = UIColor.blackColor().CGColor
+        imageViewOne.layer.borderWidth = 1
+        imageViewOne.layer.masksToBounds = true
+        
+        imageViewTwo.layer.cornerRadius = 15
+        imageViewTwo.layer.borderColor = UIColor.blackColor().CGColor
+        imageViewTwo.layer.borderWidth = 1
+        imageViewTwo.layer.masksToBounds = true
+        
+        imageViewThree.layer.cornerRadius = 15
+        imageViewThree.layer.borderColor = UIColor.blackColor().CGColor
+        imageViewThree.layer.borderWidth = 1
+        imageViewThree.layer.masksToBounds = true
+        
+        imageViewFour.layer.cornerRadius = 15
+        imageViewFour.layer.borderColor = UIColor.blackColor().CGColor
+        imageViewFour.layer.borderWidth = 1
+        imageViewFour.layer.masksToBounds = true
+        
+        imageViewFive.layer.cornerRadius = 15
+        imageViewFive.layer.borderColor = UIColor.blackColor().CGColor
+        imageViewFive.layer.borderWidth = 1
+        imageViewFive.layer.masksToBounds = true
+        
+        categoryImageView.layer.cornerRadius = 10
+        categoryImageView.layer.borderColor = UIColor.blackColor().CGColor
+        categoryImageView.layer.borderWidth = 1
+        categoryImageView.layer.masksToBounds = true
+        
+        categoryImageView.image = UIImage(named: "Food")
     }
 
     

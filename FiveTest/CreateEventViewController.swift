@@ -9,26 +9,28 @@
 import UIKit
 import Parse
 
-class CreateEventViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
+class CreateEventViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var event : Event?
     var chosenImage : UIImage?
     var imagePicker : UIImagePickerController?
     var eventDate : NSDate?
+    var locationString : String?
+    var categoryArray : [String]? = []
+    var categoryImages : [String]? = []
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var eventImage: UIImageView!
     @IBOutlet weak var eventTitleField: UITextField!
     @IBOutlet weak var eventDescriptionField: UITextView!
     @IBOutlet weak var eventSaveButton: UIButton!
+    @IBOutlet weak var eventCategoryField: UITextField!
     @IBOutlet weak var popImagePickerButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-    func updateWithLocation(location: String) {
-        
-        locationTextField.text = location
-    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,12 +57,30 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         eventDescriptionField.layer.borderColor = UIColor.blackColor().CGColor
         eventDescriptionField.layer.borderWidth = 2
         
-        scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: 1000)
-//        scrollView.contentSize.width = self.view.frame.size.width
-//        scrollView.contentSize.height = 1000
+        tableView.layer.cornerRadius = 10
+        tableView.layer.borderColor = UIColor.blackColor().CGColor
+        tableView.layer.borderWidth = 2
         
+        scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: 1000)
+        
+        //gets category array value
+        
+        categoryArray = ["Food & Drinks","Entertainment","Academics","Science","Sports","The Outdoors","The Arts","Other"]
+        
+        categoryImages = ["Food","Bowling","University","Physics","Exercise","Landscape","Comedy","Dice"]
+
+        // fix this eventually
+        
+        if locationString != nil {
+            
+            self.updateWithLocation(self.locationString!)
+        }
     }
     
+    func updateWithLocation(location: String) {
+        
+        locationTextField.text = locationString
+    }
     
     @IBAction func saveEvent(sender: AnyObject) {
         
@@ -85,10 +105,15 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     
     func saveEventToParse(file: PFFile) {
         
-        let event = Event(image: file, user: PFUser.currentUser()!, comment: eventDescriptionField.text, title: eventTitleField.text, date: datePicker.date)
+        let event = Event(image: file, user: PFUser.currentUser()!, comment: eventDescriptionField.text, title: eventTitleField.text, date: datePicker.date, category: eventCategoryField.text)
         
         event.saveInBackgroundWithBlock { (success, error) -> Void in
             if success {
+                
+                let relation = event.user.relationForKey("Events")
+                relation.addObject(event)
+                event.user.saveInBackground()
+                
                 var alertView = UIAlertView(title: "Event saved!", message: "Success", delegate: nil, cancelButtonTitle: "Okay!")
                 alertView.show()
             }
@@ -126,10 +151,49 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     
     func textFieldDidBeginEditing(textField: UITextField) {
         
+        if textField == eventTitleField {
+            return
+        }
+            
+        if textField == eventCategoryField {
+            self.tableView.hidden = false
+        }
+        
+        else if textField == locationTextField {
         self.performSegueWithIdentifier("locationSegue", sender: locationTextField)
+        }
         
     }
     
+    //sets up tableView
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        
+        cell.textLabel?.text = categoryArray![indexPath.row]
+        cell.imageView?.image = UIImage(named: categoryImages![indexPath.row])
+        
+        return cell
+        
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if let categories = categoryArray {
+            return categories.count
+        }
+        
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        self.eventCategoryField.text = categoryArray![indexPath.row]
+        
+        tableView.hidden = true
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -7,21 +7,40 @@
 //
 
 import UIKit
+import Parse
 
 class CalenderViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var eventsToAttend : [Event]? = []
+    var user = PFUser.currentUser()
+    var responseObjects : [AnyObject]? = []
+    
     @IBOutlet weak var eventsTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        var query = PFUser.query()
+        query?.includeKey("Events")
+        
+        query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+            
+            self.responseObjects = objects
+            
+//            self.responseObjects = query?.findObjects()
+            
+        })
+        
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        
+        user?.objectForKey("Events")
+        
+        cell.textLabel?.text 
         
         return cell
         
@@ -29,11 +48,11 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let eventsToAttend = self.eventsToAttend {
-            return eventsToAttend.count
-        }
+//        if let eventsToAttend = self.eventsToAttend {
+//            return eventsToAttend.count
+//        }
         
-        return 0
+        return responseObjects!.count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

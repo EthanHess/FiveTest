@@ -22,6 +22,12 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(named: "bar_background"),
+            forBarMetrics: UIBarMetrics.Default)
+    
+        
+        //queries for parse objects (events)
+        
         let query = Event.query()
         
         query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
@@ -40,7 +46,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         layout.itemSize = CGSize(width: self.view.frame.size.width / 2.5, height: 120)
 
 //        testEvents = ["homer","marge","bart","lisa","maggie"]
-//        testImages = ["homer", "marge", "bart", "lisa", "maggie"]
+        testImages = ["homer", "marge", "bart", "lisa", "maggie"]
 
         collectionView.reloadData()
         
@@ -64,6 +70,13 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         var cell : EventCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! EventCell
         
+        //sets up swipe gesture recognizer
+        
+//        let upSwipe = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
+//        upSwipe.direction = UISwipeGestureRecognizerDirection.Up
+//        cell.addGestureRecognizer(upSwipe)
+        
+    
         //queries parse for events
         
         var event = events?[indexPath.row]
@@ -81,15 +94,22 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                     
                 }
                 
-                else {
+                else if cell.isFlipped == true {
                     
-                    let date = event?.eventDate
-                    var dateFormatter = NSDateFormatter()
-                    dateFormatter.dateFormat = "hh:mm"
-                    var dateString = dateFormatter.stringFromDate(date!)
+//                    let date = event?.eventDate
+//                    var dateFormatter = NSDateFormatter()
+//                    dateFormatter.dateFormat = "hh:mm"
+//                    var dateString = dateFormatter.stringFromDate(date!)
                     
                     cell.eventDescriptionLabel.text = event?.eventDescription
-                    cell.eventDateLabel.text = dateString
+//                    cell.eventDateLabel.text = dateString
+                    
+                    cell.imageViewOne.image = UIImage(named: self.testImages![0])
+                    cell.imageViewTwo.image = UIImage(named: self.testImages![1])
+                    cell.imageViewThree.image = UIImage(named: self.testImages![2])
+                    cell.imageViewFour.image = UIImage(named: self.testImages![3])
+                    cell.imageViewFive.image = UIImage(named: self.testImages![4])
+                    
                 }
                 
             }
@@ -125,13 +145,21 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         var cell : EventCell = collectionView.cellForItemAtIndexPath(indexPath) as! EventCell
         
+//        self.view.bringSubviewToFront(cell)
+        
         UIView.transitionWithView(cell, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromLeft, animations: { () -> Void in
             
         }) { (success) -> Void in
             
             cell.flipCell()
             
-            cell.backgroundColor = UIColor.whiteColor()
+            if cell.isFlipped == true {
+                cell.backgroundColor = UIColor.lightGrayColor()
+            }
+            
+            else if cell.isFlipped == false {
+                cell.backgroundColor = UIColor.clearColor()
+            }
             
             
         }
@@ -160,6 +188,18 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         }
     }
     
+    // remove event
+    
+    func didSwipe(sender: UISwipeGestureRecognizer) {
+        
+        let cell = sender.view as! UICollectionViewCell
+        let i = self.collectionView.indexPathForCell(cell)!.item
+        
+        //code to remove here
+        
+        self.collectionView.reloadData()
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

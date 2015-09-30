@@ -77,11 +77,14 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         var createVC = CreateEventViewController.new()
         
-        createVC.updateWithLocation(name)
+//        createVC.updateWithLocation(name)
+        
+        createVC.locationString = name
         
         //make sure this doesn't break
         
-        self.navigationController?.popToViewController(createVC, animated: true)
+//        self.navigationController?.popToViewController(createVC, animated: true)
+        self.navigationController?.pushViewController(createVC, animated: true)
         
     }
     
