@@ -15,10 +15,6 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
     var imagePicker : UIImagePickerController?
     var chosenImage : UIImage?
     var user : PFUser!
-//    var location = CLLocation()
-//    var locationManager = CLLocationManager()
-//    var longString : String?
-//    var latString : String?
     var userGeoPoint : PFGeoPoint!
     var scrollView : UIScrollView!
     

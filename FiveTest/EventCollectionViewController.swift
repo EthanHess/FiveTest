@@ -45,17 +45,12 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         layout.sectionInset = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
         layout.itemSize = CGSize(width: self.view.frame.size.width / 2.5, height: 120)
 
-//        testEvents = ["homer","marge","bart","lisa","maggie"]
-        testImages = ["homer", "marge", "bart", "lisa", "maggie"]
-
         collectionView.reloadData()
         
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-//        return testEvents!.count
-        
         if let events = self.events {
             return events.count
         }
@@ -69,6 +64,10 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         //sets up cell
         
         var cell : EventCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! EventCell
+        
+        //adds attend action
+        
+        cell.attendButton.addTarget(self, action: "buttonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         
         //sets up swipe gesture recognizer
         
@@ -92,6 +91,25 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                     
                 cell.imageView.image = UIImage(named: "homer")
                     
+                //sets correct category for cell image
+                
+                    if event?.category == "" {
+                        
+                        cell.categoryImageView.image = nil
+                    }
+                    
+                    if event?.category == "The Arts" {
+                    
+                        cell.categoryImageView.image = UIImage(named: "University")
+                    }
+                    
+                    if event?.category == "The Outdoors" {
+                        
+                        cell.categoryImageView.image = UIImage(named: "Landscape")
+                    }
+                    
+                    //TODO finish categories
+                
                 }
                 
                 else if cell.isFlipped == true {
@@ -104,14 +122,16 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                     cell.eventDescriptionLabel.text = event?.eventDescription
 //                    cell.eventDateLabel.text = dateString
                     
-                    cell.imageViewOne.image = UIImage(named: self.testImages![0])
-                    cell.imageViewTwo.image = UIImage(named: self.testImages![1])
-                    cell.imageViewThree.image = UIImage(named: self.testImages![2])
-                    cell.imageViewFour.image = UIImage(named: self.testImages![3])
-                    cell.imageViewFive.image = UIImage(named: self.testImages![4])
+//                    cell.imageViewOne.image = UIImage(named: self.testImages![0])
+//                    cell.imageViewTwo.image = UIImage(named: self.testImages![1])
+//                    cell.imageViewThree.image = UIImage(named: self.testImages![2])
+//                    cell.imageViewFour.image = UIImage(named: self.testImages![3])
+//                    cell.imageViewFive.image = UIImage(named: self.testImages![4])
+                    
+                    //manually gets index path of button in cell
+                    
                     
                 }
-                
             }
         })
         
@@ -134,6 +154,12 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
 //        })
         
         cell.layer.cornerRadius = 20
+        
+//        var subviews : NSArray = cell.contentView.subviews
+//        
+//        for view in subviews {
+//            view.removeFromSuperview()
+//        }
         
         return cell
         
@@ -166,27 +192,91 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
     }
     
-    @IBAction func popAlertView(sender: AnyObject) {
+    //get index path of button
+    
+    func buttonTapped(sender: AnyObject) {
         
-        var alertViewController = UIAlertController(title: "Attend event?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
         
-        alertViewController.addAction(UIAlertAction(title: "Yes!", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            
-            
-            
-            // save event to array of events of user
-        }))
         
-        alertViewController.addAction(UIAlertAction(title: "No thanks", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
-            
-            
-        }))
+        let button = sender as! UIButton
+        let view = button.superview
+        let cell = view?.superview as! EventCell
+        let indexPath = collectionView.indexPathForCell(cell)
         
-        self.presentViewController(alertViewController, animated: true) { () -> Void in
+        print(indexPath)
+        if let indexPath = indexPath {
+            if let event = events?[indexPath.row] {
+                
+                var attendees = [String]()
+                if let attendeesTmp = event["attendees"] as?[String] {
+                    attendees = attendeesTmp;
+                }
+                if let objId = PFUser.currentUser()?.objectId {
+                    var found = false
+                    for objIdd in attendees {
+                        if objIdd == objId {
+                            found = true
+                            break;
+                        }
+                    }
+                    if !found {
+                        attendees.append(objId)
+                        event["attendees"] = attendees;
+                        event.saveInBackground()
+                    }
+                }
+                
+                if let user = PFUser.currentUser() {
+                    var eventsAttending = [String]()
+                    if let eventsAttendingTmp = user["eventsToAttend"] as?[String] {
+                        eventsAttending = eventsAttendingTmp;
+                    }
+                    if let eventId = event.objectId {
+                        var found = false
+                        for eventIdd in eventsAttending {
+                            if eventIdd == eventId {
+                                found = true
+                                break;
+                            }
+                        }
+                        if !found {
+                        eventsAttending.append(eventId)
+                        user["eventsToAttend"] = eventsAttending;
+                        user.saveInBackground()
+                        }
+                    }
+                }
+            }
             
-            // finish up here
         }
+        
+        
+        
     }
+    
+    //pop alert through storyboards
+    
+//    @IBAction func popAlertView(sender: AnyObject) {
+//        
+//        var alertViewController = UIAlertController(title: "Attend event?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+//        
+//        alertViewController.addAction(UIAlertAction(title: "Yes!", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+//            
+//            
+//            
+//            // save event to array of events of user
+//        }))
+//        
+//        alertViewController.addAction(UIAlertAction(title: "No thanks", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+//            
+//            
+//        }))
+//        
+//        self.presentViewController(alertViewController, animated: true) { () -> Void in
+//            
+//            // finish up here
+//        }
+//    }
     
     // remove event
     
@@ -194,6 +284,8 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         let cell = sender.view as! UICollectionViewCell
         let i = self.collectionView.indexPathForCell(cell)!.item
+        
+        
         
         //code to remove here
         
@@ -219,34 +311,4 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
 
 }
 
-// test images
 
-//        cell.eventTitleLabel.text = testEvents?[indexPath.row]
-//        cell.eventBackgroundImage.image = UIImage(named: testImages![indexPath.row])
-
-//        SWITCH TESTING
-
-//        switch indexPath.row {
-//
-//        case 0:
-//            cell.backgroundColor = UIColor.redColor()
-//
-//        case 1:
-//            cell.backgroundColor = UIColor.yellowColor()
-//
-//        case 2:
-//            cell.backgroundColor = UIColor.greenColor()
-//
-//        case 3:
-//            cell.backgroundColor = UIColor.blackColor()
-//
-//        case 4:
-//            cell.backgroundColor = UIColor.orangeColor()
-//
-//        default:
-//
-//            break
-//
-//        }
-
-//        cell.userImageView.image = UIImage(named: self.testImages![indexPath.row])

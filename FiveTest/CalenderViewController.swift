@@ -20,16 +20,27 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var query = PFUser.query()
-        query?.includeKey("Events")
-        
-        query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
-            
-            self.responseObjects = objects
-            
-//            self.responseObjects = query?.findObjects()
-            
-        })
+//        var query = PFUser.query()
+//        
+//        query?.includeKey("Events")
+
+        if let events = PFUser.currentUser()?["eventsToAttend"] as? [String] {
+        self.responseObjects = [Event]()
+        for eventId in events {
+            if let event = PFObject(withoutDataWithClassName: "Event", objectId: eventId) as? Event {
+            self.responseObjects?.append(event)
+            }
+        }
+        }
+//        let obj = query?.getFirstObject()?.objectForKey("Events")
+//        
+//        query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+//            
+//            self.responseObjects = objects
+//            
+////            self.responseObjects = query?.findObjects()
+//            
+//        })
         
         
     }
@@ -38,9 +49,11 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
         
         var cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         
-        user?.objectForKey("Events")
+//        user?.objectForKey("Events")
         
-        cell.textLabel?.text 
+        var event : Event = self.responseObjects![indexPath.row] as! Event
+        
+        cell.textLabel?.text = event.eventTitle
         
         return cell
         

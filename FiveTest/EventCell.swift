@@ -140,7 +140,7 @@ class EventCell: UICollectionViewCell {
         categoryImageView.layer.borderWidth = 1
         categoryImageView.layer.masksToBounds = true
         
-        categoryImageView.image = UIImage(named: "Food")
+//        categoryImageView.image = UIImage(named: "Food")
     }
 
     
