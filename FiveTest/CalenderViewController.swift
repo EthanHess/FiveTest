@@ -16,13 +16,10 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     var responseObjects : [AnyObject]? = []
     
     @IBOutlet weak var eventsTableView: UITableView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        var query = PFUser.query()
-//        
-//        query?.includeKey("Events")
 
         if let events = PFUser.currentUser()?["eventsToAttend"] as? [String] {
         self.responseObjects = [Event]()
@@ -32,28 +29,27 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
         }
-//        let obj = query?.getFirstObject()?.objectForKey("Events")
-//        
-//        query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
-//            
-//            self.responseObjects = objects
-//            
-////            self.responseObjects = query?.findObjects()
-//            
-//        })
-        
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        
-//        user?.objectForKey("Events")
+        var cell : EventCellTwo = tableView.dequeueReusableCellWithIdentifier("cell") as! EventCellTwo
         
         var event : Event = self.responseObjects![indexPath.row] as! Event
         
-        cell.textLabel?.text = event.eventTitle
+//        cell.textLabel?.text = event.eventTitle
+        
+        event.eventImage.getDataInBackgroundWithBlock { (data, error) -> Void in
+            
+            if let data = data, image = UIImage(data: data) {
+                
+                cell.eventImageView.image = image
+                cell.eventTitleLabel.text = event.eventTitle
+            }
+            
+        }
+        
+        
         
         return cell
         
@@ -61,17 +57,50 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        if let eventsToAttend = self.eventsToAttend {
-//            return eventsToAttend.count
-//        }
+        if (segmentedControl.selectedSegmentIndex == 0) {
         
         return responseObjects!.count
+            
+        }
+        
+        else if (segmentedControl.selectedSegmentIndex == 1) {
+        
+        return 0
+            
+        }
+        
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        return 300
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        // pop alert view
+    }
+    
+    func popAlertView(event: Event) {
+        
+    
         
     }
+    
+    @IBAction func segmentSelected(sender: UISegmentedControl) {
+        
+        if (sender == 0) {
+            
+            eventsTableView.reloadData()
+        }
+        
+        if (sender == 1) {
+            
+            eventsTableView.reloadData()
+        }
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

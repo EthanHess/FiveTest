@@ -128,8 +128,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
 //                    cell.imageViewFour.image = UIImage(named: self.testImages![3])
 //                    cell.imageViewFive.image = UIImage(named: self.testImages![4])
                     
-                    //manually gets index path of button in cell
-                    
                     
                 }
             }
@@ -195,8 +193,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     //get index path of button
     
     func buttonTapped(sender: AnyObject) {
-        
-        
         
         let button = sender as! UIButton
         let view = button.superview
