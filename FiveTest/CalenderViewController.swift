@@ -33,9 +33,9 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : EventCellTwo = tableView.dequeueReusableCellWithIdentifier("cell") as! EventCellTwo
+        let cell : EventCellTwo = tableView.dequeueReusableCellWithIdentifier("cell") as! EventCellTwo
         
-        var event : Event = self.responseObjects![indexPath.row] as! Event
+        let event : Event = self.responseObjects![indexPath.row] as! Event
         
 //        cell.textLabel?.text = event.eventTitle
         

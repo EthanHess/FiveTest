@@ -127,12 +127,12 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
         
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return attributesList
     }
     
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath)
-        -> UICollectionViewLayoutAttributes! {
+        -> UICollectionViewLayoutAttributes? {
             return attributesList[indexPath.row]
     }
     

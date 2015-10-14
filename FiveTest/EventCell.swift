@@ -33,7 +33,7 @@ class EventCell: UICollectionViewCell {
         
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -82,7 +82,8 @@ class EventCell: UICollectionViewCell {
         }
     }
     
-    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes!) {
+    override func applyLayoutAttributes(layoutAttributes: (UICollectionViewLayoutAttributes)) {
+        
         super.applyLayoutAttributes(layoutAttributes)
         let circularlayoutAttributes = layoutAttributes as! CollectionViewLayoutAttributes
         self.layer.anchorPoint = circularlayoutAttributes.anchorPoint

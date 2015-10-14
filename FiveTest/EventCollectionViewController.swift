@@ -37,7 +37,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                 self.collectionView.reloadData()
             }
             else if let error = error {
-                println("error: \(error.localizedDescription)")
+                print("error: \(error.localizedDescription)")
             }
         })
         
@@ -63,7 +63,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         //sets up cell
         
-        var cell : EventCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! EventCell
+        let cell : EventCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! EventCell
         
         //adds attend action
         
@@ -78,7 +78,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     
         //queries parse for events
         
-        var event = events?[indexPath.row]
+        let event = events?[indexPath.row]
         
         event?.eventImage.getDataInBackgroundWithBlock({ (data, error) -> Void in
             
@@ -167,7 +167,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         //flip cell when selected
         
-        var cell : EventCell = collectionView.cellForItemAtIndexPath(indexPath) as! EventCell
+        let cell : EventCell = collectionView.cellForItemAtIndexPath(indexPath) as! EventCell
         
 //        self.view.bringSubviewToFront(cell)
         
@@ -199,87 +199,84 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         let cell = view?.superview as! EventCell
         let indexPath = collectionView.indexPathForCell(cell)
         
-        print(indexPath)
+        //        print(indexPath)
+        
         if let indexPath = indexPath {
             if let event = events?[indexPath.row] {
                 
-                var attendees = [String]()
-                if let attendeesTmp = event["attendees"] as?[String] {
-                    attendees = attendeesTmp;
-                }
-                if let objId = PFUser.currentUser()?.objectId {
-                    var found = false
-                    for objIdd in attendees {
-                        if objIdd == objId {
-                            found = true
-                            break;
-                        }
-                    }
-                    if !found {
-                        attendees.append(objId)
-                        event["attendees"] = attendees;
-                        event.saveInBackground()
-                    }
-                }
+                //pops alert vc
                 
-                if let user = PFUser.currentUser() {
-                    var eventsAttending = [String]()
-                    if let eventsAttendingTmp = user["eventsToAttend"] as?[String] {
-                        eventsAttending = eventsAttendingTmp;
+                let alertController : UIAlertController = UIAlertController(title: event.eventTitle, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+                
+                alertController.addAction(cancelAction)
+                
+                let saveUserToEvent = UIAlertAction(title: "Yes", style: .Default) { _ in
+                    
+                    
+                    
+                    var attendees = [String]()
+                    if let attendeesTmp = event["attendees"] as?[String] {
+                        attendees = attendeesTmp;
                     }
-                    if let eventId = event.objectId {
+                    if let objId = PFUser.currentUser()?.objectId {
                         var found = false
-                        for eventIdd in eventsAttending {
-                            if eventIdd == eventId {
+                        for objIdd in attendees {
+                            if objIdd == objId {
                                 found = true
                                 break;
                             }
                         }
                         if !found {
-                        eventsAttending.append(eventId)
-                        user["eventsToAttend"] = eventsAttending;
-                        user.saveInBackground()
+                            attendees.append(objId)
+                            event["attendees"] = attendees;
+                            event.saveInBackground()
                         }
                     }
+                    
+                    if let user = PFUser.currentUser() {
+                        var eventsAttending = [String]()
+                        if let eventsAttendingTmp = user["eventsToAttend"] as?[String] {
+                            eventsAttending = eventsAttendingTmp;
+                        }
+                        if let eventId = event.objectId {
+                            var found = false
+                            for eventIdd in eventsAttending {
+                                if eventIdd == eventId {
+                                    found = true
+                                    break;
+                                }
+                            }
+                            if !found {
+                                eventsAttending.append(eventId)
+                                user["eventsToAttend"] = eventsAttending;
+                                user.saveInBackground()
+                            }
+                            
+                        }
+                    }
+                    
+                    
                 }
+                
+                alertController.addAction(saveUserToEvent)
+                
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
             }
             
         }
-        
-        
-        
     }
     
-    //pop alert through storyboards
-    
-//    @IBAction func popAlertView(sender: AnyObject) {
-//        
-//        var alertViewController = UIAlertController(title: "Attend event?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-//        
-//        alertViewController.addAction(UIAlertAction(title: "Yes!", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-//            
-//            
-//            
-//            // save event to array of events of user
-//        }))
-//        
-//        alertViewController.addAction(UIAlertAction(title: "No thanks", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
-//            
-//            
-//        }))
-//        
-//        self.presentViewController(alertViewController, animated: true) { () -> Void in
-//            
-//            // finish up here
-//        }
-//    }
     
     // remove event
     
     func didSwipe(sender: UISwipeGestureRecognizer) {
         
         let cell = sender.view as! UICollectionViewCell
-        let i = self.collectionView.indexPathForCell(cell)!.item
+        _ = self.collectionView.indexPathForCell(cell)!.item
         
         
         

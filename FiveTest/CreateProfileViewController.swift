@@ -30,7 +30,7 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
         
         user = PFUser.currentUser()
 
-        imagePicker = UIImagePickerController.new()
+        imagePicker = UIImagePickerController()
         imagePicker?.delegate = self
         imagePicker?.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         imagePicker?.allowsEditing = false
@@ -97,7 +97,7 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
             
             else if let error = error {
                 
-                println("error: \(error.localizedDescription)")
+                print("error: \(error.localizedDescription)")
             }
             
         }
@@ -107,9 +107,9 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
     
     @IBAction func saveProfile(sender: AnyObject) {
         
-        let pictureData = UIImagePNGRepresentation(profileImageView.image)
-        
-        let file = PFFile(name: "image", data: pictureData)
+        let pictureData = UIImagePNGRepresentation(profileImageView.image!)
+      
+        let file = PFFile(name: "image", data: pictureData!)
         
         file.saveInBackgroundWithBlock { (success, error) -> Void in
             
@@ -118,7 +118,7 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
             }
                 
             else if let error = error {
-                println("error: \(error.localizedDescription)")
+                print("error: \(error.localizedDescription)")
             }
             
         }
@@ -135,11 +135,11 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
         profile.saveInBackgroundWithBlock { (success, error) -> Void in
             
             if success {
-                var alertView = UIAlertView(title: "Profile saved!", message: "Success", delegate: nil, cancelButtonTitle: "Okay!")
+                let alertView = UIAlertView(title: "Profile saved!", message: "Success", delegate: nil, cancelButtonTitle: "Okay!")
                 alertView.show()
             }
             else {
-                println("error: \(error?.localizedDescription)")
+                print("error: \(error?.localizedDescription)")
             }
         }
     }

@@ -36,7 +36,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func SignIn(sender: AnyObject) {
         
-        PFUser.logInWithUsernameInBackground(self.usernameTextField.text, password: self.passwordTextField.text) { (user, error) -> Void in
+        PFUser.logInWithUsernameInBackground(self.usernameTextField.text!, password: self.passwordTextField.text!) { (user, error) -> Void in
             
             if user != nil {
                 
@@ -45,7 +45,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             else {
                 
-                var alertView = UIAlertView()
+                let alertView = UIAlertView()
                 
                 alertView.title = "Error!"
                 alertView.message = "User not found"
@@ -63,7 +63,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         activityIndicatorView.hidden = false
         activityIndicatorView.startAnimating()
         
-        var user = PFUser()
+        let user = PFUser()
         
         user.username = self.usernameTextField.text
         user.password = self.passwordTextField.text
@@ -102,7 +102,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         let sendAction = UIAlertAction(title: "Send", style: UIAlertActionStyle.Default) { _ in
             // below is how you access the textField
-            let emailTextField = alertController.textFields![0] as! UITextField
+            let emailTextField = alertController.textFields![0] 
             if let email = emailTextField.text {
                 PFUser.requestPasswordResetForEmailInBackground(email)
             }

@@ -24,22 +24,29 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var url = NSURL(string: "https://api.foursquare.com/v2/venues/explore?client_id=\(clientID)&client_secret=\(clientSecret)&v=\(foursquareVersion)&ll=\(latitudeLong)&section=\(section)")!
-        var request = NSURLRequest(URL: url)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            
+        let url = NSURL(string: "https://api.foursquare.com/v2/venues/explore?client_id=\(clientID)&client_secret=\(clientSecret)&v=\(foursquareVersion)&ll=\(latitudeLong)&section=\(section)")!
+        let request = NSURLRequest(URL: url)
+        
+//        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) in
+        
             // Dictionaries are like ogres. Unwrap the layers.
-            var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as! NSDictionary
-            var response = dictionary["response"] as! NSDictionary
-            var groups = response["groups"] as! NSArray
+            
+//            var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as! NSDictionary
+            
+            let dictionary = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+            
+            let response = dictionary["response"] as! NSDictionary
+            let groups = response["groups"] as! NSArray
             if groups.count > 0 {
-                var group = groups[0] as! NSDictionary // This should grab the "recommended" group
-                var items = group["items"] as! NSArray
+                let group = groups[0] as! NSDictionary // This should grab the "recommended" group
+                _ = group["items"] as! NSArray
                 self.responseItems = group["items"] as! [NSDictionary]
                 
                 for item in self.responseItems {
-                    var venue = item["venue"] as! NSDictionary
-                    var name = venue["name"] as! String
+                    let venue = item["venue"] as! NSDictionary
+                    _ = venue["name"] as! String
                     self.tableView.reloadData()
                     
                     
@@ -52,11 +59,11 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! LocationCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! LocationCell
         
-        var item = self.responseItems[indexPath.row]
-        var venue = item["venue"] as! NSDictionary
-        var name = venue["name"] as! String
+        let item = self.responseItems[indexPath.row]
+        let venue = item["venue"] as! NSDictionary
+        let name = venue["name"] as! String
         cell.textLabel?.text = name
         
         return cell
@@ -71,11 +78,11 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        var item = self.responseItems[indexPath.row]
-        var venue = item["venue"] as! NSDictionary
-        var name = venue["name"] as! String
+        let item = self.responseItems[indexPath.row]
+        let venue = item["venue"] as! NSDictionary
+        let name = venue["name"] as! String
         
-        var createVC = CreateEventViewController.new()
+        let createVC = CreateEventViewController()
         
 //        createVC.updateWithLocation(name)
         

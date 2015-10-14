@@ -35,7 +35,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        imagePicker = UIImagePickerController.new()
+        imagePicker = UIImagePickerController()
         imagePicker?.delegate = self
         imagePicker?.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         imagePicker?.allowsEditing = false
@@ -84,9 +84,9 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func saveEvent(sender: AnyObject) {
         
-        let pictureData = UIImagePNGRepresentation(eventImage.image)
+        let pictureData = UIImagePNGRepresentation(eventImage.image!)
         
-        let file = PFFile(name: "eventImage", data: pictureData)
+        let file = PFFile(name: "eventImage", data: pictureData!)
         
         file.saveInBackgroundWithBlock { (succeeded, error) -> Void in
             
@@ -95,7 +95,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
             }
             
             else if let error = error {
-                println("error: \(error.localizedDescription)")
+                print("error: \(error.localizedDescription)")
             }
             
         }
@@ -105,7 +105,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     
     func saveEventToParse(file: PFFile) {
         
-        let event = Event(image: file, user: PFUser.currentUser()!, comment: eventDescriptionField.text, title: eventTitleField.text, date: datePicker.date, category: eventCategoryField.text)
+        let event = Event(image: file, user: PFUser.currentUser()!, comment: eventDescriptionField.text, title: eventTitleField.text, date: datePicker.date, category: eventCategoryField.text!)
         
         event.saveInBackgroundWithBlock { (success, error) -> Void in
             if success {
@@ -114,11 +114,11 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
                 relation.addObject(event)
                 event.user.saveInBackground()
                 
-                var alertView = UIAlertView(title: "Event saved!", message: "Success", delegate: nil, cancelButtonTitle: "Okay!")
+                let alertView = UIAlertView(title: "Event saved!", message: "Success", delegate: nil, cancelButtonTitle: "Okay!")
                 alertView.show()
             }
             else {
-                println("error: \(error?.localizedDescription)")
+                print("error: \(error?.localizedDescription)")
             }
             
         }
@@ -169,7 +169,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
         
         cell.textLabel?.text = categoryArray![indexPath.row]
         cell.imageView?.image = UIImage(named: categoryImages![indexPath.row])
