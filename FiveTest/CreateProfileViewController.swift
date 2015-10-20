@@ -10,12 +10,10 @@ import UIKit
 import Parse
 import CoreLocation
 
-class CreateProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, CLLocationManagerDelegate {
+class CreateProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     var imagePicker : UIImagePickerController?
     var chosenImage : UIImage?
-    var user : PFUser!
-    var userGeoPoint : PFGeoPoint!
     var scrollView : UIScrollView!
     
     @IBOutlet weak var profileImageView: UIImageView!
@@ -27,9 +25,7 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
         super.viewDidLoad()
         
         displayName.delegate = self
-        
-        user = PFUser.currentUser()
-
+    
         imagePicker = UIImagePickerController()
         imagePicker?.delegate = self
         imagePicker?.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
@@ -50,51 +46,37 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
         imageButton.layer.borderColor = UIColor.blackColor().CGColor
         imageButton.layer.borderWidth = 2
         
-//        self.determineCurrentUserLocation()
-        
-        self.getParseGeoPoint()
-        
     }
     
-//    func determineCurrentUserLocation() {
-//        
-////        locationManager = CLLocationManager()
-////        locationManager.delegate = self
-////        locationManager.requestAlwaysAuthorization()
-////        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-////        locationManager.startUpdatingLocation()
-//        
-//
-//    }
+    // saves images and info to user class instead of profile class
     
-//    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-//        
-//        location = (locations[0] as? CLLocation)!
-//        let long = location.coordinate.longitude
-//        let lat = location.coordinate.latitude
-//        
-//        //converts points into strings if needed
-//        
-//        longString = String(format: "@%", long)
-//        latString = String(format: "@%", lat)
-//        
-//        //grabs value of longitute and latitude
-//        
-//        let point = PFGeoPoint(latitude: lat, longitude:long)
-//        
-//        println("\(long, lat)")
-//        
-//    }
-    
-    func getParseGeoPoint() {
+    @IBAction func saveUserInfo(sender: AnyObject) {
         
         PFGeoPoint.geoPointForCurrentLocationInBackground { (geoPoint: PFGeoPoint?, error: NSError?) -> Void in
             
             if (error == nil) {
                 
-            self.userGeoPoint = geoPoint
+                let user = PFUser.currentUser()
+                let pictureData = UIImagePNGRepresentation(self.profileImageView.image!)
+                let file = PFFile(data: pictureData!)
+                
+                user?.setObject(geoPoint!, forKey: "location")
+                user?.setObject(file, forKey: "profilePicture")
+                user?.setObject(self.displayName.text!, forKey: "displayName")
+                
+                user?.saveInBackground()
+                
+                //pop success alert
+                
+                let alertController : UIAlertController = UIAlertController(title: "Profile Saved!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let cancelAction = UIAlertAction(title: "Okay", style: .Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
             }
-            
+                
             else if let error = error {
                 
                 print("error: \(error.localizedDescription)")
@@ -104,45 +86,6 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
         
     }
     
-    
-    @IBAction func saveProfile(sender: AnyObject) {
-        
-        let pictureData = UIImagePNGRepresentation(profileImageView.image!)
-      
-        let file = PFFile(name: "image", data: pictureData!)
-        
-        file.saveInBackgroundWithBlock { (success, error) -> Void in
-            
-            if !(error != nil) {
-                self.saveProfileToParse(file)
-            }
-                
-            else if let error = error {
-                print("error: \(error.localizedDescription)")
-            }
-            
-        }
-    }
-    
-    func saveProfileToParse(file: PFFile) {
-        
-        //TODO: Fix error with location
-        
-//        let profile = Profile(image: file, latitude: latString!, longitude: longString!, user: PFUser.currentUser()!, displayName: displayName.text)
-        
-        let profile = Profile(image: file, user: PFUser.currentUser()!, displayName: displayName.text, location: userGeoPoint)
-        
-        profile.saveInBackgroundWithBlock { (success, error) -> Void in
-            
-            if success {
-                let alertView = UIAlertView(title: "Profile saved!", message: "Success", delegate: nil, cancelButtonTitle: "Okay!")
-                alertView.show()
-            }
-            else {
-                print("error: \(error?.localizedDescription)")
-            }
-        }
-    }
     
     @IBAction func presentImagePicker(sender: AnyObject) {
         

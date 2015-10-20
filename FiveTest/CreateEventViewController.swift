@@ -75,6 +75,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
             
             self.updateWithLocation(self.locationString!)
         }
+        
     }
     
     func updateWithLocation(location: String) {

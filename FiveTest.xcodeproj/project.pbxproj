@@ -20,8 +20,8 @@
 		271335C81B97C3EE00D70EA3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271335C71B97C3EE00D70EA3 /* QuartzCore.framework */; };
 		271335CA1B97C3F500D70EA3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271335C91B97C3F500D70EA3 /* Security.framework */; };
 		271335CE1B97C40C00D70EA3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271335CD1B97C40C00D70EA3 /* SystemConfiguration.framework */; };
-		271335D01B97C41B00D70EA3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 271335CF1B97C41B00D70EA3 /* libz.dylib */; };
-		271335D21B97C42E00D70EA3 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 271335D11B97C42E00D70EA3 /* libsqlite3.dylib */; };
+		272CCB4A1BD57EA10010E6DD /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 272CCB491BD57EA10010E6DD /* libz.tbd */; };
+		272CCB4C1BD57EB90010E6DD /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 272CCB4B1BD57EB90010E6DD /* libsqlite3.tbd */; };
 		27C093AD1B98C5DC006C9FD4 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093AC1B98C5DC006C9FD4 /* CreateProfileViewController.swift */; };
 		27C093AF1B98C5F0006C9FD4 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093AE1B98C5F0006C9FD4 /* CreateEventViewController.swift */; };
 		27C093B11B98C604006C9FD4 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093B01B98C604006C9FD4 /* CalenderViewController.swift */; };
@@ -72,8 +72,9 @@
 		271335C71B97C3EE00D70EA3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		271335C91B97C3F500D70EA3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		271335CD1B97C40C00D70EA3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		271335CF1B97C41B00D70EA3 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		271335D11B97C42E00D70EA3 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		272CCB461BD57D290010E6DD /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		272CCB491BD57EA10010E6DD /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		272CCB4B1BD57EB90010E6DD /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		27C093AC1B98C5DC006C9FD4 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		27C093AE1B98C5F0006C9FD4 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		27C093B01B98C604006C9FD4 /* CalenderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
@@ -103,8 +104,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				271335D21B97C42E00D70EA3 /* libsqlite3.dylib in Frameworks */,
-				271335D01B97C41B00D70EA3 /* libz.dylib in Frameworks */,
+				272CCB4C1BD57EB90010E6DD /* libsqlite3.tbd in Frameworks */,
+				272CCB4A1BD57EA10010E6DD /* libz.tbd in Frameworks */,
 				271335CE1B97C40C00D70EA3 /* SystemConfiguration.framework in Frameworks */,
 				271335CA1B97C3F500D70EA3 /* Security.framework in Frameworks */,
 				27C094F81BA0E154006C9FD4 /* ParseTwitterUtils.framework in Frameworks */,
@@ -137,8 +138,6 @@
 			isa = PBXGroup;
 			children = (
 				27FD45C71BB1ECFF002BCF13 /* Podfile */,
-				271335D11B97C42E00D70EA3 /* libsqlite3.dylib */,
-				271335CF1B97C41B00D70EA3 /* libz.dylib */,
 				27C094EB1BA0E154006C9FD4 /* parse-library-1 */,
 				271335CD1B97C40C00D70EA3 /* SystemConfiguration.framework */,
 				271335C91B97C3F500D70EA3 /* Security.framework */,
@@ -255,6 +254,9 @@
 		84B258674CDBA023E3B01378 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				272CCB4B1BD57EB90010E6DD /* libsqlite3.tbd */,
+				272CCB491BD57EA10010E6DD /* libz.tbd */,
+				272CCB461BD57D290010E6DD /* libz.1.dylib */,
 				C8C92DCD547CD24D37130338 /* Pods.framework */,
 			);
 			name = Frameworks;

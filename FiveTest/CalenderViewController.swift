@@ -12,7 +12,7 @@ import Parse
 class CalenderViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var eventsToAttend : [Event]? = []
-    var user = PFUser.currentUser()
+//    var user = PFUser.currentUser()
     var responseObjects : [AnyObject]? = []
     
     @IBOutlet weak var eventsTableView: UITableView!
@@ -36,8 +36,6 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell : EventCellTwo = tableView.dequeueReusableCellWithIdentifier("cell") as! EventCellTwo
         
         let event : Event = self.responseObjects![indexPath.row] as! Event
-        
-//        cell.textLabel?.text = event.eventTitle
         
         event.eventImage.getDataInBackgroundWithBlock { (data, error) -> Void in
             

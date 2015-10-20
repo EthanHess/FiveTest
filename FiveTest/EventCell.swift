@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class EventCell: UICollectionViewCell {
     
@@ -14,22 +15,18 @@ class EventCell: UICollectionViewCell {
     @IBOutlet weak var eventBackgroundImage: UIImageView!
     @IBOutlet weak var eventDescriptionLabel: UILabel!
     @IBOutlet weak var eventDateLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var creatorImageView: UIImageView!
     @IBOutlet weak var attendButton: UIButton!
     
     @IBOutlet weak var categoryImageView: UIImageView!
-    @IBOutlet weak var imageViewOne: UIImageView!
-    @IBOutlet weak var imageViewTwo: UIImageView!
-    @IBOutlet weak var imageViewThree: UIImageView!
-    @IBOutlet weak var imageViewFour: UIImageView!
-    @IBOutlet weak var imageViewFive: UIImageView!
+    
+    @IBOutlet var imageViewArray: [UIImageView]!
+    var atendeeArray : [PFUser]!
     
     var isFlipped = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        
         
     }
 
@@ -43,18 +40,16 @@ class EventCell: UICollectionViewCell {
         
         eventTitleLabel.hidden = true
         eventBackgroundImage.hidden = true
-        imageView.hidden = true
+        creatorImageView.hidden = true
         categoryImageView.hidden = true
-            
-        imageViewOne.hidden = false
-        imageViewTwo.hidden = false
-        imageViewThree.hidden = false
-        imageViewFour.hidden = false
-        imageViewFive.hidden = false
             
         eventDateLabel.hidden = false
         eventDescriptionLabel.hidden = false
         attendButton.hidden = false
+            
+        for imageView in imageViewArray {
+            imageView.hidden = false
+        }
             
         self.isFlipped = true
             
@@ -64,18 +59,16 @@ class EventCell: UICollectionViewCell {
             
             eventTitleLabel.hidden = false
             eventBackgroundImage.hidden = false
-            imageView.hidden = false
+            creatorImageView.hidden = false
             categoryImageView.hidden = false
-            
-            imageViewOne.hidden = true
-            imageViewTwo.hidden = true
-            imageViewThree.hidden = true
-            imageViewFour.hidden = true
-            imageViewFive.hidden = true
             
             eventDateLabel.hidden = true
             eventDescriptionLabel.hidden = true
             attendButton.hidden = true
+            
+            for imageView in imageViewArray {
+                imageView.hidden = true
+            }
             
             self.isFlipped = false
             
@@ -89,7 +82,10 @@ class EventCell: UICollectionViewCell {
         self.layer.anchorPoint = circularlayoutAttributes.anchorPoint
         self.center.y += (circularlayoutAttributes.anchorPoint.y - 0.5) * CGRectGetHeight(self.bounds)
         
-        imageView.layer.cornerRadius = imageView.frame.size.height / 2
+        creatorImageView.layer.cornerRadius = creatorImageView.frame.size.height / 2
+        creatorImageView.layer.borderColor = UIColor.blackColor().CGColor
+        creatorImageView.layer.borderWidth = 1
+        creatorImageView.layer.masksToBounds = true
         
         attendButton.layer.cornerRadius = attendButton.frame.size.height / 2
         
@@ -110,39 +106,20 @@ class EventCell: UICollectionViewCell {
         
         eventBackgroundImage.layer.cornerRadius = 20
         eventBackgroundImage.layer.masksToBounds = true
-        
-        imageViewOne.layer.cornerRadius = 15
-        imageViewOne.layer.borderColor = UIColor.blackColor().CGColor
-        imageViewOne.layer.borderWidth = 1
-        imageViewOne.layer.masksToBounds = true
-        
-        imageViewTwo.layer.cornerRadius = 15
-        imageViewTwo.layer.borderColor = UIColor.blackColor().CGColor
-        imageViewTwo.layer.borderWidth = 1
-        imageViewTwo.layer.masksToBounds = true
-        
-        imageViewThree.layer.cornerRadius = 15
-        imageViewThree.layer.borderColor = UIColor.blackColor().CGColor
-        imageViewThree.layer.borderWidth = 1
-        imageViewThree.layer.masksToBounds = true
-        
-        imageViewFour.layer.cornerRadius = 15
-        imageViewFour.layer.borderColor = UIColor.blackColor().CGColor
-        imageViewFour.layer.borderWidth = 1
-        imageViewFour.layer.masksToBounds = true
-        
-        imageViewFive.layer.cornerRadius = 15
-        imageViewFive.layer.borderColor = UIColor.blackColor().CGColor
-        imageViewFive.layer.borderWidth = 1
-        imageViewFive.layer.masksToBounds = true
-        
-        categoryImageView.layer.cornerRadius = 10
-        categoryImageView.layer.borderColor = UIColor.blackColor().CGColor
-        categoryImageView.layer.borderWidth = 1
-        categoryImageView.layer.masksToBounds = true
-        
-//        categoryImageView.image = UIImage(named: "Food")
-    }
 
-    
+        
+        for imageView in imageViewArray {
+            
+            imageView.layer.cornerRadius = 15
+            imageView.layer.borderColor = UIColor.blackColor().CGColor
+            imageView.layer.borderWidth = 1
+            imageView.layer.masksToBounds = true
+        }
+        
+//        categoryImageView.layer.cornerRadius = 10
+//        categoryImageView.layer.borderColor = UIColor.blackColor().CGColor
+//        categoryImageView.layer.borderWidth = 1
+//        categoryImageView.layer.masksToBounds = true
+        
+    }
 }

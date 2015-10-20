@@ -13,10 +13,7 @@ import Parse
 class EventCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var events : [Event]? = []
-    var profiles : [Profile]? = []
-    var testEvents : [String]? = []
-    var testImages : [String]? = []
-    var user = PFUser.currentUser()
+//    var profiles : [Profile]? = []
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
@@ -75,7 +72,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
 //        upSwipe.direction = UISwipeGestureRecognizerDirection.Up
 //        cell.addGestureRecognizer(upSwipe)
         
-    
         //queries parse for events
         
         let event = events?[indexPath.row]
@@ -84,74 +80,82 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
             
             if let data = data, image = UIImage(data: data) {
                 
-                if cell.isFlipped == false {
-                
                 cell.eventBackgroundImage.image = image
                 cell.eventTitleLabel.text = event?.eventTitle
-                    
-                cell.imageView.image = UIImage(named: "homer")
-                    
-                //sets correct category for cell image
                 
-                    if event?.category == "" {
-                        
-                        cell.categoryImageView.image = nil
-                    }
-                    
-                    if event?.category == "The Arts" {
-                    
-                        cell.categoryImageView.image = UIImage(named: "University")
-                    }
-                    
-                    if event?.category == "The Outdoors" {
-                        
-                        cell.categoryImageView.image = UIImage(named: "Landscape")
-                    }
-                    
-                    //TODO finish categories
+                //gets profile picture of events creator
                 
+                if let eventCreator = event?.objectForKey("user") as? PFUser {
+                    if let creatorImage = eventCreator.objectForKey("profilePicture") as? PFFile {
+                        
+                            creatorImage.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                            
+                            cell.creatorImageView.image = UIImage(data: data!)
+                            
+                        })
+                    }
                 }
                 
-                else if cell.isFlipped == true {
+                //populates dot array with atendee profile pictured
+                
+//                let atendeeArray : [PFUser]! = event?.objectForKey("atendees") as! [PFUser]!
+//                
+//                for eventAtendee in atendeeArray {
+//                    
+//                    
+//                    
+//                }
+
+                //sets correct category for cell image
+                
+                if event?.category == "" {
+                    cell.categoryImageView.image = nil
+                }
                     
-//                    let date = event?.eventDate
-//                    var dateFormatter = NSDateFormatter()
-//                    dateFormatter.dateFormat = "hh:mm"
-//                    var dateString = dateFormatter.stringFromDate(date!)
+                if event?.category == "The Arts" {
+                    cell.categoryImageView.image = UIImage(named: "Comedy")
+                }
+                    
+                if event?.category == "The Outdoors" {
+                    cell.categoryImageView.image = UIImage(named: "Landscape")
+                }
+                
+                if event?.category == "Other" {
+                    cell.categoryImageView.image = UIImage(named: "Dice")
+                }
+                
+                if event?.category == "Sports" {
+                    cell.categoryImageView.image = UIImage(named: "Exercise")
+                }
+                
+                if event?.category == "Academics" {
+                    cell.categoryImageView.image = UIImage(named: "University")
+                }
+                
+                if event?.category == "Science" {
+                    cell.categoryImageView.image = UIImage(named: "Physics")
+                }
+                
+                if event?.category == "Entertainment" {
+                    cell.categoryImageView.image = UIImage(named: "Bowling")
+                }
+                
+                if event?.category == "Food & Drinks" {
+                    cell.categoryImageView.image = UIImage(named: "Food")
+                }
+                
+                if let date = event?.eventDate {
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
                     
                     cell.eventDescriptionLabel.text = event?.eventDescription
-//                    cell.eventDateLabel.text = dateString
-                    
-//                    cell.imageViewOne.image = UIImage(named: self.testImages![0])
-//                    cell.imageViewTwo.image = UIImage(named: self.testImages![1])
-//                    cell.imageViewThree.image = UIImage(named: self.testImages![2])
-//                    cell.imageViewFour.image = UIImage(named: self.testImages![3])
-//                    cell.imageViewFive.image = UIImage(named: self.testImages![4])
-                    
-                    
+                    cell.eventDateLabel.text = dateFormatter.stringFromDate(date)
                 }
             }
         })
         
-        
-        //query parse for profiles 
-        
-//        var profile = profiles?[indexPath.row]
-//        
-//        profile?.image.getDataInBackgroundWithBlock({ (data, error) -> Void in
-//            
-//            if let data = data, image = UIImage(data: data) {
-//                
-//                cell.imageView.image = image
-//                
-//            }
-//            
-//            else {
-//                cell.imageView.image = nil
-//            }
-//        })
-        
         cell.layer.cornerRadius = 20
+        
         
 //        var subviews : NSArray = cell.contentView.subviews
 //        
@@ -168,8 +172,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         //flip cell when selected
         
         let cell : EventCell = collectionView.cellForItemAtIndexPath(indexPath) as! EventCell
-        
-//        self.view.bringSubviewToFront(cell)
         
         UIView.transitionWithView(cell, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromLeft, animations: { () -> Void in
             
@@ -199,8 +201,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         let cell = view?.superview as! EventCell
         let indexPath = collectionView.indexPathForCell(cell)
         
-        //        print(indexPath)
-        
         if let indexPath = indexPath {
             if let event = events?[indexPath.row] {
                 
@@ -213,8 +213,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                 alertController.addAction(cancelAction)
                 
                 let saveUserToEvent = UIAlertAction(title: "Yes", style: .Default) { _ in
-                    
-                    
                     
                     var attendees = [String]()
                     if let attendeesTmp = event["attendees"] as?[String] {
