@@ -45,14 +45,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             else {
                 
-                let alertView = UIAlertView()
+                let alertController : UIAlertController = UIAlertController(title: "Error", message: "User not found", preferredStyle: UIAlertControllerStyle.Alert)
                 
-                alertView.title = "Error!"
-                alertView.message = "User not found"
-                alertView.addButtonWithTitle("Okay!")
-                
-                alertView.show()
-                
+                let cancelAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Cancel) {  _ in
+                    
+                    
+                }
+            
+                alertController.addAction(cancelAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            
             }
         }
     }
@@ -81,7 +83,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 
                 self.activityIndicatorView.stopAnimating()
                 
-                var alertView = UIAlertView(title: "Oops!", message: error?.description, delegate: nil, cancelButtonTitle: "Okay")
+                let alertController : UIAlertController = UIAlertController(title: "Oops", message: error?.description, preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let cancelAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Cancel) {  _ in
+                    
+                }
+                
+                alertController.addAction(cancelAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
             }
             
         }

@@ -21,7 +21,7 @@ class EventCell: UICollectionViewCell {
     @IBOutlet weak var categoryImageView: UIImageView!
     
     @IBOutlet var imageViewArray: [UIImageView]!
-    var atendeeArray : [PFUser]!
+//    var atendeeArray : [PFUser]!
     
     var isFlipped = false
     

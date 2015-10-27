@@ -22,6 +22,7 @@
 		271335CE1B97C40C00D70EA3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271335CD1B97C40C00D70EA3 /* SystemConfiguration.framework */; };
 		272CCB4A1BD57EA10010E6DD /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 272CCB491BD57EA10010E6DD /* libz.tbd */; };
 		272CCB4C1BD57EB90010E6DD /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 272CCB4B1BD57EB90010E6DD /* libsqlite3.tbd */; };
+		2755E0FD1BE0080F0005C19E /* LocationsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		27C093AD1B98C5DC006C9FD4 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093AC1B98C5DC006C9FD4 /* CreateProfileViewController.swift */; };
 		27C093AF1B98C5F0006C9FD4 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093AE1B98C5F0006C9FD4 /* CreateEventViewController.swift */; };
 		27C093B11B98C604006C9FD4 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093B01B98C604006C9FD4 /* CalenderViewController.swift */; };
@@ -75,6 +76,7 @@
 		272CCB461BD57D290010E6DD /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		272CCB491BD57EA10010E6DD /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		272CCB4B1BD57EB90010E6DD /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsDetailViewController.swift; sourceTree = "<group>"; };
 		27C093AC1B98C5DC006C9FD4 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		27C093AE1B98C5F0006C9FD4 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		27C093B01B98C604006C9FD4 /* CalenderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				27C093B01B98C604006C9FD4 /* CalenderViewController.swift */,
 				27C093BA1B9910DE006C9FD4 /* CircularCollectionViewLayout.swift */,
 				27C3159B1BB1EF7B008BD458 /* LocationsViewController.swift */,
+				2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */,
 				27C315A01BB2138A008BD458 /* Custom Views */,
 				27C3159F1BB21368008BD458 /* Parse Models */,
 				271335951B97C35200D70EA3 /* Main.storyboard */,
@@ -431,6 +434,7 @@
 				27C3159E1BB20708008BD458 /* LocationCell.swift in Sources */,
 				27C093B71B98C926006C9FD4 /* EventCollectionViewController.swift in Sources */,
 				271335941B97C35200D70EA3 /* ViewController.swift in Sources */,
+				2755E0FD1BE0080F0005C19E /* LocationsDetailViewController.swift in Sources */,
 				27C093AF1B98C5F0006C9FD4 /* CreateEventViewController.swift in Sources */,
 				271335921B97C35200D70EA3 /* AppDelegate.swift in Sources */,
 				27C093B31B98C80E006C9FD4 /* EventCell.swift in Sources */,

@@ -96,13 +96,21 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                     }
                 }
                 
-                //populates dot array with atendee profile pictured
+                //gets profile pictures for image view array on back of cell
                 
-//                let atendeeArray : [PFUser]! = event?.objectForKey("atendees") as! [PFUser]!
-//                
-//                for eventAtendee in atendeeArray {
+//                if let attendeeArray = event?.objectForKey("attendees") as? [PFUser] {
 //                    
-//                    
+//                    for var index = 0; index < attendeeArray.count; ++index {
+//                        var profileImageView = cell.imageViewArray[index]
+//                        var user : PFUser = attendeeArray[index] as? PFUser
+//                        
+//                        if let picture = user.objectForKey("profilePicture") as? PFFile {
+//                            
+//                            profileImageView.image = picture
+//                            
+//                            //get data in background with block then do UIImage(data: data)
+//
+//                        }
 //                    
 //                }
 

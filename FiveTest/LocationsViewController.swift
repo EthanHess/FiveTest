@@ -30,7 +30,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
 //        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
         
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) in
-        
+            
             // Dictionaries are like ogres. Unwrap the layers.
             
 //            var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as! NSDictionary
@@ -81,16 +81,17 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         let item = self.responseItems[indexPath.row]
         let venue = item["venue"] as! NSDictionary
         let name = venue["name"] as! String
+//        let lat = item["lat"] as! String
+//        let lon = item["long"] as! String
+        
+//        print("\(lat)","\(lon)","\(name)")
         
         let createVC = CreateEventViewController()
         
-//        createVC.updateWithLocation(name)
-        
         createVC.locationString = name
         
-        //make sure this doesn't break
-        
-//        self.navigationController?.popToViewController(createVC, animated: true)
+//        make sure this doesn't break
+
         self.navigationController?.pushViewController(createVC, animated: true)
         
     }
