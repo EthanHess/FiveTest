@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import Bolts
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        //Parse key
+        
         Parse.enableLocalDatastore()
         
         // Initialize Parse.
@@ -26,6 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        
+        //Google maps
+        
+        GMSServices.provideAPIKey("AIzaSyA2NwekVaQhFRGxXsT9ao-W6Neji4chYpg")
         
         return true
     }

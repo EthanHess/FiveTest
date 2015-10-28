@@ -78,23 +78,67 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let item = self.responseItems[indexPath.row]
-        let venue = item["venue"] as! NSDictionary
-        let name = venue["name"] as! String
+//        let item = self.responseItems[indexPath.row]
+//        let venue = item["venue"] as! NSDictionary
+//        let name = venue["name"] as! String
+        
+        let alertController = UIAlertController(title: "Location selected", message: "Options", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let eventVCAction = UIAlertAction(title: "Confirm location", style: UIAlertActionStyle.Default) { _ in
+            
+            // change later
+            
+//            self.storyboard?.instantiateViewControllerWithIdentifier("locationsVC")
+            
+            let viewController:CreateEventViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("locationsVC") as! CreateEventViewController
+            self.presentViewController(viewController, animated: false, completion: nil)
+        }
+        alertController.addAction(eventVCAction)
+        
+        let mapsAction = UIAlertAction(title: "Show on Map", style: UIAlertActionStyle.Default) { _ in
+            
+//            self.storyboard?.instantiateViewControllerWithIdentifier("mapVC")
+            
+            let viewController:LocationsDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapVC") as! LocationsDetailViewController
+            self.presentViewController(viewController, animated: false, completion: nil)
+        }
+        alertController.addAction(mapsAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { _ in
+            
+        }
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+        
+        
+//        self.performSegueWithIdentifier("pushToGoogleMaps", sender: self)
+        
 //        let lat = item["lat"] as! String
 //        let lon = item["long"] as! String
         
 //        print("\(lat)","\(lon)","\(name)")
         
-        let createVC = CreateEventViewController()
-        
-        createVC.locationString = name
+//        let createVC = CreateEventViewController()
+//        
+//        createVC.locationString = name
         
 //        make sure this doesn't break
 
-        self.navigationController?.pushViewController(createVC, animated: true)
+//        self.navigationController?.pushViewController(createVC, animated: true)
         
     }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        
+//        if (segue.identifier == "pushToGoogleMaps") {
+//            
+//            let ldvc : LocationsDetailViewController = segue.destinationViewController as! LocationsDetailViewController
+//            let indexPath = self.tableView.indexPathForSelectedRow
+//            
+//        }
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

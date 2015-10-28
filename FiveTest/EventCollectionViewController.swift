@@ -200,7 +200,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
     }
     
-    //get index path of button
+    //get index path of button (DON'T NEED THIS METHOD ANYMORE)
     
     func buttonTapped(sender: AnyObject) {
         
@@ -269,13 +269,34 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                 alertController.addAction(saveUserToEvent)
                 
                 
-                self.presentViewController(alertController, animated: true, completion: nil)
+//                self.presentViewController(alertController, animated: true, completion: nil)
                 
             }
             
         }
     }
     
+    //THIS METHOD TAKES BUTTONTAPPED's PLACE
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let button = sender as! UIButton
+        let view = button.superview
+        let cell = view?.superview as! EventCell
+        let indexPath = collectionView.indexPathForCell(cell)
+        
+        if let indexPath = indexPath {
+            if let event = events?[indexPath.row] {
+                
+                if (segue.identifier == "presentConfirmScreen") {
+                    
+                    let modalVC = segue.destinationViewController as! ModalViewController
+                    
+                    modalVC.event = event
+                }
+            }
+        }
+    }
     
     // remove event
     
