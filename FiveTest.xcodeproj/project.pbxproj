@@ -24,6 +24,7 @@
 		272CCB4C1BD57EB90010E6DD /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 272CCB4B1BD57EB90010E6DD /* libsqlite3.tbd */; };
 		2755E0FD1BE0080F0005C19E /* LocationsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		27B1E2031BE045C200ACA4B0 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E2021BE045C200ACA4B0 /* ModalViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		27B1E2061BE146A400ACA4B0 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E2051BE146A400ACA4B0 /* EventController.swift */; settings = {ASSET_TAGS = (); }; };
 		27C093AD1B98C5DC006C9FD4 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093AC1B98C5DC006C9FD4 /* CreateProfileViewController.swift */; };
 		27C093AF1B98C5F0006C9FD4 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093AE1B98C5F0006C9FD4 /* CreateEventViewController.swift */; };
 		27C093B11B98C604006C9FD4 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093B01B98C604006C9FD4 /* CalenderViewController.swift */; };
@@ -79,6 +80,7 @@
 		272CCB4B1BD57EB90010E6DD /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsDetailViewController.swift; sourceTree = "<group>"; };
 		27B1E2021BE045C200ACA4B0 /* ModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
+		27B1E2051BE146A400ACA4B0 /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 		27C093AC1B98C5DC006C9FD4 /* CreateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		27C093AE1B98C5F0006C9FD4 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		27C093B01B98C604006C9FD4 /* CalenderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				27C093BA1B9910DE006C9FD4 /* CircularCollectionViewLayout.swift */,
 				27C3159B1BB1EF7B008BD458 /* LocationsViewController.swift */,
 				2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */,
+				27B1E2041BE1468700ACA4B0 /* New Group */,
 				27C315A01BB2138A008BD458 /* Custom Views */,
 				27C3159F1BB21368008BD458 /* Parse Models */,
 				271335951B97C35200D70EA3 /* Main.storyboard */,
@@ -213,6 +216,14 @@
 				271335A61B97C35200D70EA3 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		27B1E2041BE1468700ACA4B0 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				27B1E2051BE146A400ACA4B0 /* EventController.swift */,
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 		27C094EB1BA0E154006C9FD4 /* parse-library-1 */ = {
@@ -433,6 +444,7 @@
 				27C094D71BA0B98D006C9FD4 /* Profile.swift in Sources */,
 				27C093B11B98C604006C9FD4 /* CalenderViewController.swift in Sources */,
 				27C093AD1B98C5DC006C9FD4 /* CreateProfileViewController.swift in Sources */,
+				27B1E2061BE146A400ACA4B0 /* EventController.swift in Sources */,
 				27C3159C1BB1EF7B008BD458 /* LocationsViewController.swift in Sources */,
 				27C093BB1B9910DE006C9FD4 /* CircularCollectionViewLayout.swift in Sources */,
 				27C3159E1BB20708008BD458 /* LocationCell.swift in Sources */,

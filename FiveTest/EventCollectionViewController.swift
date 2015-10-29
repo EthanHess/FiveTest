@@ -13,7 +13,6 @@ import Parse
 class EventCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var events : [Event]? = []
-//    var profiles : [Profile]? = []
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
@@ -164,8 +163,9 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         cell.layer.cornerRadius = 20
         
+        //not sure if necessary
         
-//        var subviews : NSArray = cell.contentView.subviews
+//        let subviews : NSArray = cell.contentView.subviews
 //        
 //        for view in subviews {
 //            view.removeFromSuperview()
@@ -188,7 +188,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
             cell.flipCell()
             
             if cell.isFlipped == true {
-                cell.backgroundColor = UIColor.lightGrayColor()
+                cell.backgroundColor = UIColor.whiteColor()
             }
             
             else if cell.isFlipped == false {

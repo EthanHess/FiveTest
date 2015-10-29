@@ -23,6 +23,7 @@ class EventCell: UICollectionViewCell {
     @IBOutlet var imageViewArray: [UIImageView]!
 //    var atendeeArray : [PFUser]!
     
+    var borderColor = UIColor(red: 0/255, green: 207/255, blue: 221/255, alpha: 1.0)
     var isFlipped = false
     
     override init(frame: CGRect) {
@@ -40,12 +41,15 @@ class EventCell: UICollectionViewCell {
         
         eventTitleLabel.hidden = true
         eventBackgroundImage.hidden = true
-        creatorImageView.hidden = true
+//        creatorImageView.hidden = true
         categoryImageView.hidden = true
             
         eventDateLabel.hidden = false
         eventDescriptionLabel.hidden = false
         attendButton.hidden = false
+            
+        self.layer.borderColor = borderColor.CGColor
+        self.layer.borderWidth = 1
             
         for imageView in imageViewArray {
             imageView.hidden = false
@@ -65,6 +69,9 @@ class EventCell: UICollectionViewCell {
             eventDateLabel.hidden = true
             eventDescriptionLabel.hidden = true
             attendButton.hidden = true
+            
+            self.layer.borderColor = UIColor.clearColor().CGColor
+            self.layer.borderWidth = 1
             
             for imageView in imageViewArray {
                 imageView.hidden = true
@@ -88,6 +95,9 @@ class EventCell: UICollectionViewCell {
         creatorImageView.layer.masksToBounds = true
         
         attendButton.layer.cornerRadius = attendButton.frame.size.height / 2
+        attendButton.layer.borderColor = borderColor.CGColor
+        attendButton.setTitleColor(borderColor, forState: UIControlState.Normal)
+        attendButton.layer.borderWidth = 1
         
         eventTitleLabel.layer.cornerRadius = 15
         eventTitleLabel.layer.masksToBounds = true
@@ -96,13 +106,16 @@ class EventCell: UICollectionViewCell {
         
         eventDescriptionLabel.layer.cornerRadius = 15
         eventDescriptionLabel.layer.masksToBounds = true
-        eventDescriptionLabel.layer.borderColor = UIColor.blackColor().CGColor
+        eventDescriptionLabel.layer.borderColor = borderColor.CGColor
         eventDescriptionLabel.layer.borderWidth = 1
+        eventDescriptionLabel.numberOfLines = 0
+        eventDescriptionLabel.textColor = borderColor
         
         eventDateLabel.layer.cornerRadius = 15
         eventDateLabel.layer.masksToBounds = true
-        eventDateLabel.layer.borderColor = UIColor.blackColor().CGColor
+        eventDateLabel.layer.borderColor = borderColor.CGColor
         eventDateLabel.layer.borderWidth = 1
+        eventDateLabel.textColor = borderColor
         
         eventBackgroundImage.layer.cornerRadius = 20
         eventBackgroundImage.layer.masksToBounds = true
@@ -111,7 +124,7 @@ class EventCell: UICollectionViewCell {
         for imageView in imageViewArray {
             
             imageView.layer.cornerRadius = 15
-            imageView.layer.borderColor = UIColor.blackColor().CGColor
+            imageView.layer.borderColor = borderColor.CGColor
             imageView.layer.borderWidth = 1
             imageView.layer.masksToBounds = true
         }

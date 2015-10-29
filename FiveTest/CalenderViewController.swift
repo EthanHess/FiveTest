@@ -12,7 +12,6 @@ import Parse
 class CalenderViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var eventsToAttend : [Event]? = []
-//    var user = PFUser.currentUser()
     var responseObjects : [AnyObject]? = []
     
     @IBOutlet weak var eventsTableView: UITableView!
@@ -25,7 +24,8 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
         self.responseObjects = [Event]()
         for eventId in events {
             if let event = PFObject(withoutDataWithClassName: "Event", objectId: eventId) as? Event {
-            self.responseObjects?.append(event)
+//            self.responseObjects?.append(event)
+                self.eventsToAttend?.append(event)
             }
         }
         }
@@ -35,7 +35,7 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let cell : EventCellTwo = tableView.dequeueReusableCellWithIdentifier("cell") as! EventCellTwo
         
-        let event : Event = self.responseObjects![indexPath.row] as! Event
+        let event : Event = self.eventsToAttend![indexPath.row] 
         
         event.eventImage.getDataInBackgroundWithBlock { (data, error) -> Void in
             
@@ -55,24 +55,61 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if (segmentedControl.selectedSegmentIndex == 0) {
+//        if (segmentedControl.selectedSegmentIndex == 0) {
+//        
+//        return responseObjects!.count
+//            
+//        }
+//        
+//        else if (segmentedControl.selectedSegmentIndex == 1) {
+//        
+//        return 0
+//            
+//        }
         
-        return responseObjects!.count
+//        if let responseObjects = self.responseObjects {
+//            
+//            return responseObjects.count
+//        }
+        
+        if let eventsToAttend = self.eventsToAttend {
             
+            return eventsToAttend.count
         }
         
-        else if (segmentedControl.selectedSegmentIndex == 1) {
-        
         return 0
-            
-        }
         
-        return 0
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        return 300
+        return 400
+    }
+    
+    @IBAction func addToCalendar(sender: AnyObject) {
+        
+        let button = sender as! UIButton
+        let view = button.superview
+        let cell = view?.superview as! EventCellTwo
+        let indexPath = eventsTableView.indexPathForCell(cell)
+        
+        if let indexPath = indexPath {
+            
+            if let eventToAttend = eventsToAttend?[indexPath.row] {
+                
+                //calendar method does nothing, fix this eventually
+                
+                EventController.sharedInstance.createEvent(eventToAttend.eventTitle!, startDate: eventToAttend.eventDate!)
+                
+                print(eventToAttend.eventTitle)
+                
+            }
+        }
+    }
+    
+    @IBAction func removeEvent(sender: AnyObject) {
+        
+        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

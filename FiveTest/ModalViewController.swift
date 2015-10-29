@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import EventKit
 
 class ModalViewController: UIViewController {
     
@@ -17,8 +18,10 @@ class ModalViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(event)
-        
+//        print(event)
+        saveButton.layer.cornerRadius = 10
+        saveButton.layer.borderWidth = 1
+        saveButton.layer.borderColor = UIColor.whiteColor().CGColor
         
     }
 
@@ -68,6 +71,13 @@ class ModalViewController: UIViewController {
         
     }
     
+    
+    @IBAction func addToCalendar(sender: AnyObject) {
+        
+        EventController.sharedInstance.createEvent(event.eventTitle!, startDate: event.eventDate!)
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
