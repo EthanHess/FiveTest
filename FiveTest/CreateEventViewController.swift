@@ -89,10 +89,10 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         
         let file = PFFile(name: "eventImage", data: pictureData!)
         
-        file.saveInBackgroundWithBlock { (succeeded, error) -> Void in
+        file!.saveInBackgroundWithBlock { (succeeded, error) -> Void in
             
             if !(error != nil) {
-                self.saveEventToParse(file)
+                self.saveEventToParse(file!)
             }
             
             else if let error = error {

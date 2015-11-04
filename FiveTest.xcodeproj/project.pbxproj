@@ -43,6 +43,7 @@
 		27C3159C1BB1EF7B008BD458 /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C3159B1BB1EF7B008BD458 /* LocationsViewController.swift */; };
 		27C3159E1BB20708008BD458 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C3159D1BB20708008BD458 /* LocationCell.swift */; };
 		27C37A8C1BC46E4100695FC5 /* EventCellTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C37A8B1BC46E4100695FC5 /* EventCellTwo.swift */; };
+		27D6A6441BE94EC0005383D8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D6A6431BE94EC0005383D8 /* ProfileViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		27FD45C81BB1ECFF002BCF13 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 27FD45C71BB1ECFF002BCF13 /* Podfile */; };
 		EED1A70A031D6FAB609DE1FB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8C92DCD547CD24D37130338 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -99,6 +100,7 @@
 		27C3159B1BB1EF7B008BD458 /* LocationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsViewController.swift; sourceTree = "<group>"; };
 		27C3159D1BB20708008BD458 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
 		27C37A8B1BC46E4100695FC5 /* EventCellTwo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCellTwo.swift; sourceTree = "<group>"; };
+		27D6A6431BE94EC0005383D8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		27FD45C71BB1ECFF002BCF13 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8C92D8253861B693AA32C964 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8D7311EB91287F89EE08F26E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				27C093BA1B9910DE006C9FD4 /* CircularCollectionViewLayout.swift */,
 				27C3159B1BB1EF7B008BD458 /* LocationsViewController.swift */,
 				2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */,
+				27D6A6431BE94EC0005383D8 /* ProfileViewController.swift */,
 				27B1E2041BE1468700ACA4B0 /* New Group */,
 				27C315A01BB2138A008BD458 /* Custom Views */,
 				27C3159F1BB21368008BD458 /* Parse Models */,
@@ -445,6 +448,7 @@
 				27C093B11B98C604006C9FD4 /* CalenderViewController.swift in Sources */,
 				27C093AD1B98C5DC006C9FD4 /* CreateProfileViewController.swift in Sources */,
 				27B1E2061BE146A400ACA4B0 /* EventController.swift in Sources */,
+				27D6A6441BE94EC0005383D8 /* ProfileViewController.swift in Sources */,
 				27C3159C1BB1EF7B008BD458 /* LocationsViewController.swift in Sources */,
 				27C093BB1B9910DE006C9FD4 /* CircularCollectionViewLayout.swift in Sources */,
 				27C3159E1BB20708008BD458 /* LocationCell.swift in Sources */,

@@ -31,6 +31,8 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) in
             
+            
+            
             // Dictionaries are like ogres. Unwrap the layers.
             
 //            var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as! NSDictionary
@@ -47,6 +49,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
                 for item in self.responseItems {
                     let venue = item["venue"] as! NSDictionary
                     _ = venue["name"] as! String
+                    
                     self.tableView.reloadData()
                     
                     
@@ -111,7 +114,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         self.presentViewController(alertController, animated: true, completion: nil)
         
-        
+
         
 //        self.performSegueWithIdentifier("pushToGoogleMaps", sender: self)
         

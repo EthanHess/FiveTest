@@ -86,7 +86,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                 
                 if let eventCreator = event?.objectForKey("user") as? PFUser {
                     if let creatorImage = eventCreator.objectForKey("profilePicture") as? PFFile {
-                        
                             creatorImage.getDataInBackgroundWithBlock({ (data, error) -> Void in
                             
                             cell.creatorImageView.image = UIImage(data: data!)
@@ -97,32 +96,45 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                 
                 //gets profile pictures for image view array on back of cell
                 
-//                if let attendeeArray = event?.objectForKey("attendees") as? [PFUser] {
-//                    
-//                    for var index = 0; index < attendeeArray.count; ++index {
-//                        var profileImageView = cell.imageViewArray[index]
-//                        var user : PFUser = attendeeArray[index] as? PFUser
-//                        
-//                        if let picture = user.objectForKey("profilePicture") as? PFFile {
-//                            
-//                            profileImageView.image = picture
-//                            
-//                            //get data in background with block then do UIImage(data: data)
-//
-//                        }
-//                    
-//                }
+                if let attendeeArray = event?.objectForKey("attendees") as? [PFUser] {
+                    
+                    for var index = 0; index < attendeeArray.count; ++index {
+                        let profileImageView = cell.imageViewArray[index]
+                        let usr : PFUser = (attendeeArray[index] as PFUser?)!
+                        
+                        //                        if let picture = usr.objectForKey("profilePicture") as? PFFile {
+                        
+                        usr.fetchIfNeededInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+                            if let picture = object!.objectForKey("profilePicture") as? PFFile {
+                                picture.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                                    profileImageView.image = UIImage(data: data!)
+                                })
+                            }
+                        })
+                        
+                        //                            picture.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                        //
+                        //                                profileImageView.image = UIImage(data: data!)
+                        //
+                        //                            })
+                        
+                        //                        }
+                        
+                    }
+                    
+                }
+
 
                 //sets correct category for cell image
                 
                 if event?.category == "" {
                     cell.categoryImageView.image = nil
                 }
-                    
+                
                 if event?.category == "The Arts" {
                     cell.categoryImageView.image = UIImage(named: "Comedy")
                 }
-                    
+                
                 if event?.category == "The Outdoors" {
                     cell.categoryImageView.image = UIImage(named: "Landscape")
                 }

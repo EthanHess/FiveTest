@@ -12,7 +12,8 @@ import Parse
 class CalenderViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var eventsToAttend : [Event]? = []
-    var responseObjects : [AnyObject]? = []
+    var eventsCreated : [Event]? = []
+//    var responseObjects : [AnyObject]? = []
     
     @IBOutlet weak var eventsTableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -21,14 +22,27 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
 
         if let events = PFUser.currentUser()?["eventsToAttend"] as? [String] {
-        self.responseObjects = [Event]()
+        self.eventsToAttend = [Event]()
         for eventId in events {
             if let event = PFObject(withoutDataWithClassName: "Event", objectId: eventId) as? Event {
-//            self.responseObjects?.append(event)
+
                 self.eventsToAttend?.append(event)
             }
         }
         }
+        
+//        if let eventsCreated = PFUser.currentUser()?["Events"] as? [Event] {
+//            
+//            self.eventsCreated = [Event]()
+//            
+//            for eventCreated in eventsCreated {
+//                
+//                if let eventC = PFObject(withoutDataWithClassName: "Event", objectId: eventsCreated) as? Event {
+//                    
+//                    self.eventsCreated?.append(eventC)
+//                }
+//            }
+//        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

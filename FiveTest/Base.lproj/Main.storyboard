@@ -482,6 +482,24 @@
             </objects>
             <point key="canvasLocation" x="-20" y="1163"/>
         </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="47J-5H-Y7g">
+            <objects>
+                <viewController id="EDD-Ae-w57" customClass="ProfileViewController" customModule="FiveTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="srW-fI-2Ps"/>
+                        <viewControllerLayoutGuide type="bottom" id="wre-Yg-hoM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dgg-Ai-owg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Dy-xw-tBJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-20" y="-837"/>
+        </scene>
         <!--Events-->
         <scene sceneID="1eg-0m-C1K">
             <objects>
