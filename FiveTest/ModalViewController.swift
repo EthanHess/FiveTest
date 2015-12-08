@@ -27,8 +27,8 @@ class ModalViewController: UIViewController {
 
     @IBAction func saveEventToCalender(sender: AnyObject) {
         
-        var attendees = [String]()
-        if let attendeesTmp = event["attendees"] as?[String] {
+        var attendees = [PFUser]()
+        if let attendeesTmp = event["attendees"] as? [PFUser] {
             attendees = attendeesTmp;
         }
         if let objId = PFUser.currentUser()?.objectId {
@@ -40,15 +40,15 @@ class ModalViewController: UIViewController {
                 }
             }
             if !found {
-                attendees.append(objId)
+//                attendees.append(objId)
                 event["attendees"] = attendees;
                 event.saveInBackground()
             }
         }
         
         if let user = PFUser.currentUser() {
-            var eventsAttending = [String]()
-            if let eventsAttendingTmp = user["eventsToAttend"] as?[String] {
+            var eventsAttending = [Event]()
+            if let eventsAttendingTmp = user["eventsToAttend"] as?[Event] {
                 eventsAttending = eventsAttendingTmp;
             }
             if let eventId = event.objectId {
@@ -60,15 +60,13 @@ class ModalViewController: UIViewController {
                     }
                 }
                 if !found {
-                    eventsAttending.append(eventId)
+//                    eventsAttending.append(eventId)
                     user["eventsToAttend"] = eventsAttending;
                     user.saveInBackground()
                 }
                 
             }
         }
-        
-        
     }
     
     

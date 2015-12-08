@@ -61,7 +61,7 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
                 let file = PFFile(data: pictureData!)
                 
                 user?.setObject(geoPoint!, forKey: "location")
-                user?.setObject(file, forKey: "profilePicture")
+                user?.setObject(file!, forKey: "profilePicture")
                 user?.setObject(self.displayName.text!, forKey: "displayName")
                 
                 user?.saveInBackground()
@@ -81,9 +81,7 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
                 
                 print("error: \(error.localizedDescription)")
             }
-            
         }
-        
     }
     
     

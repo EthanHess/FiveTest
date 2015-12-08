@@ -30,8 +30,6 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
 

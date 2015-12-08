@@ -61,10 +61,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         let cell : EventCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! EventCell
         
-        //adds attend action
-        
-        cell.attendButton.addTarget(self, action: "buttonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
-        
         //sets up swipe gesture recognizer
         
 //        let upSwipe = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
@@ -102,8 +98,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                         let profileImageView = cell.imageViewArray[index]
                         let usr : PFUser = (attendeeArray[index] as PFUser?)!
                         
-                        //                        if let picture = usr.objectForKey("profilePicture") as? PFFile {
-                        
                         usr.fetchIfNeededInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
                             if let picture = object!.objectForKey("profilePicture") as? PFFile {
                                 picture.getDataInBackgroundWithBlock({ (data, error) -> Void in
@@ -111,14 +105,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                                 })
                             }
                         })
-                        
-                        //                            picture.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                        //
-                        //                                profileImageView.image = UIImage(data: data!)
-                        //
-                        //                            })
-                        
-                        //                        }
                         
                     }
                     
@@ -211,84 +197,6 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         }
         
     }
-    
-    //get index path of button (DON'T NEED THIS METHOD ANYMORE)
-    
-    func buttonTapped(sender: AnyObject) {
-        
-        let button = sender as! UIButton
-        let view = button.superview
-        let cell = view?.superview as! EventCell
-        let indexPath = collectionView.indexPathForCell(cell)
-        
-        if let indexPath = indexPath {
-            if let event = events?[indexPath.row] {
-                
-                //pops alert vc
-                
-                let alertController : UIAlertController = UIAlertController(title: event.eventTitle, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                
-                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-                
-                alertController.addAction(cancelAction)
-                
-                let saveUserToEvent = UIAlertAction(title: "Yes", style: .Default) { _ in
-                    
-                    var attendees = [String]()
-                    if let attendeesTmp = event["attendees"] as?[String] {
-                        attendees = attendeesTmp;
-                    }
-                    if let objId = PFUser.currentUser()?.objectId {
-                        var found = false
-                        for objIdd in attendees {
-                            if objIdd == objId {
-                                found = true
-                                break;
-                            }
-                        }
-                        if !found {
-                            attendees.append(objId)
-                            event["attendees"] = attendees;
-                            event.saveInBackground()
-                        }
-                    }
-                    
-                    if let user = PFUser.currentUser() {
-                        var eventsAttending = [String]()
-                        if let eventsAttendingTmp = user["eventsToAttend"] as?[String] {
-                            eventsAttending = eventsAttendingTmp;
-                        }
-                        if let eventId = event.objectId {
-                            var found = false
-                            for eventIdd in eventsAttending {
-                                if eventIdd == eventId {
-                                    found = true
-                                    break;
-                                }
-                            }
-                            if !found {
-                                eventsAttending.append(eventId)
-                                user["eventsToAttend"] = eventsAttending;
-                                user.saveInBackground()
-                            }
-                            
-                        }
-                    }
-                    
-                    
-                }
-                
-                alertController.addAction(saveUserToEvent)
-                
-                
-//                self.presentViewController(alertController, animated: true, completion: nil)
-                
-            }
-            
-        }
-    }
-    
-    //THIS METHOD TAKES BUTTONTAPPED's PLACE
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         

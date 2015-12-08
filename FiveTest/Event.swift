@@ -13,13 +13,13 @@ class Event: PFObject {
     
     @NSManaged var eventImage : PFFile
     @NSManaged var user : PFUser
-    @NSManaged var atendeeArray : [PFUser]
+//    @NSManaged var atendeeArray : [PFUser]
     @NSManaged var eventDescription : String?
     @NSManaged var eventTitle : String?
     @NSManaged var eventDate : NSDate?
     @NSManaged var category : String?
     
-    var location : CLLocationCoordinate2D?
+    var location : PFGeoPoint?
     var eventIsFull : Bool!
    
     override class func query() -> PFQuery? {
