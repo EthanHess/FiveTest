@@ -25,48 +25,74 @@ class ModalViewController: UIViewController {
         
     }
 
+    //change title to save event, calendar method below
     @IBAction func saveEventToCalender(sender: AnyObject) {
         
-        var attendees = [PFUser]()
-        if let attendeesTmp = event["attendees"] as? [PFUser] {
-            attendees = attendeesTmp;
-        }
-        if let objId = PFUser.currentUser()?.objectId {
-            var found = false
-            for objIdd in attendees {
-                if objIdd == objId {
-                    found = true
-                    break;
-                }
-            }
-            if !found {
-                attendees.append(PFUser.currentUser()!)
-                event["attendees"] = attendees;
-                event.saveInBackground()
-            }
-        }
-        
-        if let user = PFUser.currentUser() {
-            var eventsAttending = [Event]()
-            if let eventsAttendingTmp = user["eventsToAttend"] as?[Event] {
-                eventsAttending = eventsAttendingTmp;
-            }
-            if let eventId = event.objectId {
-                var found = false
-                for eventIdd in eventsAttending {
-                    if eventIdd == eventId {
-                        found = true
-                        break;
-                    }
-                }
-                if !found {
-                    eventsAttending.append(event)
-                    user["eventsToAttend"] = eventsAttending;
-                    user.saveInBackground()
-                }
+        PFUser.currentUser()?.saveInBackgroundWithBlock({ (success, error) -> Void in
+            
+            if (success) {
+                
+                let attendeeRelation = PFUser.currentUser()?.relationForKey("eventsToAttendList")
+                attendeeRelation?.addObject(self.event)
+                PFUser.currentUser()?.saveInBackground()
+                
+                let eventRelation = self.event.relationForKey("eventAttendees")
+                eventRelation.addObject(PFUser.currentUser()!)
+                self.event.saveInBackground()
                 
             }
-        }
+            
+            else {
+                
+                print(error!.localizedDescription)
+            }
+        })
+        
+        
+        
+        
+        //OLD CODE <KEEP FOR REFERENCE FOR NOW>
+        
+//        var attendees = [PFUser]()
+//        if let attendeesTmp = event["attendees"] as? [PFUser] {
+//            attendees = attendeesTmp;
+//        }
+//        if let objId = PFUser.currentUser()?.objectId {
+//            var found = false
+//            for objIdd in attendees {
+//                if objIdd == objId {
+//                    found = true
+//                    break;
+//                }
+//            }
+//            if !found {
+//                attendees.append(PFUser.currentUser()!)
+//                event["attendees"] = attendees;
+//                event.saveInBackground()
+//            }
+//        }
+//        
+//        if let user = PFUser.currentUser() {
+//            var eventsAttending = [Event]()
+//            if let eventsAttendingTmp = user["eventsToAttend"] as?[Event] {
+//                eventsAttending = eventsAttendingTmp;
+//            }
+//            if let eventId = event.objectId {
+//                var found = false
+//                for eventIdd in eventsAttending {
+//                    if eventIdd == eventId {
+//                        found = true
+//                        break;
+//                    }
+//                }
+//                if !found {
+//                    eventsAttending.append(event)
+//                    user["eventsToAttend"] = eventsAttending;
+//                    user.saveInBackground()
+//                }
+//                
+//            }
+//        }
     }
     
     

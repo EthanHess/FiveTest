@@ -161,7 +161,6 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         else if textField == locationTextField {
         self.performSegueWithIdentifier("locationSegue", sender: locationTextField)
         }
-        
     }
     
     //sets up tableView

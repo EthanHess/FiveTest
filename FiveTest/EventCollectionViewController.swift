@@ -24,6 +24,8 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         //queries for parse objects (events)
         
+        self.title = "HEY!"
+        
         let query = Event.query()
         
         query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in

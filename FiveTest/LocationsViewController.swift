@@ -93,9 +93,13 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
             
 //            self.storyboard?.instantiateViewControllerWithIdentifier("locationsVC")
             
-            let viewController:CreateEventViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("locationsVC") as! CreateEventViewController
-            self.presentViewController(viewController, animated: false, completion: nil)
+//            let viewController:CreateEventViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("locationsVC") as! CreateEventViewController
+//            self.presentViewController(viewController, animated: false, completion: nil)
+            
+            
+            
         }
+        
         alertController.addAction(eventVCAction)
         
         let mapsAction = UIAlertAction(title: "Show on Map", style: UIAlertActionStyle.Default) { _ in
@@ -104,6 +108,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
             
             let viewController:LocationsDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapVC") as! LocationsDetailViewController
             self.presentViewController(viewController, animated: false, completion: nil)
+            
         }
         alertController.addAction(mapsAction)
         
@@ -133,15 +138,24 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        
-//        if (segue.identifier == "pushToGoogleMaps") {
-//            
-//            let ldvc : LocationsDetailViewController = segue.destinationViewController as! LocationsDetailViewController
-//            let indexPath = self.tableView.indexPathForSelectedRow
-//            
-//        }
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if sender is UIAlertController {
+            
+            
+            
+            //get index of button and push accordingly
+            
+            
+        }
+        
+        if (segue.identifier == "pushToGoogleMaps") {
+            
+            let ldvc : LocationsDetailViewController = segue.destinationViewController as! LocationsDetailViewController
+            let indexPath = self.tableView.indexPathForSelectedRow
+            
+        }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

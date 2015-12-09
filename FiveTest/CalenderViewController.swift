@@ -18,17 +18,40 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var eventsTableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
+    override func viewWillAppear(animated: Bool) {
+        
+        self.eventsTableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let events = PFUser.currentUser()?["eventsToAttend"] as? [String] {
-        self.eventsToAttend = [Event]()
-        for eventId in events {
-            if let event = PFObject(withoutDataWithClassName: "Event", objectId: eventId) as? Event {
-
-                self.eventsToAttend?.append(event)
-            }
-        }
+//        if let events = PFUser.currentUser()?["eventsToAttend"] as? [String] {
+//        self.eventsToAttend = [Event]()
+//        for eventId in events {
+//            if let event = PFObject(withoutDataWithClassName: "Event", objectId: eventId) as? Event {
+//
+//                self.eventsToAttend?.append(event)
+//            }
+//        }
+//        }
+        
+        if let eventsToAttendList : PFRelation = PFUser.currentUser()?.relationForKey("eventsToAttendList") {
+            
+            eventsToAttendList.query()?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                
+                if ((objects) != nil) {
+                    
+                    self.eventsToAttend = objects as? [Event]
+                }
+                
+                else if (error != nil) {
+                    
+                    print(error)
+                }
+                
+                
+            })
         }
         
 //        if let eventsCreated = PFUser.currentUser()?["Events"] as? [Event] {

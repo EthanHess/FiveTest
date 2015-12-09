@@ -13,7 +13,8 @@ class Event: PFObject {
     
     @NSManaged var eventImage : PFFile
     @NSManaged var user : PFUser
-//    @NSManaged var atendeeArray : [PFUser]
+    @NSManaged var atendeeArray : [PFUser]
+    @NSManaged var creator: PFUser
     @NSManaged var eventDescription : String?
     @NSManaged var eventTitle : String?
     @NSManaged var eventDate : NSDate?
