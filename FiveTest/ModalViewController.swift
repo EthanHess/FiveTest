@@ -40,6 +40,8 @@ class ModalViewController: UIViewController {
                 eventRelation.addObject(PFUser.currentUser()!)
                 self.event.saveInBackground()
                 
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "reloadTableView", object: nil))
+                
             }
             
             else {

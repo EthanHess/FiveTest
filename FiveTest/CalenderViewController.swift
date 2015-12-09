@@ -20,7 +20,7 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewWillAppear(animated: Bool) {
         
-        self.eventsTableView.reloadData()
+        refresh()
     }
     
     override func viewDidLoad() {
@@ -54,6 +54,9 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
             })
         }
         
+        registerForNotifications()
+        
+        
 //        if let eventsCreated = PFUser.currentUser()?["Events"] as? [Event] {
 //            
 //            self.eventsCreated = [Event]()
@@ -66,6 +69,11 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
 //                }
 //            }
 //        }
+    }
+    
+    func registerForNotifications() {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh", name: "reloadTableView", object: nil)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -164,13 +172,18 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if (sender == 0) {
             
-            eventsTableView.reloadData()
+            refresh()
         }
         
         if (sender == 1) {
             
-            eventsTableView.reloadData()
+            refresh()
         }
+    }
+    
+    func refresh() {
+        
+        eventsTableView.reloadData()
     }
     
 
