@@ -40,7 +40,7 @@ class ModalViewController: UIViewController {
                 }
             }
             if !found {
-//                attendees.append(objId)
+                attendees.append(PFUser.currentUser()!)
                 event["attendees"] = attendees;
                 event.saveInBackground()
             }
@@ -60,7 +60,7 @@ class ModalViewController: UIViewController {
                     }
                 }
                 if !found {
-//                    eventsAttending.append(eventId)
+                    eventsAttending.append(event)
                     user["eventsToAttend"] = eventsAttending;
                     user.saveInBackground()
                 }

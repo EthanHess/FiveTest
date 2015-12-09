@@ -10,22 +10,44 @@ import UIKit
 import GoogleMaps
 
 
-class LocationsDetailViewController: UIViewController {
-
+class LocationsDetailViewController: UIViewController, GMSMapViewDelegate {
+    
+    let locationManager = CLLocationManager()
+    var firstLocationUpdate = Bool?()
+    var mapView : GMSMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        locationManager.requestWhenInUseAuthorization()
+        
         let camera = GMSCameraPosition.cameraWithLatitude(-33.86,
             longitude: 151.20, zoom: 6)
-        let mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
+        mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.myLocationEnabled = true
         self.view = mapView
+        
+        mapView.addObserver(self, forKeyPath: "myLocation", options: NSKeyValueObservingOptions.New, context: nil)
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.mapView.myLocationEnabled = true
+        })
+        print(mapView.myLocation)
+        
         
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2DMake(-33.86, 151.20)
         marker.title = "Sydney"
         marker.snippet = "Australia"
         marker.map = mapView
+    }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        
+        firstLocationUpdate = true
+        let location = change![NSKeyValueChangeNewKey] as! CLLocation
+        mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 14)
+        
     }
 
     override func didReceiveMemoryWarning() {
