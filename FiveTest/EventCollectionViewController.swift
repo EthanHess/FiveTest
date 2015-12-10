@@ -94,21 +94,50 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                 
                 //gets profile pictures for image view array on back of cell
                 
-                if let attendeeArray = event?.objectForKey("attendees") as? [PFUser] {
+                if let attendeeRelation : PFRelation = event?.relationForKey("eventAttendees") {
                     
-                    for var index = 0; index < attendeeArray.count; ++index {
-                        let profileImageView = cell.imageViewArray[index]
-                        let usr : PFUser = (attendeeArray[index] as PFUser?)!
+                    attendeeRelation.query()?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
                         
-                        usr.fetchIfNeededInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
-                            if let picture = object!.objectForKey("profilePicture") as? PFFile {
-                                picture.getDataInBackgroundWithBlock({ (data, error) -> Void in
-                                    profileImageView.image = UIImage(data: data!)
+                        if ((objects) != nil) {
+                            
+                            let tempArray = objects as! [PFUser]
+                            
+                            for var index = 0; index < objects!.count; ++index {
+                                
+                                let profileImageView = cell.imageViewArray[index]
+                                let usr : PFUser = (tempArray[index] as PFUser?)!
+                                
+                                usr.fetchIfNeededInBackgroundWithBlock({ (object, error) -> Void in
+                                    
+                                    if let picture = object!.objectForKey("profilePicture") as? PFFile {
+                                        picture.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                                            profileImageView.image = UIImage(data: data!)
+                                        })
+                                    }
                                 })
                             }
-                        })
+                        }
                         
-                    }
+                        else {
+                            
+                            print(error)
+                        }
+                        
+                    })
+                    
+//                    for var index = 0; index < attendeeArray.count; ++index {
+//                        let profileImageView = cell.imageViewArray[index]
+//                        let usr : PFUser = (attendeeArray[index] as PFUser?)!
+//                        
+//                        usr.fetchIfNeededInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+//                            if let picture = object!.objectForKey("profilePicture") as? PFFile {
+//                                picture.getDataInBackgroundWithBlock({ (data, error) -> Void in
+//                                    profileImageView.image = UIImage(data: data!)
+//                                })
+//                            }
+//                        })
+//                        
+//                    }
                     
                 }
 

@@ -28,6 +28,8 @@ class ModalViewController: UIViewController {
     //change title to save event, calendar method below
     @IBAction func saveEventToCalender(sender: AnyObject) {
         
+        //make sure user can't be saved to same relation twice
+        
         PFUser.currentUser()?.saveInBackgroundWithBlock({ (success, error) -> Void in
             
             if (success) {
