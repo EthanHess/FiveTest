@@ -27,8 +27,9 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var eventSaveButton: UIButton!
     @IBOutlet weak var eventCategoryField: UITextField!
     @IBOutlet weak var popImagePickerButton: UIButton!
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet var locationButton: UIButton!
+    @IBOutlet var locationLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +59,6 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         tableView.layer.cornerRadius = 10
         tableView.layer.borderColor = UIColor.blackColor().CGColor
         tableView.layer.borderWidth = 2
-        
-        scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: 1000)
         
         //gets category array value
         

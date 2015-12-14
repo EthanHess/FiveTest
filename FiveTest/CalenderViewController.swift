@@ -13,7 +13,6 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var eventsToAttend : [Event]? = []
     var eventsCreated : [Event]? = []
-//    var responseObjects : [AnyObject]? = []
     
     @IBOutlet weak var eventsTableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -25,34 +24,36 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        if let events = PFUser.currentUser()?["eventsToAttend"] as? [String] {
-//        self.eventsToAttend = [Event]()
-//        for eventId in events {
-//            if let event = PFObject(withoutDataWithClassName: "Event", objectId: eventId) as? Event {
-//
-//                self.eventsToAttend?.append(event)
-//            }
-//        }
-//        }
         
-        if let eventsToAttendList : PFRelation = PFUser.currentUser()?.relationForKey("eventsToAttendList") {
+        let refresher = UIRefreshControl()
+        refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        self.eventsTableView.addSubview(refresher)
+        
+        //maybe change
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
-            eventsToAttendList.query()?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+            if let eventsToAttendList : PFRelation = PFUser.currentUser()?.relationForKey("eventsToAttendList") {
                 
-                if ((objects) != nil) {
+                eventsToAttendList.query()?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
                     
-                    self.eventsToAttend = objects as? [Event]
-                }
-                
-                else if (error != nil) {
+                    if ((objects) != nil) {
+                        
+                        self.eventsToAttend = objects as? [Event]
+                    }
+                        
+                    else if (error != nil) {
+                        
+                        print(error)
+                    }
                     
-                    print(error)
-                }
-                
-                
-            })
+                    
+                })
+            }
         }
+        
+        
         
         registerForNotifications()
         

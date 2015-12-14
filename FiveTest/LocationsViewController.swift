@@ -89,14 +89,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let eventVCAction = UIAlertAction(title: "Confirm location", style: UIAlertActionStyle.Default) { _ in
             
-            // change later
-            
-//            self.storyboard?.instantiateViewControllerWithIdentifier("locationsVC")
-            
-//            let viewController:CreateEventViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("locationsVC") as! CreateEventViewController
-//            self.presentViewController(viewController, animated: false, completion: nil)
-            
-            
+            self.performSegueWithIdentifier("pushBackToEventVC", sender: self)
             
         }
         
@@ -104,10 +97,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let mapsAction = UIAlertAction(title: "Show on Map", style: UIAlertActionStyle.Default) { _ in
             
-//            self.storyboard?.instantiateViewControllerWithIdentifier("mapVC")
-            
-            let viewController:LocationsDetailViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mapVC") as! LocationsDetailViewController
-            self.presentViewController(viewController, animated: false, completion: nil)
+            self.performSegueWithIdentifier("pushToGoogleMaps", sender: self)
             
         }
         alertController.addAction(mapsAction)
@@ -140,19 +130,17 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if sender is UIAlertController {
+        if segue.identifier == "pushBackToEventVC" {
             
-            
-            
-            //get index of button and push accordingly
-            
-            
+            let eventVC : CreateEventViewController = segue.destinationViewController as! CreateEventViewController
         }
         
-        if (segue.identifier == "pushToGoogleMaps") {
+        if segue.identifier == "pushToGoogleMaps" {
             
             let ldvc : LocationsDetailViewController = segue.destinationViewController as! LocationsDetailViewController
-            let indexPath = self.tableView.indexPathForSelectedRow
+            
+            
+//            let indexPath = self.tableView.indexPathForSelectedRow
             
         }
     }
