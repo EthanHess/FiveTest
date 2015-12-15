@@ -21,7 +21,8 @@ class EventCell: UICollectionViewCell {
     @IBOutlet weak var categoryImageView: UIImageView!
     
     @IBOutlet var imageViewArray: [UIImageView]!
-//    var atendeeArray : [PFUser]!
+    @IBOutlet var buttonsArray: [UIButton]!
+    
     
     var borderColor = UIColor(red: 0/255, green: 207/255, blue: 221/255, alpha: 1.0)
     var isFlipped = false
@@ -51,8 +52,13 @@ class EventCell: UICollectionViewCell {
         self.layer.borderColor = borderColor.CGColor
         self.layer.borderWidth = 1
             
+            
         for imageView in imageViewArray {
             imageView.hidden = false
+        }
+            
+        for button in buttonsArray {
+            button.hidden = false
         }
             
         self.isFlipped = true
@@ -75,6 +81,10 @@ class EventCell: UICollectionViewCell {
             
             for imageView in imageViewArray {
                 imageView.hidden = true
+            }
+            
+            for button in buttonsArray {
+                button.hidden = true
             }
             
             self.isFlipped = false
@@ -123,10 +133,18 @@ class EventCell: UICollectionViewCell {
         
         for imageView in imageViewArray {
             
-            imageView.layer.cornerRadius = 15
+            imageView.layer.cornerRadius = 20
             imageView.layer.borderColor = borderColor.CGColor
             imageView.layer.borderWidth = 1
             imageView.layer.masksToBounds = true
+        }
+        
+        for button in buttonsArray {
+            
+            button.layer.cornerRadius = 20
+            button.layer.borderColor = borderColor.CGColor
+            button.layer.borderWidth = 1
+            button.layer.masksToBounds = true
         }
         
 //        categoryImageView.layer.cornerRadius = 10

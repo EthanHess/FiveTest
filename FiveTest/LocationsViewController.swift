@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import Parse
 
 class LocationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -30,7 +31,6 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
 //        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
         
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) in
-            
             
             
             // Dictionaries are like ogres. Unwrap the layers.
@@ -81,10 +81,6 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-//        let item = self.responseItems[indexPath.row]
-//        let venue = item["venue"] as! NSDictionary
-//        let name = venue["name"] as! String
-        
         let alertController = UIAlertController(title: "Location selected", message: "Options", preferredStyle: UIAlertControllerStyle.Alert)
         
         let eventVCAction = UIAlertAction(title: "Confirm location", style: UIAlertActionStyle.Default) { _ in
@@ -109,38 +105,44 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         self.presentViewController(alertController, animated: true, completion: nil)
         
-
-        
-//        self.performSegueWithIdentifier("pushToGoogleMaps", sender: self)
-        
-//        let lat = item["lat"] as! String
-//        let lon = item["long"] as! String
-        
-//        print("\(lat)","\(lon)","\(name)")
-        
-//        let createVC = CreateEventViewController()
-//        
-//        createVC.locationString = name
-        
-//        make sure this doesn't break
-
-//        self.navigationController?.pushViewController(createVC, animated: true)
-        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        let indexPath = self.tableView.indexPathForSelectedRow
+        
+        let item = self.responseItems![indexPath!.row]
+        
+        var eventVC = CreateEventViewController()
+        
         if segue.identifier == "pushBackToEventVC" {
             
-            let eventVC : CreateEventViewController = segue.destinationViewController as! CreateEventViewController
+            if let venue = item["venue"] as? NSDictionary {
+                
+                let locationString = venue["name"] as! String
+                
+                //get lat/long strings
+                
+                eventVC.updateWithLocation(locationString)
+                
+                //ask quan about this
+            }
+            
+            eventVC = segue.destinationViewController as! CreateEventViewController
+            
+            //pass location coordinates 
         }
         
         if segue.identifier == "pushToGoogleMaps" {
             
             let ldvc : LocationsDetailViewController = segue.destinationViewController as! LocationsDetailViewController
             
+            if let geoPoint = PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint {
+                
+                
+            }
             
-//            let indexPath = self.tableView.indexPathForSelectedRow
+            //pass location coordinates to google maps to enable directions
             
         }
     }
@@ -150,15 +152,5 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

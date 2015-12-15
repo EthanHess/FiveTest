@@ -14,8 +14,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     var event : Event?
     var chosenImage : UIImage?
     var imagePicker : UIImagePickerController?
-    var eventDate : NSDate?
-    var locationString : String?
+//    var eventDate : NSDate?
     var categoryArray : [String]? = []
     var categoryImages : [String]? = []
     
@@ -30,6 +29,11 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet var locationButton: UIButton!
     @IBOutlet var locationLabel: UILabel!
+    
+    func updateWithLocation(location: String) {
+        
+        self.locationLabel.text = location
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,19 +69,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         categoryArray = ["Food & Drinks","Entertainment","Academics","Science","Sports","The Outdoors","The Arts","Other"]
         
         categoryImages = ["Food","Bowling","University","Physics","Exercise","Landscape","Comedy","Dice"]
-
-        // fix this eventually
         
-        if locationString != nil {
-            
-            self.updateWithLocation(self.locationString!)
-        }
-        
-    }
-    
-    func updateWithLocation(location: String) {
-        
-        locationTextField.text = locationString
     }
     
     @IBAction func saveEvent(sender: AnyObject) {

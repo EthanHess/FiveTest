@@ -33,7 +33,7 @@ class CircularCollectionViewLayout: UICollectionViewLayout {
     
     //adjust width
     
-    let itemSize = CGSize(width: 300, height: 415)
+    let itemSize = CGSize(width: 320, height: 430)
     
     
     var angleAtExtreme: CGFloat {

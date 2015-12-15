@@ -13,6 +13,8 @@ import Parse
 class EventCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var events : [Event]? = []
+    var tempArray : [PFUser]? = []
+    
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
@@ -98,18 +100,25 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                         
                         if ((objects) != nil) {
                             
-                            let tempArray = objects as! [PFUser]
+                            self.tempArray = objects as? [PFUser]
+//                            let testArray = objects as? [PFUser]
                             
                             for var index = 0; index < objects!.count; ++index {
                                 
                                 let profileImageView = cell.imageViewArray[index]
-                                let usr : PFUser = (tempArray[index] as PFUser?)!
+                                let buttonView = cell.buttonsArray[index]
+                                
+                                let usr : PFUser = (self.tempArray?[index] as PFUser?)!
                                 
                                 usr.fetchIfNeededInBackgroundWithBlock({ (object, error) -> Void in
                                     
                                     if let picture = object!.objectForKey("profilePicture") as? PFFile {
                                         picture.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                                            
                                             profileImageView.image = UIImage(data: data!)
+                                            
+                                            buttonView.setBackgroundImage(UIImage(data: data!), forState: UIControlState.Normal)
+                                            
                                         })
                                     }
                                 })
@@ -123,22 +132,8 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                         
                     })
                     
-//                    for var index = 0; index < attendeeArray.count; ++index {
-//                        let profileImageView = cell.imageViewArray[index]
-//                        let usr : PFUser = (attendeeArray[index] as PFUser?)!
-//                        
-//                        usr.fetchIfNeededInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
-//                            if let picture = object!.objectForKey("profilePicture") as? PFFile {
-//                                picture.getDataInBackgroundWithBlock({ (data, error) -> Void in
-//                                    profileImageView.image = UIImage(data: data!)
-//                                })
-//                            }
-//                        })
-//                        
-//                    }
-                    
                 }
-
+        
 
                 //sets correct category for cell image
                 
@@ -244,6 +239,13 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                     modalVC.event = event
                 }
             }
+        }
+        
+        if (segue.identifier == "pushToProfile") {
+            
+            //get index of button here then push to profile VC with correct user
+            
+            let profileVC = segue.destinationViewController as! ProfileViewController
         }
     }
     

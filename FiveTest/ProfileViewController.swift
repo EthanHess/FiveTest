@@ -7,15 +7,67 @@
 //
 
 import UIKit
+import Parse
 
 class ProfileViewController: UIViewController {
 
+    //outlet properties
+    @IBOutlet var profileImage: UIImageView!
+    @IBOutlet var usernameLabel: UILabel!
+    @IBOutlet var descriptionLabel: UILabel!
+    @IBOutlet var messageButton: UIButton!
+    @IBOutlet var emailButton: UIButton!
+
+    //other properties
+    var profilesUser : PFUser!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        //query user
+        
+        profilesUser.fetchInBackgroundWithBlock { (objects, error) -> Void in
+            
+            if error != nil {
+                print(error?.localizedDescription)
+            }
+            
+            else {
+                
+                if let imageData = self.profilesUser.objectForKey("profilePicture") as? PFFile {
+                    
+                    imageData.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                        
+                        if error != nil {
+                            print(error)
+                        }
+                        
+                        else {
+            
+                            self.profileImage.image = UIImage(data: data!)
+                        }
+                    })
+                    
+                    self.usernameLabel.text = self.profilesUser.objectForKey("displayName") as? String
+                    self.descriptionLabel.text = self.profilesUser.objectForKey("") as? String
+                    
+                }
+            }
+        }
+        
+    }
+    
+    @IBAction func emailUser(sender: AnyObject) {
+        
+        
     }
 
+    @IBAction func messageUser(sender: AnyObject) {
+        
+        
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
