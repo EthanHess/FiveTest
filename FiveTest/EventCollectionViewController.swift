@@ -105,8 +105,8 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                             
                             for var index = 0; index < objects!.count; ++index {
                                 
-                                let profileImageView = cell.imageViewArray[index]
-                                let buttonView = cell.buttonsArray[index]
+//                                let profileImageView = cell.imageViewArray[index]
+                                let buttonView = cell.userButtonsArray[index]
                                 
                                 let usr : PFUser = (self.tempArray?[index] as PFUser?)!
                                 
@@ -115,10 +115,13 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                                     if let picture = object!.objectForKey("profilePicture") as? PFFile {
                                         picture.getDataInBackgroundWithBlock({ (data, error) -> Void in
                                             
-                                            profileImageView.image = UIImage(data: data!)
+//                                            profileImageView.image = UIImage(data: data!)
                                             
                                             buttonView.setBackgroundImage(UIImage(data: data!), forState: UIControlState.Normal)
+                                            buttonView.user = usr
                                             
+                                            //test
+                                            buttonView.addTarget(self, action: "buttonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
                                         })
                                     }
                                 })
@@ -197,6 +200,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
     }
     
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         //flip cell when selected
@@ -224,6 +228,8 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        //gets attend button from cell with event object
+        
         let button = sender as! UIButton
         let view = button.superview
         let cell = view?.superview as! EventCell
@@ -241,11 +247,42 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
             }
         }
         
-        if (segue.identifier == "pushToProfile") {
+        //gets userButton from custom button array
+        
+        let userButton = sender as! UserButton
+        let user = userButton.user as PFUser?
+        
+        if user != nil {
             
-            //get index of button here then push to profile VC with correct user
+            if (segue.identifier == "pushToProfile") {
+                
+                //get index of button here then push to profile VC with correct user
+                
+                let profileVC = segue.destinationViewController as! ProfileViewController
+                
+                profileVC.profilesUser = user
             
-            let profileVC = segue.destinationViewController as! ProfileViewController
+        }
+        
+        else {
+                
+            print("No User")
+        
+        }
+      }
+    }
+    
+    //button test method 
+    
+    func buttonClicked(sender: UserButton?) {
+        
+        if let user = sender?.user {
+            
+            print(user)
+        }
+        
+        else {
+            print("No User")
         }
     }
     

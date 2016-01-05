@@ -20,8 +20,9 @@ class EventCell: UICollectionViewCell {
     
     @IBOutlet weak var categoryImageView: UIImageView!
     
-    @IBOutlet var imageViewArray: [UIImageView]!
-    @IBOutlet var buttonsArray: [UIButton]!
+//    @IBOutlet var imageViewArray: [UIImageView]!
+//    @IBOutlet var buttonsArray: [UIButton]!
+    @IBOutlet var userButtonsArray: [UserButton]!
     
     
     var borderColor = UIColor(red: 0/255, green: 207/255, blue: 221/255, alpha: 1.0)
@@ -53,11 +54,11 @@ class EventCell: UICollectionViewCell {
         self.layer.borderWidth = 1
             
             
-        for imageView in imageViewArray {
-            imageView.hidden = false
-        }
+//        for imageView in imageViewArray {
+//            imageView.hidden = false
+//        }
             
-        for button in buttonsArray {
+        for button in userButtonsArray {
             button.hidden = false
         }
             
@@ -79,11 +80,11 @@ class EventCell: UICollectionViewCell {
             self.layer.borderColor = UIColor.clearColor().CGColor
             self.layer.borderWidth = 1
             
-            for imageView in imageViewArray {
-                imageView.hidden = true
-            }
+//            for imageView in imageViewArray {
+//                imageView.hidden = true
+//            }
             
-            for button in buttonsArray {
+            for button in userButtonsArray {
                 button.hidden = true
             }
             
@@ -131,15 +132,15 @@ class EventCell: UICollectionViewCell {
         eventBackgroundImage.layer.masksToBounds = true
 
         
-        for imageView in imageViewArray {
-            
-            imageView.layer.cornerRadius = 20
-            imageView.layer.borderColor = borderColor.CGColor
-            imageView.layer.borderWidth = 1
-            imageView.layer.masksToBounds = true
-        }
+//        for imageView in imageViewArray {
+//            
+//            imageView.layer.cornerRadius = 20
+//            imageView.layer.borderColor = borderColor.CGColor
+//            imageView.layer.borderWidth = 1
+//            imageView.layer.masksToBounds = true
+//        }
         
-        for button in buttonsArray {
+        for button in userButtonsArray {
             
             button.layer.cornerRadius = 20
             button.layer.borderColor = borderColor.CGColor

@@ -22,6 +22,7 @@
 		271335CE1B97C40C00D70EA3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271335CD1B97C40C00D70EA3 /* SystemConfiguration.framework */; };
 		272CCB4A1BD57EA10010E6DD /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 272CCB491BD57EA10010E6DD /* libz.tbd */; };
 		272CCB4C1BD57EB90010E6DD /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 272CCB4B1BD57EB90010E6DD /* libsqlite3.tbd */; };
+		273521BF1C3C4F8900722B0F /* UserButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273521BE1C3C4F8900722B0F /* UserButton.swift */; settings = {ASSET_TAGS = (); }; };
 		2755E0FD1BE0080F0005C19E /* LocationsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		27B1E2031BE045C200ACA4B0 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E2021BE045C200ACA4B0 /* ModalViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		27B1E2061BE146A400ACA4B0 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E2051BE146A400ACA4B0 /* EventController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -79,6 +80,7 @@
 		272CCB461BD57D290010E6DD /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		272CCB491BD57EA10010E6DD /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		272CCB4B1BD57EB90010E6DD /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		273521BE1C3C4F8900722B0F /* UserButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserButton.swift; sourceTree = "<group>"; };
 		2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsDetailViewController.swift; sourceTree = "<group>"; };
 		27B1E2021BE045C200ACA4B0 /* ModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		27B1E2051BE146A400ACA4B0 /* EventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				27C093B21B98C80E006C9FD4 /* EventCell.swift */,
 				27C3159D1BB20708008BD458 /* LocationCell.swift */,
 				27C37A8B1BC46E4100695FC5 /* EventCellTwo.swift */,
+				273521BE1C3C4F8900722B0F /* UserButton.swift */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				2755E0FD1BE0080F0005C19E /* LocationsDetailViewController.swift in Sources */,
 				27C093AF1B98C5F0006C9FD4 /* CreateEventViewController.swift in Sources */,
 				271335921B97C35200D70EA3 /* AppDelegate.swift in Sources */,
+				273521BF1C3C4F8900722B0F /* UserButton.swift in Sources */,
 				27C093B31B98C80E006C9FD4 /* EventCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

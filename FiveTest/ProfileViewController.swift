@@ -23,6 +23,10 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //test
+        
+        //print(profilesUser)
 
         //query user
         
