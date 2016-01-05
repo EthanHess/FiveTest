@@ -24,6 +24,13 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        profileImage.layer.cornerRadius = 10
+        profileImage.layer.borderColor = UIColor.blackColor().CGColor
+        profileImage.layer.borderWidth = 2
+        
+        descriptionLabel.text = profilesUser.objectForKey("description") as? String
+        usernameLabel.text = profilesUser.objectForKey("displayName") as? String
+        
         //test
         
         //print(profilesUser)

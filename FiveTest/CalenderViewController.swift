@@ -13,6 +13,7 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var eventsToAttend : [Event]? = []
     var eventsCreated : [Event]? = []
+    var refresher = UIRefreshControl()
     
     @IBOutlet weak var eventsTableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -25,20 +26,19 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let refresher = UIRefreshControl()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
         self.eventsTableView.addSubview(refresher)
         
         //maybe change
         
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            
+//        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        
             if let eventsToAttendList : PFRelation = PFUser.currentUser()?.relationForKey("eventsToAttendList") {
                 
                 eventsToAttendList.query()?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
                     
-                    if ((objects) != nil) {
+                    if objects != nil {
                         
                         self.eventsToAttend = objects as? [Event]
                     }
@@ -51,7 +51,7 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
                     
                 })
             }
-        }
+//        }
         
         
         
@@ -185,6 +185,7 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     func refresh() {
         
         eventsTableView.reloadData()
+        refresher.endRefreshing()
     }
     
 

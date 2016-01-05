@@ -228,35 +228,36 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        //gets attend button from cell with event object
-        
-        let button = sender as! UIButton
-        let view = button.superview
-        let cell = view?.superview as! EventCell
-        let indexPath = collectionView.indexPathForCell(cell)
-        
-        if let indexPath = indexPath {
-            if let event = events?[indexPath.row] {
-                
                 if (segue.identifier == "presentConfirmScreen") {
+                    
+                    //gets attend button from cell with event object
+                    
+                    let button = sender as! UIButton
+                    let view = button.superview
+                    let cell = view?.superview as! EventCell
+                    let indexPath = collectionView.indexPathForCell(cell)
+                    
+                    if let indexPath = indexPath {
+                        if let event = events?[indexPath.row] {
                     
                     let modalVC = segue.destinationViewController as! ModalViewController
                     
                     modalVC.event = event
+                            
                 }
             }
         }
-        
-        //gets userButton from custom button array
-        
-        let userButton = sender as! UserButton
-        let user = userButton.user as PFUser?
-        
-        if user != nil {
             
             if (segue.identifier == "pushToProfile") {
                 
                 //get index of button here then push to profile VC with correct user
+                
+                //gets userButton from custom button array
+                
+                let userButton = sender as! UserButton
+                let user = userButton.user as PFUser?
+                
+                if user != nil {
                 
                 let profileVC = segue.destinationViewController as! ProfileViewController
                 

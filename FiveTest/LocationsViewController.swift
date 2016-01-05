@@ -120,8 +120,11 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
             if let venue = item["venue"] as? NSDictionary {
                 
                 let locationString = venue["name"] as! String
+                let location = venue["location"]
                 
                 //get lat/long strings
+                
+                print(location)
                 
                 eventVC.updateWithLocation(locationString)
                 
