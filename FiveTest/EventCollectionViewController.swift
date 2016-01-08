@@ -14,6 +14,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     var events : [Event]? = []
     var tempArray : [PFUser]? = []
+    var locationTestArray : [Event]? = []
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -22,8 +23,32 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(named: "bar_background"),
             forBarMetrics: UIBarMetrics.Default)
-    
         
+        //user/ event test query for location 
+        
+        let testQuery = Event.query()
+        
+        if let latitude = PFUser.currentUser()?["location"].latitude {
+            
+            if let longitude = PFUser.currentUser()?["location"].longitude {
+                
+                testQuery?.whereKey("location", withinGeoBoxFromSouthwest: PFGeoPoint(latitude: latitude - 3, longitude: longitude - 3), toNortheast: PFGeoPoint(latitude: latitude + 3, longitude: longitude + 3))
+                
+                testQuery?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                    
+                    if error != nil {
+                        print(error)
+                    }
+                    else {
+                        
+                        self.locationTestArray = objects as? [Event]
+                        print(self.locationTestArray)
+                    }
+                })
+            }
+        }
+    
+    
         //queries for parse objects (events)
         
         let query = Event.query()
@@ -34,10 +59,12 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                 self.events = objects
                 self.collectionView.reloadData()
             }
+                
             else if let error = error {
                 print("error: \(error.localizedDescription)")
             }
         })
+        
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
