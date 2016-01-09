@@ -32,6 +32,23 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //maybe change
         
+        if let eventsCreatedList : PFRelation = PFUser.currentUser()?.relationForKey("Events") {
+            
+            eventsCreatedList.query()?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                
+                if objects != nil {
+                    
+                    self.eventsCreated = objects as? [Event]
+                    print(self.eventsCreated)
+                }
+                
+                else if (error != nil) {
+                    print(error)
+                }
+                
+            })
+        }
+        
 //        dispatch_async(dispatch_get_main_queue()) { () -> Void in
         
             if let eventsToAttendList : PFRelation = PFUser.currentUser()?.relationForKey("eventsToAttendList") {
@@ -81,19 +98,36 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let cell : EventCellTwo = tableView.dequeueReusableCellWithIdentifier("cell") as! EventCellTwo
         
-        let event : Event = self.eventsToAttend![indexPath.row] 
+        //redo method for events created list
         
-        event.eventImage.getDataInBackgroundWithBlock { (data, error) -> Void in
+        if (segmentedControl.selectedSegmentIndex == 0) {
             
-            if let data = data, image = UIImage(data: data) {
+            let eventToAttend : Event = self.eventsToAttend![indexPath.row]
+            
+            eventToAttend.eventImage.getDataInBackgroundWithBlock { (data, error) -> Void in
                 
-                cell.eventImageView.image = image
-                cell.eventTitleLabel.text = event.eventTitle
+                if let data = data, image = UIImage(data: data) {
+                    
+                    cell.eventImageView.image = image
+                    cell.eventTitleLabel.text = eventToAttend.eventTitle
+                }
+                
             }
             
+        } else if (segmentedControl.selectedSegmentIndex == 1) {
+            
+            let eventCreated : Event = self.eventsCreated![indexPath.row]
+            
+            eventCreated.eventImage.getDataInBackgroundWithBlock({ (data, error) -> Void in
+                
+                if let data = data, image = UIImage(data: data) {
+                    
+                    cell.eventImageView.image = image
+                    cell.eventTitleLabel.text = eventCreated.eventTitle
+                }
+                
+            })
         }
-        
-        
         
         return cell
         
@@ -118,9 +152,20 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
 //            return responseObjects.count
 //        }
         
-        if let eventsToAttend = self.eventsToAttend {
+        if (segmentedControl.selectedSegmentIndex == 0) {
             
-            return eventsToAttend.count
+            if let eventsToAttend = self.eventsToAttend {
+                
+                return eventsToAttend.count
+            }
+        }
+
+        else if (segmentedControl.selectedSegmentIndex == 1) {
+            
+            if let eventsCreated = self.eventsCreated {
+                
+                return eventsCreated.count
+            }
         }
         
         return 0

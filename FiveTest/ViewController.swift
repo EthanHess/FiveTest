@@ -75,6 +75,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             if error == nil {
                 
+                //test
+                user["location"] = PFGeoPoint(latitude: 77, longitude: 88)
+                
                 self.performSegueWithIdentifier("pushTabBar", sender: self)
                 
             }

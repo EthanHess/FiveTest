@@ -16,14 +16,18 @@ class LocationsDetailViewController: UIViewController, GMSMapViewDelegate {
     var firstLocationUpdate = Bool?()
     var mapView : GMSMapView!
     
+    @IBOutlet var mapViewView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         locationManager.requestWhenInUseAuthorization()
         
-        let camera = GMSCameraPosition.cameraWithLatitude(-33.86,
-            longitude: 151.20, zoom: 6)
-        mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
+//        let camera = GMSCameraPosition.cameraWithLatitude(-33.86,
+//            longitude: 151.20, zoom: 6)
+        mapView = GMSMapView(frame: mapViewView.bounds)
+        mapView.camera = GMSCameraPosition.cameraWithLatitude(-33.86, longitude: 151.20, zoom: 6)
+//        mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.myLocationEnabled = true
         self.view = mapView
         

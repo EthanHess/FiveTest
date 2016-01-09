@@ -248,9 +248,24 @@
                     <view key="view" contentMode="scaleToFill" id="dZ8-WW-1TU">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MjI-H6-zT0">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="MjI-H6-zT0" secondAttribute="trailing" id="ARh-qJ-P7x"/>
+                            <constraint firstItem="MjI-H6-zT0" firstAttribute="top" secondItem="dZ8-WW-1TU" secondAttribute="top" id="HdE-r9-rcQ"/>
+                            <constraint firstItem="MjI-H6-zT0" firstAttribute="bottom" secondItem="Tsh-VF-asY" secondAttribute="top" id="bMI-9X-VKA"/>
+                            <constraint firstItem="MjI-H6-zT0" firstAttribute="leading" secondItem="dZ8-WW-1TU" secondAttribute="leading" id="hNx-1f-5ej"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wsa-sj-V9m"/>
+                    <connections>
+                        <outlet property="mapViewView" destination="MjI-H6-zT0" id="OeV-CC-pmP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9fC-z0-guo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

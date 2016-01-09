@@ -8,8 +8,9 @@
 
 import UIKit
 import Parse
+import MessageUI
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, MFMailComposeViewControllerDelegate {
 
     //outlet properties
     @IBOutlet var profileImage: UIImageView!
@@ -26,11 +27,9 @@ class ProfileViewController: UIViewController {
         
         profileImage.layer.cornerRadius = 10
         profileImage.layer.borderColor = UIColor.blackColor().CGColor
+        profileImage.layer.masksToBounds = true
         profileImage.layer.borderWidth = 2
-        
-        descriptionLabel.text = profilesUser.objectForKey("description") as? String
-        usernameLabel.text = profilesUser.objectForKey("displayName") as? String
-        
+    
         //test
         
         //print(profilesUser)
@@ -60,7 +59,7 @@ class ProfileViewController: UIViewController {
                     })
                     
                     self.usernameLabel.text = self.profilesUser.objectForKey("displayName") as? String
-                    self.descriptionLabel.text = self.profilesUser.objectForKey("") as? String
+                    self.descriptionLabel.text = self.profilesUser.objectForKey("description") as? String
                     
                 }
             }
@@ -70,12 +69,32 @@ class ProfileViewController: UIViewController {
     
     @IBAction func emailUser(sender: AnyObject) {
         
+        let mailComp = MFMailComposeViewController()
+        mailComp.mailComposeDelegate = self
         
+        if MFMailComposeViewController.canSendMail() {
+            
+            let profileUserEmail = profilesUser["email"] as? String
+            
+            mailComp.setToRecipients(NSArray(object: profileUserEmail!) as? [String])
+            mailComp.setSubject("")
+            mailComp.setMessageBody("", isHTML: false)
+            mailComp.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+            self.presentViewController(mailComp, animated: true, completion: nil)
+            
+        }
     }
 
     @IBAction func messageUser(sender: AnyObject) {
         
+        //implement messaging here through push notifications
+    }
+    
+    //delegate method
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         
+        //do something here
     }
     
     
