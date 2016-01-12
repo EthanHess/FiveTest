@@ -17,6 +17,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
 //    var eventDate : NSDate?
     var categoryArray : [String]? = []
     var categoryImages : [String]? = []
+    var eventLocation : PFGeoPoint?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var locationTextField: UITextField!
@@ -30,9 +31,18 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet var locationButton: UIButton!
     @IBOutlet var locationLabel: UILabel!
     
-    func updateWithLocation(location: String) {
+    func updateWithLocation(locationString: String) {
         
-        self.locationLabel.text = location
+        print(locationString)
+        self.locationLabel.text = locationString
+    }
+    
+    func updateWithGeoPoint(venueLocation: PFGeoPoint) {
+        
+//        print(venueLocation)
+        self.event?.location = venueLocation
+        self.eventLocation = venueLocation
+        print(self.eventLocation)
     }
     
     override func viewDidLoad() {
@@ -74,7 +84,8 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func saveEvent(sender: AnyObject) {
         
-        let pictureData = UIImagePNGRepresentation(eventImage.image!)
+//        let pictureData = UIImagePNGRepresentation(eventImage.image!)
+        let pictureData = UIImageJPEGRepresentation(eventImage.image!, 0.5)
         
         let file = PFFile(name: "eventImage", data: pictureData!)
         
@@ -96,6 +107,11 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     func saveEventToParse(file: PFFile) {
         
         let event = Event(image: file, user: PFUser.currentUser()!, comment: eventDescriptionField.text, title: eventTitleField.text, date: datePicker.date, category: eventCategoryField.text!)
+        
+        //save location separ1tely for now
+//        event["location"] = self.eventLocation
+        
+        //TODO: configure to show alert view if if eventLocation is nil
         
         event.saveInBackgroundWithBlock { (success, error) -> Void in
             if success {

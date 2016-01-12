@@ -49,7 +49,6 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
             })
         }
         
-//        dispatch_async(dispatch_get_main_queue()) { () -> Void in
         
             if let eventsToAttendList : PFRelation = PFUser.currentUser()?.relationForKey("eventsToAttendList") {
                 
@@ -67,26 +66,12 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
                     
                     
                 })
-            }
-//        }
+        }
         
         
         
         registerForNotifications()
         
-        
-//        if let eventsCreated = PFUser.currentUser()?["Events"] as? [Event] {
-//            
-//            self.eventsCreated = [Event]()
-//            
-//            for eventCreated in eventsCreated {
-//                
-//                if let eventC = PFObject(withoutDataWithClassName: "Event", objectId: eventsCreated) as? Event {
-//                    
-//                    self.eventsCreated?.append(eventC)
-//                }
-//            }
-//        }
     }
     
     func registerForNotifications() {
@@ -97,8 +82,6 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell : EventCellTwo = tableView.dequeueReusableCellWithIdentifier("cell") as! EventCellTwo
-        
-        //redo method for events created list
         
         if (segmentedControl.selectedSegmentIndex == 0) {
             
@@ -134,23 +117,6 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-//        if (segmentedControl.selectedSegmentIndex == 0) {
-//        
-//        return responseObjects!.count
-//            
-//        }
-//        
-//        else if (segmentedControl.selectedSegmentIndex == 1) {
-//        
-//        return 0
-//            
-//        }
-        
-//        if let responseObjects = self.responseObjects {
-//            
-//            return responseObjects.count
-//        }
         
         if (segmentedControl.selectedSegmentIndex == 0) {
             

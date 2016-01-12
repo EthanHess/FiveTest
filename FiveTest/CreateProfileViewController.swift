@@ -57,7 +57,8 @@ class CreateProfileViewController: UIViewController, UIImagePickerControllerDele
             if (error == nil) {
                 
                 let user = PFUser.currentUser()
-                let pictureData = UIImagePNGRepresentation(self.profileImageView.image!)
+//                let pictureData = UIImagePNGRepresentation(self.profileImageView.image!)
+                let pictureData = UIImageJPEGRepresentation(self.profileImageView.image!, 0.5)
                 let file = PFFile(data: pictureData!)
                 
                 user?.setObject(geoPoint!, forKey: "location")

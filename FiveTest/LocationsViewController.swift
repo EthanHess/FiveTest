@@ -20,6 +20,9 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     var latitudeLong = "37.770802,-122.403902" // Zynga HQ in CA
     var section = "coffee"
     
+    var locationLatitude = Double()
+    var locationLongitude = Double()
+    
     var responseItems : [NSDictionary]! = []
     
     override func viewDidLoad() {
@@ -81,6 +84,28 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        //TEST
+        
+        let responseItem = responseItems[indexPath.row];
+        
+        if let responseVenue = responseItem["venue"] {
+        
+            let name = responseVenue["name"]
+            
+            if let location = responseVenue["location"] as? NSDictionary {
+                
+                locationLatitude = location["lat"] as! Double
+                locationLongitude = location["lng"] as! Double
+                let distance = location["distance"]
+                let city = location["city"]
+                
+                print(name, location, city, distance, String(locationLatitude), String(locationLongitude))
+                
+            }
+            
+            
+        }
+        
         let alertController = UIAlertController(title: "Location selected", message: "Options", preferredStyle: UIAlertControllerStyle.Alert)
         
         let eventVCAction = UIAlertAction(title: "Confirm location", style: UIAlertActionStyle.Default) { _ in
@@ -126,7 +151,8 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
                 
                 print(location)
                 
-                eventVC.updateWithLocation(locationString)
+//                eventVC.updateWithLocation(locationString)
+                eventVC.updateWithGeoPoint(PFGeoPoint(latitude: locationLatitude, longitude: locationLongitude))
                 
                 //ask quan about this
             }
