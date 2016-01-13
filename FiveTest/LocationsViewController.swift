@@ -94,12 +94,10 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
             
             if let location = responseVenue["location"] as? NSDictionary {
                 
-                locationLatitude = location["lat"] as! Double
-                locationLongitude = location["lng"] as! Double
                 let distance = location["distance"]
                 let city = location["city"]
                 
-                print(name, location, city, distance, String(locationLatitude), String(locationLongitude))
+//                print(name, location, city, distance, String(locationLatitude), String(locationLongitude))
                 
             }
             
@@ -142,22 +140,31 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if segue.identifier == "pushBackToEventVC" {
             
+            eventVC = segue.destinationViewController as! CreateEventViewController
+            
             if let venue = item["venue"] as? NSDictionary {
                 
                 let locationString = venue["name"] as! String
-                let location = venue["location"]
+                let location = venue["location"] as! NSDictionary
                 
                 //get lat/long strings
                 
-                print(location)
+//                print(location)
                 
 //                eventVC.updateWithLocation(locationString)
-                eventVC.updateWithGeoPoint(PFGeoPoint(latitude: locationLatitude, longitude: locationLongitude))
+//                eventVC.updateWithGeoPoint(PFGeoPoint(latitude: locationLatitude, longitude: locationLongitude))
+                
+                eventVC.eventLocationString = locationString
+                
+                locationLatitude = location["lat"] as! Double
+                locationLongitude = location["lng"] as! Double
+                
+                eventVC.eventLocation = (PFGeoPoint(latitude: locationLatitude, longitude: locationLongitude))
                 
                 //ask quan about this
             }
             
-            eventVC = segue.destinationViewController as! CreateEventViewController
+            
             
             //pass location coordinates 
         }

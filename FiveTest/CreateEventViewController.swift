@@ -18,6 +18,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     var categoryArray : [String]? = []
     var categoryImages : [String]? = []
     var eventLocation : PFGeoPoint?
+    var eventLocationString : String?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var locationTextField: UITextField!
@@ -30,20 +31,6 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet var locationButton: UIButton!
     @IBOutlet var locationLabel: UILabel!
-    
-    func updateWithLocation(locationString: String) {
-        
-        print(locationString)
-        self.locationLabel.text = locationString
-    }
-    
-    func updateWithGeoPoint(venueLocation: PFGeoPoint) {
-        
-//        print(venueLocation)
-        self.event?.location = venueLocation
-        self.eventLocation = venueLocation
-        print(self.eventLocation)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +67,34 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         
         categoryImages = ["Food","Bowling","University","Physics","Exercise","Landscape","Comedy","Dice"]
         
+        //passing data test 
+        
+        if let locationString = eventLocationString {
+            
+            locationLabel.text = locationString
+        }
+        
+        if let eventLocationGeoPoint = eventLocation {
+            
+            print("TEST", eventLocationGeoPoint)
+        }
+        
+        
+    }
+    
+    func updateWithLocation(locationString: String) {
+        
+        print(locationString)
+        self.locationLabel.text = locationString
+    }
+    
+    func updateWithGeoPoint(venueLocation: PFGeoPoint) {
+        
+        //        print(venueLocation)
+        self.event?.location = venueLocation
+        self.eventLocation = venueLocation
+        //        print(self.eventLocation)
+        
     }
     
     @IBAction func saveEvent(sender: AnyObject) {
@@ -109,7 +124,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         let event = Event(image: file, user: PFUser.currentUser()!, comment: eventDescriptionField.text, title: eventTitleField.text, date: datePicker.date, category: eventCategoryField.text!)
         
         //save location separ1tely for now
-//        event["location"] = self.eventLocation
+        event["location"] = self.eventLocation
         
         //TODO: configure to show alert view if if eventLocation is nil
         
