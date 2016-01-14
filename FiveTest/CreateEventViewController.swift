@@ -90,10 +90,8 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
     
     func updateWithGeoPoint(venueLocation: PFGeoPoint) {
         
-        //        print(venueLocation)
         self.event?.location = venueLocation
         self.eventLocation = venueLocation
-        //        print(self.eventLocation)
         
     }
     
@@ -126,7 +124,7 @@ class CreateEventViewController: UIViewController, UIImagePickerControllerDelega
         //save location separ1tely for now
         event["location"] = self.eventLocation
         
-        //TODO: configure to show alert view if if eventLocation is nil
+        //TODO: configure to show alert view if if eventLocation etc. is nil
         
         event.saveInBackgroundWithBlock { (success, error) -> Void in
             if success {

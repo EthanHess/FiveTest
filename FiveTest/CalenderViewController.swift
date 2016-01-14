@@ -93,6 +93,7 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
                     
                     cell.eventImageView.image = image
                     cell.eventTitleLabel.text = eventToAttend.eventTitle
+                    cell.removeEventButton.setTitle("Retract", forState: UIControlState.Normal)
                 }
                 
             }
@@ -166,28 +167,95 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func removeEvent(sender: AnyObject) {
         
+        //make sure only creator can delete their own event
         
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let button = sender as! UIButton
+        let view = button.superview
+        let cell = view?.superview as! EventCellTwo
+        let indexPath = eventsTableView.indexPathForCell(cell)
         
-        // pop alert view
-    }
-    
-    func popAlertView(event: Event) {
-        
-    
-        
+        if let indexPath = indexPath {
+            
+            if (segmentedControl.selectedSegmentIndex == 1) {
+            
+            if let eventCreated = eventsCreated?[indexPath.row] {
+                
+                let alertController = UIAlertController(title: "Remove event?", message: "Are you sure you want to delete this event?", preferredStyle: UIAlertControllerStyle.Alert)
+                let deleteAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                    
+                    eventCreated.deleteInBackgroundWithBlock({ (success, error) -> Void in
+                        
+                        if error != nil {
+                            print(error)
+                        }
+                        
+                        else {
+                            let successAlertController = UIAlertController(title: "Event deleted", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                            let okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Cancel, handler: nil)
+                            successAlertController.addAction(okayAction)
+                            
+                            self.presentViewController(successAlertController, animated: true, completion: nil)
+                            
+                            self.eventsTableView.reloadData()
+                        }
+                    })
+                    
+                })
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+                alertController.addAction(deleteAction)
+                alertController.addAction(cancelAction)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+            
+          }
+            
+        else if (segmentedControl.selectedSegmentIndex == 0) {
+                
+                //delete relation for key
+                if let eventToAttend = eventsToAttend?[indexPath.row] {
+                   
+                    let attendeeRelation = PFUser.currentUser()?.relationForKey("eventsToAttendList")
+                    attendeeRelation?.removeObject(eventToAttend)
+                    
+                    let eventRelation = eventToAttend.relationForKey("eventAttendees")
+                    eventRelation.removeObject(PFUser.currentUser()!)
+                    eventToAttend.saveInBackground()
+                    
+                    PFUser.currentUser()?.saveInBackgroundWithBlock({ (success, error) -> Void in
+                        
+                        if error != nil {
+                            print(error)
+                        }
+                        
+                        else {
+                            
+                            let retractionAlertController = UIAlertController(title: "Attendence retracted", message: "You are no longer attending this event", preferredStyle: UIAlertControllerStyle.Alert)
+                            let okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Cancel, handler: nil)
+                            retractionAlertController.addAction(okayAction)
+                            
+                            self.presentViewController(retractionAlertController, animated: true, completion: nil)
+                    
+                            self.eventsTableView.reloadData()
+                            
+                            //reloads main collection view
+                            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "reloadCollectionView", object: nil))
+                        }
+                    })
+                }
+            }
+        }
     }
     
     @IBAction func segmentSelected(sender: UISegmentedControl) {
         
-        if (sender == 0) {
+        if (sender.selectedSegmentIndex == 0) {
             
             refresh()
         }
         
-        if (sender == 1) {
+        if (sender.selectedSegmentIndex == 1) {
             
             refresh()
         }
@@ -199,6 +267,10 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
         refresher.endRefreshing()
     }
     
+    func displayAlert(title: String, message: String) {
+        
+        //fill in eventually to clean up code
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

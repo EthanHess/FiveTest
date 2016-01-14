@@ -21,6 +21,10 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //register for notifications 
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh", name: "reloadCollectionView", object: nil)
+        
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(named: "bar_background"),
             forBarMetrics: UIBarMetrics.Default)
         
@@ -327,6 +331,11 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         self.collectionView.reloadData()
         
+    }
+    
+    func refresh() {
+        
+        collectionView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
