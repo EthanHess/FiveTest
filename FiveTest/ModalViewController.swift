@@ -30,27 +30,51 @@ class ModalViewController: UIViewController {
         
         //make sure user can't be saved to same relation twice
         
-        PFUser.currentUser()?.saveInBackgroundWithBlock({ (success, error) -> Void in
+        let query = Event.query()
+        query?.whereKey("objectId", equalTo: self.event.objectId!)
+        query?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
             
-            if (success) {
-                
-                let attendeeRelation = PFUser.currentUser()?.relationForKey("eventsToAttendList")
-                attendeeRelation?.addObject(self.event)
-                PFUser.currentUser()?.saveInBackground()
-                
-                let eventRelation = self.event.relationForKey("eventAttendees")
-                eventRelation.addObject(PFUser.currentUser()!)
-                self.event.saveInBackground()
-                
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "reloadTableView", object: nil))
-                
+            if error != nil {
+                print(error)
             }
             
-            else {
+            else if let objects = objects {
                 
-                print(error!.localizedDescription)
+                for object : Event in objects as! [Event] {
+                    
+                    if let eventAttendees : PFRelation = object["eventAttendees"] as? PFRelation {
+                        
+                        print(eventAttendees)
+                        
+                        //TODO: check relation for current user
+                    }
+                }
             }
         })
+        
+        //important code: uncomment when the above is fixed
+        
+//        PFUser.currentUser()?.saveInBackgroundWithBlock({ (success, error) -> Void in
+//            
+//            if (success) {
+//                
+//                let attendeeRelation = PFUser.currentUser()?.relationForKey("eventsToAttendList")
+//                attendeeRelation?.addObject(self.event)
+//                PFUser.currentUser()?.saveInBackground()
+//                
+//                let eventRelation = self.event.relationForKey("eventAttendees")
+//                eventRelation.addObject(PFUser.currentUser()!)
+//                self.event.saveInBackground()
+//                
+//                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "reloadTableView", object: nil))
+//                
+//            }
+//            
+//            else {
+//                
+//                print(error!.localizedDescription)
+//            }
+//        })
         
         
         

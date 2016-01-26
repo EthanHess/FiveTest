@@ -8,49 +8,27 @@
 
 import UIKit
 import GoogleMaps
+import MapKit
 
 
-class LocationsDetailViewController: UIViewController, GMSMapViewDelegate {
+class LocationsDetailViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     var firstLocationUpdate = Bool?()
-    var mapView : GMSMapView!
     
-    @IBOutlet var mapViewView: UIView!
+    
+    @IBOutlet var getDirectionsButton: UIButton!
+    @IBOutlet var segmentedControl: UISegmentedControl!
+    @IBOutlet var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager.requestWhenInUseAuthorization()
-        
-//        let camera = GMSCameraPosition.cameraWithLatitude(-33.86,
-//            longitude: 151.20, zoom: 6)
-        mapView = GMSMapView(frame: mapViewView.bounds)
-        mapView.camera = GMSCameraPosition.cameraWithLatitude(-33.86, longitude: 151.20, zoom: 6)
-//        mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
-        mapView.myLocationEnabled = true
-        self.view = mapView
-        
-        mapView.addObserver(self, forKeyPath: "myLocation", options: NSKeyValueObservingOptions.New, context: nil)
-        
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.mapView.myLocationEnabled = true
-        })
-        print(mapView.myLocation)
-        
-        
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2DMake(-33.86, 151.20)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
-        marker.map = mapView
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    
+    @IBAction func getDirections(sender: AnyObject) {
         
-        firstLocationUpdate = true
-        let location = change![NSKeyValueChangeNewKey] as! CLLocation
-        mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 14)
         
     }
 

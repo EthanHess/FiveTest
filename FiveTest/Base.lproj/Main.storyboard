@@ -249,22 +249,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MjI-H6-zT0">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="e4r-eq-8KQ">
+                                <rect key="frame" x="63" y="116" width="474" height="358"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ker-p9-jkT">
+                                <rect key="frame" x="208" y="507" width="185" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="jUl-g1-ggf"/>
+                                    <constraint firstAttribute="width" constant="185" id="xWF-5K-zVn"/>
+                                </constraints>
+                                <state key="normal" title="Get Directions!"/>
+                                <connections>
+                                    <action selector="getDirections:" destination="cAn-Mb-uZS" eventType="touchUpInside" id="VGg-hs-8vd"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zTt-aG-zpX">
+                                <rect key="frame" x="63" y="62" width="474" height="29"/>
+                                <segments>
+                                    <segment title="Walk"/>
+                                    <segment title="Drive"/>
+                                    <segment title="Public"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="MjI-H6-zT0" secondAttribute="trailing" id="ARh-qJ-P7x"/>
-                            <constraint firstItem="MjI-H6-zT0" firstAttribute="top" secondItem="dZ8-WW-1TU" secondAttribute="top" id="HdE-r9-rcQ"/>
-                            <constraint firstItem="MjI-H6-zT0" firstAttribute="bottom" secondItem="Tsh-VF-asY" secondAttribute="top" id="bMI-9X-VKA"/>
-                            <constraint firstItem="MjI-H6-zT0" firstAttribute="leading" secondItem="dZ8-WW-1TU" secondAttribute="leading" id="hNx-1f-5ej"/>
+                            <constraint firstItem="zTt-aG-zpX" firstAttribute="top" secondItem="s96-UA-ftu" secondAttribute="bottom" constant="42" id="1lR-Yf-e2a"/>
+                            <constraint firstItem="ker-p9-jkT" firstAttribute="top" secondItem="e4r-eq-8KQ" secondAttribute="bottom" constant="33" id="4fL-wg-g4s"/>
+                            <constraint firstItem="Tsh-VF-asY" firstAttribute="top" secondItem="ker-p9-jkT" secondAttribute="bottom" constant="43" id="5Ho-pa-K4L"/>
+                            <constraint firstItem="zTt-aG-zpX" firstAttribute="leading" secondItem="dZ8-WW-1TU" secondAttribute="leadingMargin" constant="43" id="7yW-Qu-MNr"/>
+                            <constraint firstItem="zTt-aG-zpX" firstAttribute="leading" secondItem="e4r-eq-8KQ" secondAttribute="leading" id="HOT-cw-kLM"/>
+                            <constraint firstItem="e4r-eq-8KQ" firstAttribute="top" secondItem="zTt-aG-zpX" secondAttribute="bottom" constant="26" id="Ih2-xY-xvP"/>
+                            <constraint firstItem="zTt-aG-zpX" firstAttribute="trailing" secondItem="e4r-eq-8KQ" secondAttribute="trailing" id="RbN-nC-etM"/>
+                            <constraint firstItem="zTt-aG-zpX" firstAttribute="centerX" secondItem="dZ8-WW-1TU" secondAttribute="centerX" id="SLG-Ux-Piw"/>
+                            <constraint firstItem="e4r-eq-8KQ" firstAttribute="centerX" secondItem="ker-p9-jkT" secondAttribute="centerX" id="V45-yq-61c"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wsa-sj-V9m"/>
                     <connections>
-                        <outlet property="mapViewView" destination="MjI-H6-zT0" id="OeV-CC-pmP"/>
+                        <outlet property="getDirectionsButton" destination="ker-p9-jkT" id="eJ4-Bl-PDq"/>
+                        <outlet property="mapView" destination="e4r-eq-8KQ" id="yvd-9h-npP"/>
+                        <outlet property="segmentedControl" destination="zTt-aG-zpX" id="K38-Am-Mnc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9fC-z0-guo" userLabel="First Responder" sceneMemberID="firstResponder"/>

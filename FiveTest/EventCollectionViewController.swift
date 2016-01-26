@@ -17,6 +17,11 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     var locationTestArray : [Event]? = []
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        collectionView.reloadData()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +51,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                     else {
                         
                         self.locationTestArray = objects as? [Event]
-                        print(self.locationTestArray)
+//                        print(self.locationTestArray)
                     }
                 })
             }
