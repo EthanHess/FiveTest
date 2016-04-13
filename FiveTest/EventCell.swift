@@ -17,11 +17,9 @@ class EventCell: UICollectionViewCell {
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var creatorImageView: UIImageView!
     @IBOutlet weak var attendButton: UIButton!
-    
+    @IBOutlet var getDirectionsButton: UIButton!
     @IBOutlet weak var categoryImageView: UIImageView!
-    
-//    @IBOutlet var imageViewArray: [UIImageView]!
-//    @IBOutlet var buttonsArray: [UIButton]!
+
     @IBOutlet var userButtonsArray: [UserButton]!
     
     
@@ -43,20 +41,14 @@ class EventCell: UICollectionViewCell {
         
         eventTitleLabel.hidden = true
         eventBackgroundImage.hidden = true
-//        creatorImageView.hidden = true
         categoryImageView.hidden = true
-            
+        getDirectionsButton.hidden = false
         eventDateLabel.hidden = false
         eventDescriptionLabel.hidden = false
         attendButton.hidden = false
             
         self.layer.borderColor = borderColor.CGColor
         self.layer.borderWidth = 1
-            
-            
-//        for imageView in imageViewArray {
-//            imageView.hidden = false
-//        }
             
         for button in userButtonsArray {
             button.hidden = false
@@ -72,17 +64,13 @@ class EventCell: UICollectionViewCell {
             eventBackgroundImage.hidden = false
             creatorImageView.hidden = false
             categoryImageView.hidden = false
-            
+            getDirectionsButton.hidden = true
             eventDateLabel.hidden = true
             eventDescriptionLabel.hidden = true
             attendButton.hidden = true
             
             self.layer.borderColor = UIColor.clearColor().CGColor
             self.layer.borderWidth = 1
-            
-//            for imageView in imageViewArray {
-//                imageView.hidden = true
-//            }
             
             for button in userButtonsArray {
                 button.hidden = true
@@ -130,15 +118,6 @@ class EventCell: UICollectionViewCell {
         
         eventBackgroundImage.layer.cornerRadius = 20
         eventBackgroundImage.layer.masksToBounds = true
-
-        
-//        for imageView in imageViewArray {
-//            
-//            imageView.layer.cornerRadius = 20
-//            imageView.layer.borderColor = borderColor.CGColor
-//            imageView.layer.borderWidth = 1
-//            imageView.layer.masksToBounds = true
-//        }
         
         for button in userButtonsArray {
             
@@ -147,11 +126,6 @@ class EventCell: UICollectionViewCell {
             button.layer.borderWidth = 1
             button.layer.masksToBounds = true
         }
-        
-//        categoryImageView.layer.cornerRadius = 10
-//        categoryImageView.layer.borderColor = UIColor.blackColor().CGColor
-//        categoryImageView.layer.borderWidth = 1
-//        categoryImageView.layer.masksToBounds = true
         
     }
 }

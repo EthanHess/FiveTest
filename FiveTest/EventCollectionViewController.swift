@@ -264,6 +264,25 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+                if segue.identifier == "pushToMaps" {
+                    
+                    let button = sender as! UIButton
+                    let view = button.superview
+                    let cell = view?.superview as! EventCell
+                    let indexPath = collectionView.indexPathForCell(cell)
+                    
+                    let event = events![indexPath!.row]
+            
+                    let ldvc : LocationsDetailViewController = segue.destinationViewController as! LocationsDetailViewController
+            
+                    let eventLocation : PFGeoPoint = event["location"] as! PFGeoPoint
+                
+                    ldvc.eventLatitude = eventLocation.latitude 
+                    ldvc.eventLongitude = eventLocation.longitude 
+                
+            }
+
+        
                 if (segue.identifier == "presentConfirmScreen") {
                     
                     //gets attend button from cell with event object

@@ -94,7 +94,9 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
                 let distance = location["distance"]
                 let city = location["city"]
                 
-//                print(name, location, city, distance, String(locationLatitude), String(locationLongitude))
+                //TEST
+                
+                print(name, location, city, distance, String(locationLatitude), String(locationLongitude))
                 
             }
             
@@ -141,7 +143,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
             
             if let venue = item["venue"] as? NSDictionary {
                 
-                let locationString = venue["name"] as! String
+                let nameString = venue["name"] as! String
                 let location = venue["location"] as! NSDictionary
                 
                 //get lat/long strings
@@ -151,14 +153,13 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
 //                eventVC.updateWithLocation(locationString)
 //                eventVC.updateWithGeoPoint(PFGeoPoint(latitude: locationLatitude, longitude: locationLongitude))
                 
-                eventVC.eventLocationString = locationString
+                eventVC.eventLocationString = nameString
                 
                 locationLatitude = location["lat"] as! Double
                 locationLongitude = location["lng"] as! Double
                 
                 eventVC.eventLocation = (PFGeoPoint(latitude: locationLatitude, longitude: locationLongitude))
-                
-                //ask quan about this
+       
             }
             
             
@@ -166,21 +167,6 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
             //pass location coordinates 
         }
         
-        if segue.identifier == "pushToGoogleMaps" {
-            
-            let ldvc : LocationsDetailViewController = segue.destinationViewController as! LocationsDetailViewController
-            
-            if let venue = item["venue"] as? NSDictionary {
-                
-                let locationString = venue["name"] as! String
-                let location = venue["location"] as! NSDictionary
-                
-                ldvc.eventLatitude = location["lat"] as! Double
-                ldvc.eventLongitude = location["lng"] as! Double
-                
-            }
-            
-        }
     }
     
     override func didReceiveMemoryWarning() {
