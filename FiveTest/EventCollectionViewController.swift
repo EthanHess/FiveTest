@@ -28,7 +28,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         //register for notifications 
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh", name: "reloadCollectionView", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventCollectionViewController.refresh), name: "reloadCollectionView", object: nil)
         
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(named: "bar_background"),
             forBarMetrics: UIBarMetrics.Default)
@@ -139,7 +139,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                             self.tempArray = objects as? [PFUser]
 //                            let testArray = objects as? [PFUser]
                             
-                            for var index = 0; index < objects!.count; ++index {
+                            for index in 0 ..< objects!.count {
                                 
 //                                let profileImageView = cell.imageViewArray[index]
                                 let buttonView = cell.userButtonsArray[index]
@@ -157,7 +157,7 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                                             buttonView.user = usr
                                             
                                             //test
-                                            buttonView.addTarget(self, action: "buttonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+                                            buttonView.addTarget(self, action: #selector(EventCollectionViewController.buttonClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                                         })
                                     }
                                 })

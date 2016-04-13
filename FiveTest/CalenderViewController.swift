@@ -27,7 +27,7 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        refresher.addTarget(self, action: #selector(CalenderViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
         self.eventsTableView.addSubview(refresher)
         
         //maybe change
@@ -76,7 +76,7 @@ class CalenderViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func registerForNotifications() {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh", name: "reloadTableView", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CalenderViewController.refresh), name: "reloadTableView", object: nil)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

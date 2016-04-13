@@ -40,10 +40,10 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
             
 //            var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as! NSDictionary
             
-            let dictionary = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+            let dictionary = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
             
-            let response = dictionary["response"] as! NSDictionary
-            let groups = response["groups"] as! NSArray
+            let response = dictionary["response"] as? NSDictionary
+            let groups = response!["groups"] as! NSArray
             if groups.count > 0 {
                 let group = groups[0] as! NSDictionary // This should grab the "recommended" group
                 _ = group["items"] as! NSArray
@@ -55,11 +55,8 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
                     
                     self.tableView.reloadData()
                     
-                    
                 }
             }
-
-        
         }
     }
     
@@ -88,7 +85,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let responseItem = responseItems[indexPath.row];
         
-        if let responseVenue = responseItem["venue"] {
+        if let responseVenue = responseItem["venue"] as? NSDictionary {
         
             let name = responseVenue["name"]
             
@@ -173,12 +170,15 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
             
             let ldvc : LocationsDetailViewController = segue.destinationViewController as! LocationsDetailViewController
             
-            if let geoPoint = PFUser.currentUser()?.objectForKey("location") as? PFGeoPoint {
+            if let venue = item["venue"] as? NSDictionary {
                 
+                let locationString = venue["name"] as! String
+                let location = venue["location"] as! NSDictionary
+                
+                ldvc.eventLatitude = location["lat"] as! Double
+                ldvc.eventLongitude = location["lng"] as! Double
                 
             }
-            
-            //pass location coordinates to google maps to enable directions
             
         }
     }

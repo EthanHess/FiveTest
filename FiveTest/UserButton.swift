@@ -22,3 +22,9 @@ class UserButton: UIButton {
     */
 
 }
+
+class thisClass {
+    
+    
+    
+}
