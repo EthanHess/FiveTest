@@ -21,10 +21,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
-//        self.navigationController!.navigationBar.setBackgroundImage(UIImage(named: "bar_background"),
-//            forBarMetrics: UIBarMetrics.Default)
         
         usernameTextField.delegate = self
         passwordTextField.delegate = self

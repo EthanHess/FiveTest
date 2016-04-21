@@ -22,10 +22,10 @@
 		271335CE1B97C40C00D70EA3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271335CD1B97C40C00D70EA3 /* SystemConfiguration.framework */; };
 		272CCB4A1BD57EA10010E6DD /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 272CCB491BD57EA10010E6DD /* libz.tbd */; };
 		272CCB4C1BD57EB90010E6DD /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 272CCB4B1BD57EB90010E6DD /* libsqlite3.tbd */; };
-		273521BF1C3C4F8900722B0F /* UserButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273521BE1C3C4F8900722B0F /* UserButton.swift */; settings = {ASSET_TAGS = (); }; };
-		2755E0FD1BE0080F0005C19E /* LocationsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		27B1E2031BE045C200ACA4B0 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E2021BE045C200ACA4B0 /* ModalViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		27B1E2061BE146A400ACA4B0 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E2051BE146A400ACA4B0 /* EventController.swift */; settings = {ASSET_TAGS = (); }; };
+		273521BF1C3C4F8900722B0F /* UserButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273521BE1C3C4F8900722B0F /* UserButton.swift */; };
+		2755E0FD1BE0080F0005C19E /* LocationsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2755E0FC1BE0080F0005C19E /* LocationsDetailViewController.swift */; };
+		27B1E2031BE045C200ACA4B0 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E2021BE045C200ACA4B0 /* ModalViewController.swift */; };
+		27B1E2061BE146A400ACA4B0 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B1E2051BE146A400ACA4B0 /* EventController.swift */; };
 		27C093AD1B98C5DC006C9FD4 /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093AC1B98C5DC006C9FD4 /* CreateProfileViewController.swift */; };
 		27C093AF1B98C5F0006C9FD4 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093AE1B98C5F0006C9FD4 /* CreateEventViewController.swift */; };
 		27C093B11B98C604006C9FD4 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C093B01B98C604006C9FD4 /* CalenderViewController.swift */; };
@@ -44,9 +44,9 @@
 		27C3159C1BB1EF7B008BD458 /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C3159B1BB1EF7B008BD458 /* LocationsViewController.swift */; };
 		27C3159E1BB20708008BD458 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C3159D1BB20708008BD458 /* LocationCell.swift */; };
 		27C37A8C1BC46E4100695FC5 /* EventCellTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C37A8B1BC46E4100695FC5 /* EventCellTwo.swift */; };
-		27D6A6441BE94EC0005383D8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D6A6431BE94EC0005383D8 /* ProfileViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		27D6A6441BE94EC0005383D8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D6A6431BE94EC0005383D8 /* ProfileViewController.swift */; };
 		27FD45C81BB1ECFF002BCF13 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 27FD45C71BB1ECFF002BCF13 /* Podfile */; };
-		EED1A70A031D6FAB609DE1FB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8C92DCD547CD24D37130338 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		EED1A70A031D6FAB609DE1FB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8C92DCD547CD24D37130338 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -628,8 +628,6 @@
 					"-framework",
 					"\"GLKit\"",
 					"-framework",
-					"\"GoogleMaps\"",
-					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"OpenGLES\"",
@@ -683,8 +681,6 @@
 					"\"CoreText\"",
 					"-framework",
 					"\"GLKit\"",
-					"-framework",
-					"\"GoogleMaps\"",
 					"-framework",
 					"\"ImageIO\"",
 					"-framework",

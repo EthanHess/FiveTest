@@ -7,17 +7,14 @@
 //
 
 import UIKit
-import GoogleMaps
 import MapKit
 
-class LocationsDetailViewController: UIViewController, CLLocationManagerDelegate {
+class LocationsDetailViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     var locationManager : CLLocationManager!
-    var userLatitude: CLLocationDegrees = 0
-    var userLongitude: CLLocationDegrees = 0
-    
-    var eventLatitude: CLLocationDegrees = 0
-    var eventLongitude: CLLocationDegrees = 0
+    var userLocation: CLLocationCoordinate2D?
+    var eventLocation: CLLocationCoordinate2D?
+
     var eventTitle: String?
     
     
@@ -28,87 +25,145 @@ class LocationsDetailViewController: UIViewController, CLLocationManagerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
+        dispatch_async(dispatch_get_main_queue()) { 
+            
+            if CLLocationManager.locationServicesEnabled() {
+                
+                //change always in Plist file
+                
+                self.locationManager = CLLocationManager()
+                self.locationManager.delegate = self
+                self.locationManager.requestWhenInUseAuthorization()
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                self.locationManager.startUpdatingLocation()
+                
+            }
+        }
         
-        print(eventLongitude, eventLatitude)
+        print(eventLocation)
         
-        //establish map region
         
-        let userLocation = CLLocationCoordinate2DMake(userLatitude, userLongitude)
-        
-        let mapRegion = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        
-        self.mapView.setRegion(mapRegion, animated: true)
-        
-        let objectAnnotation = MKPointAnnotation()
-        objectAnnotation.coordinate = userLocation
-        objectAnnotation.title = "You are here"
-        self.mapView.addAnnotation(objectAnnotation)
     }
     
     
     @IBAction func getDirections(sender: AnyObject) {
         
-        let requestLocation = CLLocation(latitude: eventLatitude, longitude: eventLongitude)
+        mapView.removeAnnotations(mapView.annotations)
         
-        CLGeocoder().reverseGeocodeLocation(requestLocation) { (placemarks, error) -> Void in
+        mapView.removeOverlays(mapView.overlays)
+        
+        let geoCoder = CLGeocoder()
+        
+        let destLocation = CLLocation(latitude: eventLocation!.latitude, longitude: eventLocation!.longitude)
+        
+        geoCoder.reverseGeocodeLocation(destLocation) { (placemarks, error) in
             
-            if error != nil {
-                print(error)
-            }
-            
-            else {
+            if let placemark : CLPlacemark = placemarks![0] {
                 
-                if placemarks!.count > 0 {
-                    
-                    let placeMark = placemarks![0]
-                    
-                    let mapViewPlacemark = MKPlacemark(placemark: placeMark)
-                    
-                    let mapItem = MKMapItem(placemark: mapViewPlacemark)
-                    
-                    mapItem.name = self.eventTitle
-                    
-                    if self.segmentedControl.selectedSegmentIndex == 0 {
-                        
-                        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking]
-                        mapItem.openInMapsWithLaunchOptions(launchOptions)
-                        
-                    } else if self.segmentedControl.selectedSegmentIndex == 1 {
-                        
-                        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-                        mapItem.openInMapsWithLaunchOptions(launchOptions)
-                        
-                    } else if self.segmentedControl.selectedSegmentIndex == 2 {
-                        
-                        let launchOptions = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeTransit]
-                        mapItem.openInMapsWithLaunchOptions(launchOptions)
-                    }
-                }
+                self.mapView.addAnnotation(MKPlacemark(placemark: placemark))
+                self.locationManager.startUpdatingLocation()
+                
+                self.getDirections()
             }
+            
+        }
+
+    }
+    
+    func getDirections() {
+        
+        let fromPlacemark = MKPlacemark(coordinate: userLocation!, addressDictionary: nil)
+        let toPlacemark = MKPlacemark(coordinate: eventLocation!, addressDictionary: nil)
+        
+        let fromItem = MKMapItem(placemark: fromPlacemark)
+        let toItem = MKMapItem(placemark: toPlacemark)
+        
+        let request = MKDirectionsRequest()
+        
+        request.source = fromItem
+        request.destination = toItem
+        
+        //any for now but allow user to pick eventually
+        
+        request.requestsAlternateRoutes = false
+        request.transportType = MKDirectionsTransportType.Any
+        
+        let directions = MKDirections(request: request)
+        
+        directions.calculateDirectionsWithCompletionHandler { (response, error) -> Void in
+            
+            if (error != nil || response!.routes.isEmpty) {
+                
+                print(error?.localizedDescription)
+            }
+            
+            let route : MKRoute = response!.routes[0]
+            
+            self.mapView.addOverlay(route.polyline)
+            
+            self.showUserAndDestinationOnMap()
+            
         }
     }
     
-    //MARK Location Manager Del. 
+    func showUserAndDestinationOnMap() {
+        
+        let maxLatitude : Double = fmax(userLocation!.latitude,  eventLocation!.latitude)
+        let maxLongitude : Double = fmax(userLocation!.longitude, eventLocation!.longitude)
+        let minLatitude : Double = fmin(userLocation!.latitude,  eventLocation!.latitude)
+        let minLongitude : Double = fmin(userLocation!.longitude, eventLocation!.longitude)
+        
+        let mapMargin : Double = 1.5
+        let leastCoordSpan : Double = 0.005
+        let span_x : Double = fmax(leastCoordSpan, fabs(maxLatitude - minLatitude) * mapMargin);
+        let span_y : Double = fmax(leastCoordSpan, fabs(maxLongitude - minLongitude) * mapMargin);
+        
+        let span = MKCoordinateSpanMake(span_x, span_y)
+        
+        let center : CLLocationCoordinate2D = CLLocationCoordinate2DMake((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2)
+        let region : MKCoordinateRegion = MKCoordinateRegionMake(center, span)
+        
+        mapView.setRegion(mapView.regionThatFits(region), animated:true)
+    }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    //MARK Location Manager Del.
+    
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         
-        //Establish users current location
+        if let location : CLLocation = newLocation {
+            
+            userLocation = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+            
+            print("ready!")
+        }
         
-        let location : CLLocationCoordinate2D = manager.location!.coordinate
-        
-        self.userLatitude = location.latitude
-        self.userLongitude = location.longitude
-        
-        
+        let userAnnotation = MKPointAnnotation()
+        userAnnotation.coordinate = userLocation!
+        userAnnotation.title = "You're here!"
+        mapView.addAnnotation(userAnnotation)
         
     }
     
-
+    //adds line to map
+    
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        
+        let overlay = MKPolyline()
+        
+        let polyRenderer = MKPolylineRenderer(overlay: overlay)
+        
+        polyRenderer.strokeColor = UIColor.redColor()
+        polyRenderer.lineWidth = 3
+        
+        return polyRenderer
+    }
+    
+    //self explanatory
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        
+        print(error.localizedDescription)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

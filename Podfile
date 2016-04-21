@@ -1,8 +1,5 @@
-use_frameworks!
-pod "AFNetworking"
-
-# My other pods
-
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.1'
-pod 'GoogleMaps'
+platform :ios, '9.0'
+use_frameworks!
+
+pod 'Alamofire', '~> 3.3'

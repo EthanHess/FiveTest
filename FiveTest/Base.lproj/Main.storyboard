@@ -250,6 +250,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="e4r-eq-8KQ">
                                 <rect key="frame" x="63" y="116" width="474" height="358"/>
+                                <connections>
+                                    <outlet property="delegate" destination="cAn-Mb-uZS" id="Wrb-Fc-XoI"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ker-p9-jkT">
                                 <rect key="frame" x="208" y="507" width="185" height="50"/>

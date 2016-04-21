@@ -9,6 +9,7 @@
 
 import UIKit
 import Parse
+import Alamofire
 
 class LocationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -20,6 +21,8 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     var latitudeLong = "37.770802,-122.403902" // Zynga HQ in CA
     var section = "coffee"
     
+    //update to current location of user via location manager
+    
     var locationLatitude = Double()
     var locationLongitude = Double()
     
@@ -27,6 +30,10 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getLocationsArray()
+        
+        //WILL BE REPLACED ALAMOFIRE
 
         let url = NSURL(string: "https://api.foursquare.com/v2/venues/explore?client_id=\(clientID)&client_secret=\(clientSecret)&v=\(foursquareVersion)&ll=\(latitudeLong)&section=\(section)")!
         let request = NSURLRequest(URL: url)
@@ -57,6 +64,16 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
                     
                 }
             }
+        }
+    }
+    
+    func getLocationsArray() {
+        
+        let url = NSURL(string: "https://api.foursquare.com/v2/venues/explore?client_id=\(clientID)&client_secret=\(clientSecret)&v=\(foursquareVersion)&ll=\(latitudeLong)&section=\(section)")!
+    
+        Alamofire.request(.GET, url).responseJSON { (response) in
+            
+            print("THIS IS THE RESPONSE : \(response)")
         }
     }
     

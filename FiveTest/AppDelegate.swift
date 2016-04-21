@@ -9,7 +9,6 @@
 import UIKit
 import Parse
 import Bolts
-import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,12 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // [Optional] Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+
         
-        //Google maps
-        
-//        GMSServices.provideAPIKey("AIzaSyA2NwekVaQhFRGxXsT9ao-W6Neji4chYpg")
-        GMSServices.provideAPIKey("AIzaSyD7lM2OMR18blnAV3l_lfzWad0UlgUOuH4"
-        )
         return true
     }
 

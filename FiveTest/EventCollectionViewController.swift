@@ -276,9 +276,11 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                     let ldvc : LocationsDetailViewController = segue.destinationViewController as! LocationsDetailViewController
             
                     let eventLocation : PFGeoPoint = event["location"] as! PFGeoPoint
+                    
+                    let latPF = eventLocation.latitude
+                    let longPF = eventLocation.longitude
                 
-                    ldvc.eventLatitude = eventLocation.latitude 
-                    ldvc.eventLongitude = eventLocation.longitude 
+                    ldvc.eventLocation = CLLocationCoordinate2DMake(latPF, longPF)
                 
             }
 
