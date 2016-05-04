@@ -25,55 +25,53 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var locationLatitude = Double()
     var locationLongitude = Double()
-    
-    var responseItems : [NSDictionary]! = []
+
+    var responseItems : [Dictionary<String, AnyObject>] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         getLocationsArray()
-        
-        //WILL BE REPLACED ALAMOFIRE
 
-        let url = NSURL(string: "https://api.foursquare.com/v2/venues/explore?client_id=\(clientID)&client_secret=\(clientSecret)&v=\(foursquareVersion)&ll=\(latitudeLong)&section=\(section)")!
-        let request = NSURLRequest(URL: url)
-        
-//        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-        
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) in
-            
-            
-            // Dictionaries are like ogres. Unwrap the layers.
-            
-//            var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as! NSDictionary
-            
-            let dictionary = try! NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments) as! NSDictionary
-            
-            let response = dictionary["response"] as? NSDictionary
-            let groups = response!["groups"] as! NSArray
-            if groups.count > 0 {
-                let group = groups[0] as! NSDictionary // This should grab the "recommended" group
-                _ = group["items"] as! NSArray
-                self.responseItems = group["items"] as! [NSDictionary]
-                
-                for item in self.responseItems {
-                    let venue = item["venue"] as! NSDictionary
-                    _ = venue["name"] as! String
-                    
-                    self.tableView.reloadData()
-                    
-                }
-            }
-        }
     }
     
     func getLocationsArray() {
+        
+        //eventually get current location, latitudeLong is just a test
         
         let url = NSURL(string: "https://api.foursquare.com/v2/venues/explore?client_id=\(clientID)&client_secret=\(clientSecret)&v=\(foursquareVersion)&ll=\(latitudeLong)&section=\(section)")!
     
         Alamofire.request(.GET, url).responseJSON { (response) in
             
-            print("THIS IS THE RESPONSE : \(response)")
+            if let dict = response.result.value as? Dictionary<String, AnyObject> {
+                
+                if let responseDict = dict["response"] as? Dictionary<String, AnyObject> {
+                    
+                    if let groups = responseDict["groups"] as? [Dictionary<String, AnyObject>] {
+                        
+                        if groups.count > 0 {
+                            
+                            let group = groups[0]
+                            
+                            guard let items = group["items"] as? [Dictionary<String, AnyObject>] else { return }
+                            
+                            self.responseItems = items
+                            
+                            for item in self.responseItems {
+                                
+                                let venue = item["venue"] as! Dictionary<String, AnyObject>
+                                _ = venue["name"]
+                                
+                                print("YAY %@", self.responseItems)
+                                
+                                self.tableView.reloadData()
+                            }
+                            
+                        }
+                        
+                    }
+                }
+            }
         }
     }
     
@@ -82,7 +80,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! LocationCell
         
         let item = self.responseItems[indexPath.row]
-        let venue = item["venue"] as! NSDictionary
+        let venue = item["venue"] as! Dictionary<String, AnyObject>
         let name = venue["name"] as! String
         cell.textLabel?.text = name
         
@@ -102,11 +100,11 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let responseItem = responseItems[indexPath.row];
         
-        if let responseVenue = responseItem["venue"] as? NSDictionary {
+        if let responseVenue = responseItem["venue"] as? Dictionary<String, AnyObject> {
         
             let name = responseVenue["name"]
             
-            if let location = responseVenue["location"] as? NSDictionary {
+            if let location = responseVenue["location"] as? Dictionary<String, AnyObject> {
                 
                 let distance = location["distance"]
                 let city = location["city"]
@@ -130,12 +128,6 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         alertController.addAction(eventVCAction)
         
-        let mapsAction = UIAlertAction(title: "Show on Map", style: UIAlertActionStyle.Default) { _ in
-            
-            self.performSegueWithIdentifier("pushToGoogleMaps", sender: self)
-            
-        }
-        alertController.addAction(mapsAction)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { _ in
             
@@ -150,7 +142,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let indexPath = self.tableView.indexPathForSelectedRow
         
-        let item = self.responseItems![indexPath!.row]
+        let item = self.responseItems[indexPath!.row]
         
         var eventVC = CreateEventViewController()
         
@@ -158,17 +150,12 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
             
             eventVC = segue.destinationViewController as! CreateEventViewController
             
-            if let venue = item["venue"] as? NSDictionary {
+            if let venue = item["venue"] as? Dictionary<String, AnyObject> {
                 
                 let nameString = venue["name"] as! String
-                let location = venue["location"] as! NSDictionary
+                let location = venue["location"] as! Dictionary<String, AnyObject>
                 
                 //get lat/long strings
-                
-//                print(location)
-                
-//                eventVC.updateWithLocation(locationString)
-//                eventVC.updateWithGeoPoint(PFGeoPoint(latitude: locationLatitude, longitude: locationLongitude))
                 
                 eventVC.eventLocationString = nameString
                 

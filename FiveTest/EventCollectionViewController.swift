@@ -28,6 +28,8 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         //register for notifications 
         
+        //add deinit method
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventCollectionViewController.refresh), name: "reloadCollectionView", object: nil)
         
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(named: "bar_background"),
