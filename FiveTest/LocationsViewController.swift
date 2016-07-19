@@ -172,6 +172,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
     }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -101,6 +101,10 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         let cell : EventCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! EventCell
         
+        //clear it out...
+        
+        cell.eventBackgroundImage.image = nil
+        
         //sets up swipe gesture recognizer
         
 //        let upSwipe = UISwipeGestureRecognizer(target: self, action: "didSwipe:")
@@ -145,6 +149,10 @@ class EventCollectionViewController: UIViewController, UICollectionViewDelegate,
                                 
 //                                let profileImageView = cell.imageViewArray[index]
                                 let buttonView = cell.userButtonsArray[index]
+                                
+                                //clear it out again...
+                                
+                                buttonView.setBackgroundImage(nil, forState: UIControlState.Normal)
                                 
                                 let usr : PFUser = (self.tempArray?[index] as PFUser?)!
                                 
